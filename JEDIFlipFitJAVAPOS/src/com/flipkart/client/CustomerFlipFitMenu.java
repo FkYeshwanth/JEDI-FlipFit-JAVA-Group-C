@@ -1,10 +1,11 @@
 package com.flipkart.client;
 
 public class CustomerFlipFitMenu {
+    public void customerMenu(String mail) {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    public void registerCustomer() {
 
+    }
 }
