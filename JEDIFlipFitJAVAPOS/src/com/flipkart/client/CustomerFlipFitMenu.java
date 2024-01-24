@@ -25,7 +25,7 @@ public class CustomerFlipFitMenu {
 //					customerBusiness.getBookings(email);
 					break;
 				case 4:
-//					bookSlot()
+//					bookSlot();
 					break;
 				case 5:
 //					cancelBooking(email);
