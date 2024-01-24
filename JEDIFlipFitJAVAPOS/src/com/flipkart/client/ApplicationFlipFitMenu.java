@@ -14,11 +14,14 @@ public class ApplicationFlipFitMenu {
         String PersonEmail = in.next();
         System.out.print("Enter Password: ");
         String password = in.next();
-        System.out.print("Enter Role Name: ");
+        System.out.println("Enter Role Choice: ");
+        System.out.println("1. Admin");
+        System.out.println("2. Gym Owner");
+        System.out.println("3. Gym Customer");
         String roleId = in.next();
         Person Person = new Person(PersonEmail, password, roleId);
         PersonFlipFitService PersonFlipFitService = new PersonFlipFitService();
-        if (roleId.equalsIgnoreCase("Admin")) {
+        if (roleId.equals("1")) {
             AdminFlipFitMenu admin = new AdminFlipFitMenu();
             admin.AdminMenu(in);
         }
@@ -27,12 +30,12 @@ public class ApplicationFlipFitMenu {
             System.out.println(
                     "Welcome " + PersonEmail + "! You are logged in.");
 
-            if (roleId.equalsIgnoreCase("Customer")) {
+            if (roleId.equals("3")) {
 
                 CustomerFlipFitMenu customer = new CustomerFlipFitMenu();
                 customer.customerMenu(PersonEmail);
 
-            } else if (roleId.equalsIgnoreCase("GymOwner")) {
+            } else if (roleId.equals("2")) {
 
                 GymOwnerFlipFitMenu gymOwner = new GymOwnerFlipFitMenu();
                 gymOwner.gymOwnerMenu(in, PersonEmail);
