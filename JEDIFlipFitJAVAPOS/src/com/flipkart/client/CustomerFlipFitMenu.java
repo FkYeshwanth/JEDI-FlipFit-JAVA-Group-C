@@ -2,9 +2,9 @@ package com.flipkart.client;
 import java.util.*;
 import com.flipkart.bean.GymUser;
 import com.flipkart.service.PersonFlipFitService;
-
+import com.flipkart.DAO.PersonDAOImpl;
 public class CustomerFlipFitMenu {
-	GymUser customer = new GymUser();
+
 	Scanner sc = new Scanner(System.in);
 	public void customerMenu(String email) {
 		int choice = 0;
@@ -46,21 +46,30 @@ public class CustomerFlipFitMenu {
 	}
 
 	public void registerCustomer() {
+		GymUser customer = new GymUser();
 		System.out.print("\u001B[36mEnter email: ");
-		customer.setName(sc.next());
+		String email =sc.next();
+		customer.setEmail(email);
 		System.out.print("Enter password: ");
-		customer.setPassword(sc.next());
+		String password =sc.next();
+		customer.setPassword(password);
 		System.out.print("Enter Name: ");
-		customer.setName(sc.next());
+		String name=sc.next();
+		customer.setName(name);
 		System.out.print("Enter Phone Number: ");
-		customer.setPhoneNumber(sc.next());
+		String number=sc.next();
+		customer.setPhoneNumber(number);
 		System.out.print("Enter Age: ");
-		customer.setAge(Integer.valueOf(sc.next()));
+		int age= sc.nextInt();
+		customer.setAge(age);
 		System.out.print("Enter Address: \033[0m");
-		customer.setAddress(sc.next());
+		String address=sc.next();
+		customer.setAddress(address);
 //		UserBusiness userBusiness = new UserBusiness();
-		PersonFlipFitService temp = new PersonFlipFitService();
-		temp.registerCustomer(customer);
+	//	PersonFlipFitService temp = new PersonFlipFitService();
+	//	temp.registerCustomer(customer);
+		PersonDAOImpl personDAOImpl = new PersonDAOImpl();
+		personDAOImpl.registerCustomer(customer);
 
 		System.out.println("\u001B[32mCustomer registered successfully!\033[0m");
 

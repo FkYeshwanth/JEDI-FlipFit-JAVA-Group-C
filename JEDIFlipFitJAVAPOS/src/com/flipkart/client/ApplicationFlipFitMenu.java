@@ -73,7 +73,7 @@ public class ApplicationFlipFitMenu {
                 System.out.println("\u001B[31mWrong Choice!\033[0m");
             }
         } else {
-            System.out.println("\nSorry! You are not Registered! Please Register Yourself!");
+            //System.out.println("\nSorry! You are not Registered! Please Register Yourself!");
         }
     }
 

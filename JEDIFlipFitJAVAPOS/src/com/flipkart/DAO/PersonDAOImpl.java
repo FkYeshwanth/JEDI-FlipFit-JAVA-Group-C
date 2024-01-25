@@ -40,7 +40,7 @@ public class PersonDAOImpl implements PersonDAO {
             String emailId =person.getEmail();
             String password= person.getPassword();
 
-            if(!gymUserHashMap.isEmpty() && gymUserHashMap.containsKey(emailId) && gymUserHashMap.get(password).getPassword().equals(password)) {
+            if(!gymUserHashMap.isEmpty() && gymUserHashMap.containsKey(emailId) && gymUserHashMap.get(emailId).getPassword().equals(password)) {
                 System.out.println("You have been authorized. You are a gym customer");
                 return true;
             }
