@@ -46,7 +46,7 @@ public class CustomerFlipFitMenu {
 	}
 
 	public void registerCustomer() {
-		System.out.print("Enter email: ");
+		System.out.print("\u001B[36mEnter email: ");
 		customer.setName(sc.next());
 		System.out.print("Enter password: ");
 		customer.setPassword(sc.next());
@@ -56,7 +56,7 @@ public class CustomerFlipFitMenu {
 		customer.setPhoneNumber(sc.next());
 		System.out.print("Enter Age: ");
 		customer.setAge(Integer.valueOf(sc.next()));
-		System.out.print("Enter Address: ");
+		System.out.print("Enter Address: \033[0m");
 		customer.setAddress(sc.next());
 //		UserBusiness userBusiness = new UserBusiness();
 		PersonFlipFitService temp = new PersonFlipFitService();
