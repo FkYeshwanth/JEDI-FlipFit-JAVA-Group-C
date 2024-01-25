@@ -1,6 +1,7 @@
 package com.flipkart.client;
 import java.util.*;
 import com.flipkart.bean.GymUser;
+import com.flipkart.service.PersonFlipFitService;
 
 public class CustomerFlipFitMenu {
 	GymUser customer = new GymUser();
@@ -58,7 +59,8 @@ public class CustomerFlipFitMenu {
 		System.out.print("Enter Address: ");
 		customer.setAddress(sc.next());
 //		UserBusiness userBusiness = new UserBusiness();
-//		userBusiness.registerCustomer(customer);
+		PersonFlipFitService temp = new PersonFlipFitService();
+		temp.registerCustomer(customer);
 
 		System.out.println("\u001B[32mCustomer registered successfully!\033[0m");
 
