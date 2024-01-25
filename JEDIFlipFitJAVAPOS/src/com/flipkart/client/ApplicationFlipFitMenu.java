@@ -20,7 +20,32 @@ public class ApplicationFlipFitMenu {
         System.out.println("3. Gym Customer");
         String roleId = in.next();
         Person Person = new Person(PersonEmail, password, roleId);
-        PersonFlipFitInterface PersonFlipFitService = new PersonFlipFitInterface();
+        PersonFlipFitInterface PersonFlipFitService = new PersonFlipFitInterface() {
+            @Override
+            public boolean authenticatePerson(com.flipkart.bean.Person p) {
+                return false;
+            }
+
+            @Override
+            public boolean registerCustomer(GymUser customer) {
+                return false;
+            }
+
+            @Override
+            public boolean registerGymOwner(GymOwner gymOwner) {
+                return false;
+            }
+
+            @Override
+            public boolean authenticateUser(com.flipkart.bean.Person user) {
+                return false;
+            }
+
+            @Override
+            public boolean logout(com.flipkart.bean.Person user) {
+                return false;
+            }
+        };
         if (roleId.equals("1")) {
             AdminFlipFitMenu admin = new AdminFlipFitMenu();
             admin.AdminMenu(in);
