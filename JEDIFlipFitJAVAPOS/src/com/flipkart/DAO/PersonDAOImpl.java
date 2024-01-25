@@ -20,6 +20,13 @@ public class PersonDAOImpl implements PersonDAO {
     public boolean authenticateUser(Person person){
         String roleId= person.getRoleId();
         if(roleId.equals("1")){
+            if(person.getEmail().equals(AdminDAOImpl.admin_username) && person.getPassword().equals(AdminDAOImpl.admin_pwd)){
+                System.out.println("You have been authorized. You are admin");
+                System.out.println("Welcome "+AdminDAOImpl.admin_username);
+                return true;
+            }else{
+                System.out.println("You have not authorized");
+            }
 
 
 

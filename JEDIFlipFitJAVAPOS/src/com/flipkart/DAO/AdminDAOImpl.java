@@ -12,6 +12,9 @@ import com.flipkart.bean.*;
  */
 public class AdminDAOImpl implements AdminDAO {
 
+    static String  admin_username = "yesh.k";
+    static String admin_pwd = "123";
+
 //    public List<GymOwner> getAllGymOwners() {
 //        List<GymOwner> gymOwners = new ArrayList<GymOwner>();
 //
