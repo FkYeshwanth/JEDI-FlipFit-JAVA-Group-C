@@ -35,7 +35,7 @@ public class GymOwnerFlipFitMenu {
                     editProfile(in, email);
                     break;
                 case 3:
-//                    addGym(in, email);
+                    addGym(in, email);
                     break;
                 case 4:
 //                    editGym(in, email);
@@ -47,7 +47,7 @@ public class GymOwnerFlipFitMenu {
 //                    addSlot(in);
                     break;
                 case 7:
-//                    getGymDetails(in, email);
+                    getGymDetails(in, email);
                     break;
                 case 8:
                     recur = false;
@@ -67,6 +67,31 @@ public class GymOwnerFlipFitMenu {
         }
 
 
+    }
+
+    private void getGymDetails(Scanner in, String email) {
+        GymOwner owner = GymOwnerDAOImpl.gymOwnerHash.get(email);
+        int count = 1;
+        for(Gym i: owner.getCenteres()){
+            System.out.println(count + ") GymID---->" + i.getGymId());
+            System.out.println("Name--> "+i.getGymName());
+            System.out.println("Address--> "+i.getAddress());
+            System.out.println("Slot count--> "+i.getSlotCount());
+        }
+    }
+
+    private void addGym(Scanner in, String email) {
+        GymOwner owner = GymOwnerDAOImpl.gymOwnerHash.get(email);
+        Gym i = new Gym();
+        System.out.println("Enter Gym Name-->");
+        i.setGymName(in.next());
+        System.out.println("Enter Gym Address-->");
+        i.setAddress(in.next());
+        System.out.println("Slot count-->");
+        i.setSlotCount(in.nextInt());
+        List<Gym> temp = owner.getCenteres();
+        temp.add(i);
+        owner.setCenteres(temp);
     }
 
     private void viewProfile(Scanner in, String email) {
