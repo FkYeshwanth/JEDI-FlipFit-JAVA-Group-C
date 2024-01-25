@@ -8,7 +8,7 @@ public class ApplicationFlipFitMenu {
 
     public static void login() {
         Scanner in = new Scanner(System.in);
-        System.out.println("\u001B[32m__________________________________________________________________________________\n");
+        System.out.println("__________________________________________________________________________________\n");
         System.out.println("Enter LogIn Details\n");
         System.out.print("Enter Email: ");
         String PersonEmail = in.next();
@@ -17,7 +17,7 @@ public class ApplicationFlipFitMenu {
         System.out.println("Enter Role Choice: ");
         System.out.println("1. Admin");
         System.out.println("2. Gym Owner");
-        System.out.println("3. Gym Customer\033[0m");
+        System.out.println("3. Gym Customer");
         String roleId = in.next();
         Person Person = new Person(PersonEmail, password, roleId);
         PersonFlipFitInterface PersonFlipFitService = new PersonFlipFitInterface() {
@@ -52,7 +52,8 @@ public class ApplicationFlipFitMenu {
         }
         else if (PersonFlipFitService.authenticatePerson(Person)) {
             System.out.println("__________________________________________________________________________________\n");
-            System.out.println("Welcome " + PersonEmail + "! You are logged in.");
+            System.out.println(
+                    "Welcome " + PersonEmail + "! You are logged in.");
 
             if (roleId.equals("3")) {
 
@@ -65,7 +66,7 @@ public class ApplicationFlipFitMenu {
                 gymOwner.gymOwnerMenu(in, PersonEmail);
 
             } else {
-                System.out.println("\u001B[31mWrong Choice!\033[0m");
+                System.out.println("Wrong Choice!");
             }
         } else {
             System.out.println("\nSorry! You are not Registered! Please Register Yourself!");
@@ -73,17 +74,17 @@ public class ApplicationFlipFitMenu {
     }
 
     public static void applicationMenu() {
-        boolean recur = true;
-        System.out.println("\u001B[36mWelcome to the \u001B[36mFlipFit Application\033[0m");
+        boolean recursion = true;
+        System.out.println("<---------------Welcome to the FlipFit Application!--------------->");
 
-        while (recur) {
-            System.out.println("\n\u001B[32mEnter your choice:\033[0m");
-            System.out.println("\u001B[32m1. Login");
+        while (recursion) {
+            System.out.println("\nEnter your choice:");
+            System.out.println("1. Login");
             System.out.println("2. Customer Registration");
             System.out.println("3. Gym Owner Registration");
             System.out.println("4. Update Password");
             System.out.println("5. Exit");
-            System.out.print("\n\u001B[35mEnter Your Choice: \033[0m");
+            System.out.print("\nEnter Your Choice: ");
 
             Scanner in = new Scanner(System.in);
 
@@ -105,13 +106,13 @@ public class ApplicationFlipFitMenu {
                 case 4:
                     break;
                 case 5:
-                    System.out.println("\u001B[34mExiting...");
-                    System.out.println("Exited Successfully\033[0m");
-                    recur = false;
+                    System.out.println("Exiting...");
+                    System.out.println("Exited Successfully");
+                    recursion = false;
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("\u001B[31mWrong choice\033[0m");
+                    System.out.println("Wrong choice");
             }
         }
 
