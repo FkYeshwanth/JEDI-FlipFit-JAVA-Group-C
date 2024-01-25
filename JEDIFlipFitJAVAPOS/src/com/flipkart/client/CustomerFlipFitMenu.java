@@ -9,9 +9,9 @@ public class CustomerFlipFitMenu {
 		int choice = 0;
 
 		while (choice != 8) {
-			System.out.println("Menu:-");
-			System.out.println("1.Select Gym in Bangalore \n2.View Available Slots \n3.View Bookings \n4.Book Slot \n5.Cancel Slot \n6.View Profile \n7.Edit Profile \n8.Exit");
-			System.out.print("Enter your choice: ");
+			System.out.println("\u001B[32mMenu:-");
+			System.out.println("1.Select Gym in Bangalore \n2.View Available Slots \n3.View Bookings \n4.Book Slot \n5.Cancel Slot \n6.View Profile \n7.Edit Profile \n8.Exit\033[0m");
+			System.out.print("\u001B[35mEnter your choice: \033[0m");
 			choice = sc.nextInt();
 
 			switch (choice) {
@@ -38,7 +38,7 @@ public class CustomerFlipFitMenu {
 				case 8:
 					break;
 				default:
-					System.out.println("Invalid choice!");
+					System.out.println("\u001B[31mInvalid choice!\033[0m");
 			}
 		}
 
@@ -60,7 +60,7 @@ public class CustomerFlipFitMenu {
 //		UserBusiness userBusiness = new UserBusiness();
 //		userBusiness.registerCustomer(customer);
 
-		System.out.println("Customer registered successfully!");
+		System.out.println("\u001B[32mCustomer registered successfully!\033[0m");
 
 
 	}
