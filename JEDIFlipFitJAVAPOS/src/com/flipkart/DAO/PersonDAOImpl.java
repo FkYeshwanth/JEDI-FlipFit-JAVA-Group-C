@@ -30,6 +30,7 @@ public class PersonDAOImpl implements PersonDAO {
             System.out.println("Final size is "+ GymOwnerDAOImpl.gymOwnerHash.size());
             if(!GymOwnerDAOImpl.gymOwnerHash.isEmpty() && GymOwnerDAOImpl.gymOwnerHash.containsKey(emailId) && GymOwnerDAOImpl.gymOwnerHash.get(emailId).getPassword().equals(password) ) {
                 System.out.println("You have been authorized. You are a gym owner");
+                System.out.println("Hello "+emailId);
                 return true;
             }
             else{
@@ -42,6 +43,7 @@ public class PersonDAOImpl implements PersonDAO {
 
             if(!gymUserHashMap.isEmpty() && gymUserHashMap.containsKey(emailId) && gymUserHashMap.get(emailId).getPassword().equals(password)) {
                 System.out.println("You have been authorized. You are a gym customer");
+                System.out.println("Hello "+emailId);
                 return true;
             }
             else{
