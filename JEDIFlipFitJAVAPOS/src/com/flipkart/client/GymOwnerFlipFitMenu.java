@@ -65,7 +65,7 @@ public class GymOwnerFlipFitMenu {
 
     }
     public void gymOwnerRegistration (Scanner in){
-        System.out.println("\n\u001B[32mEnter GymOwner Details: \n");
+        System.out.println("\n\u001B[36mEnter GymOwner Details: \n");
         System.out.print("Enter Email: ");
         gymOwner.setEmail(in.next());
         System.out.print("Enter Password: ");
