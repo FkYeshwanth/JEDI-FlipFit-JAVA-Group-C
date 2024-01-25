@@ -1,6 +1,7 @@
 package com.flipkart.client;
 import java.util.*;
 import com.flipkart.bean.GymOwner;
+import com.flipkart.DAO.GymOwnerDAOImpl;
 public class GymOwnerFlipFitMenu {
     GymOwner gymOwner = new GymOwner();
 
@@ -65,20 +66,29 @@ public class GymOwnerFlipFitMenu {
 
     }
     public void gymOwnerRegistration (Scanner in){
-        System.out.println("\n\u001B[36mEnter GymOwner Details: \n");
+        System.out.println("\n\u001B[32mEnter GymOwner Details: \n");
+
         System.out.print("Enter Email: ");
-        gymOwner.setEmail(in.next());
+        String email= in.next();
+        gymOwner.setEmail(email);
         System.out.print("Enter Password: ");
-        gymOwner.setPassword(in.next());
+        String password= in.next();
+        gymOwner.setPassword(password);
         gymOwner.setRoleId("GymOwner");
         System.out.print("Enter Name: ");
-        gymOwner.setName(in.next());
+        String name= in.next();
+        gymOwner.setName(name);
         System.out.print("Enter Phone Number: ");
-        gymOwner.setPhoneNumber(in.next());
+        String phoneNum= in.next();
+        gymOwner.setPhoneNumber(phoneNum);
         System.out.print("Enter PAN: ");
-        gymOwner.setPanNumber(in.next());
+        String pan= in.next();
+        gymOwner.setPanNumber(pan);
         System.out.print("Enter Aadhaar: \033[0m");
-        gymOwner.setAadharNumber(in.next());
+        String aadhar= in.next();
+        gymOwner.setAadharNumber(aadhar);
+        GymOwnerDAOImpl gymOwnerDAOImpl = new GymOwnerDAOImpl();
+        gymOwnerDAOImpl.addGymOwnerDetails(name, email, password, phoneNum,pan,aadhar);
 
     }
 }

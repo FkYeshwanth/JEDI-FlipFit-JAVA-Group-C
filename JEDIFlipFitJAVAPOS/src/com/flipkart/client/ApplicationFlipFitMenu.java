@@ -1,7 +1,7 @@
 package com.flipkart.client;
 import com.flipkart.bean.*;
 import com.flipkart.service.*;
-
+import com.flipkart.DAO.PersonDAOImpl;
 import java.util.*;
 
 public class ApplicationFlipFitMenu {
@@ -9,17 +9,22 @@ public class ApplicationFlipFitMenu {
     public static void login() {
         Scanner in = new Scanner(System.in);
         System.out.println("\u001B[32m__________________________________________________________________________________\n");
-        System.out.println("\u001B[33mEnter LogIn Details\033[0m\n");
-        System.out.print("\u001B[35mEnter Email: ");
+        System.out.println("Enter LogIn Details\n");
+        System.out.print("Enter Email: ");
         String PersonEmail = in.next();
         System.out.print("Enter Password: ");
         String password = in.next();
-        System.out.println("Enter Role Choice: \033[0m");
-        System.out.println("\u001B[32m1. Admin");
+        System.out.println("Enter Role Choice: ");
+        System.out.println("1. Admin");
         System.out.println("2. Gym Owner");
         System.out.println("3. Gym Customer\033[0m");
         String roleId = in.next();
-        Person Person = new Person(PersonEmail, password, roleId);
+
+        Person person = new Person(PersonEmail, password, roleId);
+        PersonDAOImpl personDAOImpl = new PersonDAOImpl();
+        //personDAOImpl.registerGymOwner(person);
+        personDAOImpl.authenticateUser(person);
+
         PersonFlipFitInterface PersonFlipFitService = new PersonFlipFitInterface() {
             @Override
             public boolean authenticatePerson(com.flipkart.bean.Person p) {
@@ -50,7 +55,7 @@ public class ApplicationFlipFitMenu {
             AdminFlipFitMenu admin = new AdminFlipFitMenu();
             admin.AdminMenu(in);
         }
-        else if (PersonFlipFitService.authenticatePerson(Person)) {
+        else if (PersonFlipFitService.authenticatePerson(person)) {
             System.out.println("__________________________________________________________________________________\n");
             System.out.println("Welcome " + PersonEmail + "! You are logged in.");
 
@@ -68,7 +73,7 @@ public class ApplicationFlipFitMenu {
                 System.out.println("\u001B[31mWrong Choice!\033[0m");
             }
         } else {
-            System.out.println("\n\u001B[31mSorry! You are not Registered! Please Register Yourself!\033[0m");
+            System.out.println("\nSorry! You are not Registered! Please Register Yourself!");
         }
     }
 
@@ -77,7 +82,7 @@ public class ApplicationFlipFitMenu {
         System.out.println("\u001B[36mWelcome to the \u001B[36mFlipFit Application\033[0m");
 
         while (recur) {
-            System.out.println("\n\u001B[33m Available menu are:-\033[0m");
+            System.out.println("\n\u001B[32mEnter your choice:\033[0m");
             System.out.println("\u001B[32m1. Login");
             System.out.println("2. Customer Registration");
             System.out.println("3. Gym Owner Registration");
@@ -120,3 +125,4 @@ public class ApplicationFlipFitMenu {
         applicationMenu();
     }
 }
+
