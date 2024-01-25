@@ -1,7 +1,7 @@
 package com.flipkart.client;
 import com.flipkart.bean.*;
 import com.flipkart.service.*;
-import com.flipkart.client.*;
+
 import java.util.*;
 
 public class ApplicationFlipFitMenu {
@@ -20,7 +20,32 @@ public class ApplicationFlipFitMenu {
         System.out.println("3. Gym Customer\033[0m");
         String roleId = in.next();
         Person Person = new Person(PersonEmail, password, roleId);
-        PersonFlipFitService PersonFlipFitService = new PersonFlipFitService();
+        PersonFlipFitInterface PersonFlipFitService = new PersonFlipFitInterface() {
+            @Override
+            public boolean authenticatePerson(com.flipkart.bean.Person p) {
+                return false;
+            }
+
+            @Override
+            public boolean registerCustomer(GymUser customer) {
+                return false;
+            }
+
+            @Override
+            public boolean registerGymOwner(GymOwner gymOwner) {
+                return false;
+            }
+
+            @Override
+            public boolean authenticateUser(com.flipkart.bean.Person user) {
+                return false;
+            }
+
+            @Override
+            public boolean logout(com.flipkart.bean.Person user) {
+                return false;
+            }
+        };
         if (roleId.equals("1")) {
             AdminFlipFitMenu admin = new AdminFlipFitMenu();
             admin.AdminMenu(in);

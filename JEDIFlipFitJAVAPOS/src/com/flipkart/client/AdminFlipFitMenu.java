@@ -14,6 +14,8 @@ public class AdminFlipFitMenu {
             System.out.println("6. Approve all pending Gym Requests");
             System.out.println("7. Access Logs");
             System.out.println("8. Exit\033[0m");
+            System.out.println("7. Access User History");
+            System.out.println("8. Exit");
 
             System.out.print("\u001B[35mEnter your choice: \033[0m");
             int choice = in.nextInt();
