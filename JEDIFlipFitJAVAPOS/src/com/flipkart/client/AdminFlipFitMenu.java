@@ -11,7 +11,7 @@ public class AdminFlipFitMenu {
             System.out.println("4. View all pending Gym Requests");
             System.out.println("5. Approve all pending Gym Owner Requests");
             System.out.println("6. Approve all pending Gym Requests");
-            System.out.println("7. Access Logs");
+            System.out.println("7. Access User History");
             System.out.println("8. Exit");
 
             System.out.print("Enter your choice: ");
