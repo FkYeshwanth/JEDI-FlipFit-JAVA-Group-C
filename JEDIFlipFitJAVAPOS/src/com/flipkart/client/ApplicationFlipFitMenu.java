@@ -55,6 +55,17 @@ public class ApplicationFlipFitMenu {
             AdminFlipFitMenu admin = new AdminFlipFitMenu();
             admin.AdminMenu(in);
         }
+        else if (roleId.equals("3")) {
+
+            CustomerFlipFitMenu customer = new CustomerFlipFitMenu();
+            customer.customerMenu(PersonEmail);
+
+        } else if (roleId.equals("2")) {
+
+            GymOwnerFlipFitMenu gymOwner = new GymOwnerFlipFitMenu();
+            gymOwner.gymOwnerMenu(in, PersonEmail);
+
+        }
         else if (PersonFlipFitService.authenticatePerson(person)) {
             System.out.println("__________________________________________________________________________________\n");
             System.out.println("Welcome " + PersonEmail + "! You are logged in.");

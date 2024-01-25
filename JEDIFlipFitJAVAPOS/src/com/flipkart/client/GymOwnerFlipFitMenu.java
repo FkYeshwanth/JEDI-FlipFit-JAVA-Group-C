@@ -1,5 +1,7 @@
 package com.flipkart.client;
 import java.util.*;
+
+import com.flipkart.bean.Gym;
 import com.flipkart.bean.GymOwner;
 import com.flipkart.DAO.GymOwnerDAOImpl;
 public class GymOwnerFlipFitMenu {
@@ -7,6 +9,7 @@ public class GymOwnerFlipFitMenu {
 
     public void gymOwnerMenu(Scanner in, String email) {
         boolean recur = true;
+        System.out.println(recur);
         while (recur) {
             System.out.println("\n\u001B[32mHere are the actions you can perform!");
 
@@ -26,10 +29,10 @@ public class GymOwnerFlipFitMenu {
 
             switch (choice) {
                 case 1:
-//                    viewProfile(in, email);
+                    viewProfile(in, email);
                     break;
                 case 2:
-//                    editProfile(in, email);
+                    editProfile(in, email);
                     break;
                 case 3:
 //                    addGym(in, email);
@@ -65,6 +68,53 @@ public class GymOwnerFlipFitMenu {
 
 
     }
+
+    private void viewProfile(Scanner in, String email) {
+        GymOwner owner = GymOwnerDAOImpl.gymOwnerHash.get(email);
+        System.out.println("Name--> "+owner.getName());
+        System.out.println("Ph No--> "+owner.getPhoneNumber());
+        System.out.println("Aadhaar Num--> "+owner.getAadharNumber());
+        System.out.println("PAN Num--> "+owner.getPanNumber());
+        System.out.println("List of registered gyms------------>");
+        int count = 1;
+        for(Gym i: owner.getCenteres()){
+            System.out.println(count + "GymID---->" + i.getGymId());
+            System.out.println("Name--> "+i.getGymName());
+            System.out.println("Address--> "+i.getAddress());
+            System.out.println("Slot count--> "+i.getSlotCount());
+        }
+    }
+
+    private void editProfile(Scanner in, String email) {
+        GymOwner owner = GymOwnerDAOImpl.gymOwnerHash.get(email);
+        System.out.println("What do you want to edit----->");
+        Scanner in2 = new Scanner(System.in);
+        System.out.println("1.Name");
+        System.out.println("2.Ph No");
+        System.out.println("3.Aadhaar Num");
+        System.out.println("4.PAN Num");
+        int choice = in2.nextInt();
+        if(choice==1){
+            System.out.println("Enter new name--->");
+            String newname = in2.next();
+            owner.setName(newname);
+        }else if(choice==2){
+            System.out.println("Enter new phone number--->");
+            String newph = in2.next();
+            owner.setName(newph);
+        }else if(choice==3){
+            System.out.println("Enter updated Aadhaar Number--->");
+            String newAad= in2.next();
+            owner.setName(newAad);
+        }else if(choice==4){
+            System.out.println("Enter updated PAN--->");
+            String newPAN = in2.next();
+            owner.setName(newPAN);
+        }
+        System.out.println("Updated profile---->");
+        viewProfile(in,email);
+    }
+
     public void gymOwnerRegistration (Scanner in){
         System.out.println("\n\u001B[32mEnter GymOwner Details: \n");
 

@@ -2,6 +2,7 @@
  *
  */
 package com.flipkart.bean;
+import java.util.*;
 
 /**
  *
@@ -12,6 +13,17 @@ public class GymOwner extends Person {
     private String aadharNumber;
     private String panNumber;
     private boolean isVerified;
+
+    public List<Gym> getCenteres() {
+        return centeres;
+    }
+
+    public void setCenteres(List<Gym> centeres) {
+        this.centeres = centeres;
+    }
+
+    private List<Gym> centeres = new ArrayList<>();
+
 
     public GymOwner(String email, String password, String roleId, String name, String phoneNumber, String aadharNumber, String panNumber) {
         super(email, password, roleId);
