@@ -10,9 +10,6 @@ import java.util.Map;
 public class PersonDAOImpl implements PersonDAO {
     public static HashMap<String,GymUser> gymUserHashMap=new HashMap<>();
 
-    public static int gyuid=101;
-
-
 
 
 
@@ -27,8 +24,6 @@ public class PersonDAOImpl implements PersonDAO {
             }else{
                 System.out.println("You have not authorized");
             }
-
-
 
         }else if(roleId.equals("2")){
             String emailId =person.getEmail();

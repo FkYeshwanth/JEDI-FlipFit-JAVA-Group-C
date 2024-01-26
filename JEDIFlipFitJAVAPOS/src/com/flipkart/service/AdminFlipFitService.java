@@ -2,46 +2,80 @@ package com.flipkart.service;
 
 import com.flipkart.bean.*;
 import java.util.*;
+import com.flipkart.DAO.AdminDAOImpl;
 
-public interface AdminFlipFitService{
-    /*
-   returns the list of all the gym owners
-   */
-    public List<GymOwner> getGymOwners();
 
-    /*
-    returns the list of all the gyms
-    */
-    public List<Gym> getGym() ;
+public class AdminFlipFitService implements AdminFlipFitInterface{
+    AdminDAOImpl adminDAO = new AdminDAOImpl();
+    /**
+     * Obtains a list of every gym owner within the system.
+     * @return List of GymOwner objects
+     */
+    public List<GymOwner> getGymOwners() {
+        System.out.println("Fetched gym owner details successfully!");
+        return adminDAO.getAllGymOwners();
+    }
+    /**
+     * Obtains a list of every gym within the system.
+     * @return List of Gym objects
+     */
+    public List<Gym> getGym() {
+        System.out.println("Fetched gym details successfully!");
+        return adminDAO.getAllGyms();
+    }
 
-    /*
-    returns the list of all the gym owners whose requests are pending
-    */
-    public List<GymOwner> viewAllPendingGymOwnerRequests();
+    /**
+     * Returns all GymOwners object whose requests are pending for approval.
+     * @return List of GymOwner objects
+     */
+    public List<GymOwner> viewAllPendingGymOwnerRequests() {
+        System.out.println("Fetched pending gym owner details successfully!");
+        return adminDAO.getPendingGymOwnerRequests();
+    }
 
-    /*
-    approves the gym owner request whose email is passed
-    */
-    public boolean approveSingleGymOwnerRequest(String gymOwnerEmail);
+    /**
+     * Accepts one request from a gym owner.
+     * @param gymOwnerEmail The request's email that has to be approved
+     */
+    public boolean approveSingleGymOwnerRequest(String gymOwnerEmail) {
+        adminDAO.approveSingleOwnerRequest(gymOwnerEmail);
+        System.out.println("Approved gym owner request! " + gymOwnerEmail);
+        return true;
+    }
 
-    /*
-    approves all the pending gym owner requests
-    */
-    public boolean approveAllPendingGymOwnerRequests();
-
-    /*
-    returns the list of all the gyms whose request is pending
-   */
-    public List<Gym> viewAllPendingGymRequests();
-
-    /*
-    approves single gym whose gymId is sent
-    */
-    public boolean approveSingleGymRequest(String gymId);
-
-    /*
-    approves all the pending gym requests
-    */
-    public boolean approveAllPendingGymRequests();
+    /**
+     * Approves all GymOwners whose requests are pending for approval.
+     */
+    public boolean approveAllPendingGymOwnerRequests() {
+        adminDAO.approveAllOwnerRequest();
+        System.out.println("Approved all pending gym owner requests!");
+        return true;
+    }
+    /**
+     * Returns all Gym object whose requests are pending for approval.
+     * @return List of Gym objects
+     */
+    public List<Gym> viewAllPendingGymRequests() {
+        System.out.println("Fetched pending gym requests successfully!");
+        return adminDAO.getPendingGymRequests();
+    }
+    /**
+     * Approves a single Gym object request.
+     * @param gymId the id of a gym that needs to be approved
+     * @return true if the gymId is valid else returns false
+     */
+    public boolean approveSingleGymRequest(String gymId) {
+        adminDAO.approveSingleGymRequest(gymId);
+        System.out.println("Successfully approved gym request! " + gymId);
+        return true;
+    }
+    /**
+     * Approves all Gym whose requests are pending for approval.
+     */
+    public boolean approveAllPendingGymRequests() {
+        adminDAO.approveAllGymRequest();
+        System.out.println("Successfully approved all pending gym requests!");
+        return true;
+    }
 
 }
