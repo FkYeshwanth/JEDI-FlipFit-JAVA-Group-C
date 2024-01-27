@@ -6,7 +6,7 @@ import com.flipkart.bean.Person;
 import com.flipkart.service.PersonFlipFitService;
 import com.flipkart.constants.*;
 
-public class ApplicationClient {
+public class ApplicationFlipFitMenu {
 
     public static void login() throws Exception {
         Scanner in = new Scanner(System.in);
