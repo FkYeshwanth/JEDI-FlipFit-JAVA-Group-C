@@ -4,7 +4,7 @@ import com.flipkart.bean.*;
 
 public interface PersonFlipFitInterface {
 
-    public boolean authenticatePerson(Person p);
+//    public boolean authenticatePerson(Person p);
     /*
    Registers a new customer
    @return boolean value indicating success of registration
