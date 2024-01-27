@@ -7,11 +7,11 @@ import com.flipkart.bean.Person;
 import java.util.HashMap;
 
 public interface PersonDAO {
-    public boolean authenticateUser(Person person);
+    public boolean authenticatePerson(Person person);
 
     public boolean registerCustomer(GymUser gymUser);
 
     public boolean registerGymOwner(GymOwner gymOwner);
 
-    public void updatePassword(Person person);
+    //public void updatePassword(Person person);
 }

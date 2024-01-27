@@ -21,7 +21,7 @@ public interface PersonFlipFitInterface {
     Authenticates a user
     @return boolean value indicating if user is authenticated
     */
-    public boolean authenticateUser(Person user);
+    public boolean authenticatePerson(Person user);
 
     /*
     Logs out a user

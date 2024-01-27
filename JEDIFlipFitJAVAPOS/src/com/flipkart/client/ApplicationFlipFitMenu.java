@@ -1,105 +1,63 @@
 package com.flipkart.client;
-import com.flipkart.bean.*;
-import com.flipkart.service.*;
-import com.flipkart.DAO.PersonDAOImpl;
+
 import java.util.*;
 
-public class ApplicationFlipFitMenu {
+import com.flipkart.bean.Person;
+import com.flipkart.service.PersonFlipFitService;
+import com.flipkart.constants.*;
 
-    public static void login() {
+public class ApplicationClient {
+
+    public static void login() throws Exception {
         Scanner in = new Scanner(System.in);
-        System.out.println("\u001B[32m__________________________________________________________________________________\n");
+        System.out.println("__________________________________________________________________________________\n");
         System.out.println("Enter LogIn Details\n");
         System.out.print("Enter Email: ");
         String PersonEmail = in.next();
         System.out.print("Enter Password: ");
         String password = in.next();
-        System.out.println("Enter Role Choice: ");
-        System.out.println("1. Admin");
-        System.out.println("2. Gym Owner");
-        System.out.println("3. Gym Customer\033[0m");
+        System.out.print("Enter Role Name: ");
         String roleId = in.next();
-
-        Person person = new Person(PersonEmail, password, roleId);
-        PersonDAOImpl personDAOImpl = new PersonDAOImpl();
-        //personDAOImpl.registerGymOwner(person);
-        personDAOImpl.authenticateUser(person);
-
-        PersonFlipFitInterface PersonFlipFitService = new PersonFlipFitInterface() {
-            @Override
-            public boolean authenticatePerson(com.flipkart.bean.Person p) {
-                return false;
-            }
-
-            @Override
-            public boolean registerCustomer(GymUser customer) {
-                return false;
-            }
-
-            @Override
-            public boolean registerGymOwner(GymOwner gymOwner) {
-                return false;
-            }
-
-            @Override
-            public boolean authenticateUser(com.flipkart.bean.Person user) {
-                return false;
-            }
-
-            @Override
-            public boolean logout(com.flipkart.bean.Person user) {
-                return false;
-            }
-        };
-        if (roleId.equals("1")) {
+        Person Person = new Person(PersonEmail, password, roleId);
+        PersonFlipFitService Personservice = new PersonFlipFitService();
+        if (roleId.equalsIgnoreCase("Admin")) {
             AdminFlipFitMenu admin = new AdminFlipFitMenu();
             admin.AdminMenu(in);
         }
-        else if (roleId.equals("3")) {
-
-            CustomerFlipFitMenu customer = new CustomerFlipFitMenu();
-            customer.customerMenu(PersonEmail);
-
-        } else if (roleId.equals("2")) {
-
-            GymOwnerFlipFitMenu gymOwner = new GymOwnerFlipFitMenu();
-            gymOwner.gymOwnerMenu(in, PersonEmail);
-
-        }
-        else if (PersonFlipFitService.authenticatePerson(person)) {
+        else if (Personservice.authenticatePerson(Person)) {
             System.out.println("__________________________________________________________________________________\n");
-            System.out.println("Welcome " + PersonEmail + "! You are logged in.");
+            System.out.println(
+                    ColorConstants.GREEN + "Welcome " + PersonEmail + "! You are logged in." + ColorConstants.RESET);
 
-            if (roleId.equals("3")) {
+            if (roleId.equalsIgnoreCase("Customer")) {
 
                 CustomerFlipFitMenu customer = new CustomerFlipFitMenu();
                 customer.customerMenu(PersonEmail);
 
-            } else if (roleId.equals("2")) {
+            } else if (roleId.equalsIgnoreCase("GymOwner")) {
 
                 GymOwnerFlipFitMenu gymOwner = new GymOwnerFlipFitMenu();
                 gymOwner.gymOwnerMenu(in, PersonEmail);
 
             } else {
-                System.out.println("\u001B[31mWrong Choice!\033[0m");
+                System.out.println(ColorConstants.RED + "Wrong Choice!" + ColorConstants.RESET);
             }
         } else {
-            //System.out.println("\nSorry! You are not Registered! Please Register Yourself!");
+            System.out.println(ColorConstants.RED + "\nSorry! You are not Registered! Please Register Yourself!" + ColorConstants.RESET);
         }
     }
 
-    public static void applicationMenu() {
+    public static void applicationMenu() throws Exception {
         boolean recur = true;
-        System.out.println("\u001B[36mWelcome to the \u001B[36mFlipFit Application\033[0m");
+        System.out.println(ColorConstants.GREEN + "Welcome to the FlipFit Application!" + ColorConstants.RESET);
 
         while (recur) {
-            System.out.println("\n\u001B[32mEnter your choice:\033[0m");
-            System.out.println("\u001B[32m1. Login");
+            System.out.println("\nChoose your action:");
+            System.out.println("1. Login");
             System.out.println("2. Customer Registration");
             System.out.println("3. Gym Owner Registration");
-            System.out.println("4. Update Password");
-            System.out.println("5. Exit");
-            System.out.print("\n\u001B[35mEnter Your Choice: \033[0m");
+            System.out.println("4. Exit");
+            System.out.print("\nEnter Your Choice: ");
 
             Scanner in = new Scanner(System.in);
 
@@ -110,7 +68,7 @@ public class ApplicationFlipFitMenu {
                     break;
                 case 2:
                     CustomerFlipFitMenu customer = new CustomerFlipFitMenu();
-                    customer.registerGymUser();
+                    customer.registerCustomer();
                     login();
                     break;
                 case 3:
@@ -119,21 +77,21 @@ public class ApplicationFlipFitMenu {
                     login();
                     break;
                 case 4:
-                    break;
-                case 5:
-                    System.out.println("\u001B[34mExiting...");
-                    System.out.println("Exited Successfully\033[0m");
+                    System.out.println(ColorConstants.RED + "Exiting..." + ColorConstants.RESET);
+                    System.out.println(ColorConstants.GREEN + "Exited Successfully" + ColorConstants.RESET);
                     recur = false;
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("\u001B[31mWrong choice\033[0m");
+                    System.out.println(ColorConstants.RED + "Wrong choice" + ColorConstants.RESET);
             }
         }
 
     }
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws Exception {
+        // TODO Auto-generated method stub
         applicationMenu();
     }
-}
 
+}

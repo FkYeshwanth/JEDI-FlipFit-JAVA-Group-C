@@ -1,71 +1,126 @@
 package com.flipkart.DAO;
 
-import com.flipkart.bean.GymOwner;
-import com.flipkart.bean.GymUser;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.flipkart.bean.*;
 import com.flipkart.bean.Person;
-import com.flipkart.DAO.GymOwnerDAOImpl;
-import java.util.HashMap;
-import java.util.Map;
+import com.flipkart.constants.SQLConstants;
+import com.flipkart.utils.DBUtils;
 
 public class PersonDAOImpl implements PersonDAO {
-    public static HashMap<String,GymUser> gymUserHashMap=new HashMap<>();
 
+    public boolean authenticatePerson(Person Person) {
+        // to run without authentication, make isPersonValid = true
+        Connection connection = null;
 
+        boolean isPersonValid = false;
+        try {connection = DBUtils.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQLConstants.SQL_SELECT_Person_LOGIN_CREDENTIAL);
 
+            preparedStatement.setString(1, Person.getEmail());
 
-
-    public boolean authenticateUser(Person person){
-        String roleId= person.getRoleId();
-        if(roleId.equals("1")){
-            if(person.getEmail().equals(AdminDAOImpl.admin_username) && person.getPassword().equals(AdminDAOImpl.admin_pwd)){
-                System.out.println("You have been authorized. You are admin");
-                System.out.println("Welcome "+AdminDAOImpl.admin_username);
-                return true;
-            }else{
-                System.out.println("You have not authorized");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                if (Person.getPassword().equals(rs.getString("password"))
+                        && Person.getRoleId().equalsIgnoreCase(rs.getString("role"))) {
+                    System.out.println(
+                            rs.getString("email") + " " + rs.getString("password") + " " + rs.getString("role"));
+                    isPersonValid = true;
+                }
             }
 
-        }else if(roleId.equals("2")){
-            String emailId =person.getEmail();
-            String password= person.getPassword();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
 
-            System.out.println("Final size is "+ GymOwnerDAOImpl.gymOwnerHash.size());
-            if(!GymOwnerDAOImpl.gymOwnerHash.isEmpty() && GymOwnerDAOImpl.gymOwnerHash.containsKey(emailId) && GymOwnerDAOImpl.gymOwnerHash.get(emailId).getPassword().equals(password) ) {
-                System.out.println("You have been authorized. You are a gym owner");
-                System.out.println("Hello "+emailId);
-                return true;
-            }
-            else{
-                System.out.println("You have not authorized");
-            }
+        return isPersonValid;
+    }
 
-        }else if(roleId.equals("3")){
-            String emailId =person.getEmail();
-            String password= person.getPassword();
+    public boolean registerCustomer(GymUser customer) {
+        Connection connection = null;
+        boolean registerSuccess = false;
+        String query = "INSERT INTO customer VALUES (?,?,?,?,?)";
+        String queryPerson = "INSERT INTO Person VALUES (?,?,?)";
+        try {connection = DBUtils.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatementPerson = connection.prepareStatement(queryPerson);
 
-            if(!gymUserHashMap.isEmpty() && gymUserHashMap.containsKey(emailId) && gymUserHashMap.get(emailId).getPassword().equals(password)) {
-                System.out.println("You have been authorized. You are a gym customer");
-                System.out.println("Hello "+emailId);
-                return true;
-            }
-            else{
-                System.out.println("You have not authorized");
+            preparedStatement.setString(1, customer.getEmail());
+            preparedStatement.setString(2, customer.getName());
+            preparedStatement.setString(3, customer.getPhoneNumber());
+            preparedStatement.setInt(4, customer.getAge());
+            preparedStatement.setString(1, customer.getAddress());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected != 0)
+                registerSuccess = true;
+
+            preparedStatementPerson.setString(1, customer.getEmail());
+            preparedStatementPerson.setString(2, customer.getPassword());
+            preparedStatementPerson.setString(3, "Customer");
+
+            rowsAffected = preparedStatementPerson.executeUpdate();
+            if (rowsAffected != 0)
+                registerSuccess = true;
+
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+
+        return registerSuccess;
+    }
+
+    public boolean registerGymOwner(GymOwner gymOwner) {
+        Connection connection = null;
+        boolean registerSuccess = false;
+        String query = "INSERT INTO gymOwner VALUES (?,?,?,?,?,?)";
+        String queryOwner = "INSERT INTO Person VALUES (?,?,?)";
+        try {connection = DBUtils.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatementOwner = connection.prepareStatement(queryOwner);
+
+            preparedStatement.setString(1, gymOwner.getEmail());
+            preparedStatement.setString(2, gymOwner.getName());
+            preparedStatement.setString(3, gymOwner.getPhoneNumber());
+            preparedStatement.setString(4, gymOwner.getAadharNumber());
+            preparedStatement.setString(5, gymOwner.getPanNumber());
+            preparedStatement.setBoolean(6, gymOwner.isVerified());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected != 0)
+                registerSuccess = true;
+
+            preparedStatementOwner.setString(1, gymOwner.getEmail());
+            preparedStatementOwner.setString(2, gymOwner.getPassword());
+            preparedStatementOwner.setString(3, "GymOwner");
+
+            rowsAffected = preparedStatementOwner.executeUpdate();
+            if (rowsAffected != 0)
+                registerSuccess = true;
+
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+
+        return registerSuccess;
+    }
+
+    public static void printSQLException(SQLException ex) {
+        for (Throwable e : ex) {
+            if (e instanceof SQLException) {
+                e.printStackTrace(System.err);
+                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
+                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
+                System.err.println("Message: " + e.getMessage());
+                Throwable t = ex.getCause();
+                while (t != null) {
+                    System.out.println("Cause: " + t);
+                    t = t.getCause();
+                }
             }
         }
-        return false;
     }
-
-
-    public boolean registerCustomer(GymUser gymUser){
-        gymUserHashMap.put(gymUser.getEmail(),gymUser);
-        return true;
-    }
-    public boolean registerGymOwner(GymOwner gymOwner){
-
-        return true;
-    }
-    public void updatePassword(Person person){
-        return;
-    }
-
 }

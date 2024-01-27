@@ -1,17 +1,28 @@
+/**
+ *
+ */
 package com.flipkart.service;
-import com.flipkart.bean.*;
-import com.flipkart.DAO.*;
 
-public class PersonFlipFitService implements PersonFlipFitInterface {
+import com.flipkart.DAO.GymOwnerDAOImpl;
+import com.flipkart.DAO.PersonDAOImpl;
+import com.flipkart.bean.GymUser;
+import com.flipkart.bean.GymOwner;
+import com.flipkart.bean.Person;
+
+/**
+ *
+ */
+public class PersonFlipFitService implements PersonFlipFitInterface{
+
     GymOwnerDAOImpl gymOwnerDao = new GymOwnerDAOImpl();
-    PersonDAOImpl userDao = new PersonDAOImpl();
+    PersonDAOImpl PersonDao = new PersonDAOImpl();
     /**
      Registers a customer in the system.
      @param customer The Customer object representing the customer data
      */
     public boolean registerCustomer(GymUser customer) {
         boolean registerSuccess = false;
-        registerSuccess = userDao.registerCustomer(customer);
+        registerSuccess = PersonDao.registerCustomer(customer);
         return registerSuccess;
     }
     /**
@@ -20,25 +31,25 @@ public class PersonFlipFitService implements PersonFlipFitInterface {
      */
     public boolean registerGymOwner(GymOwner gymOwner) {
         boolean registerSuccess = false;
-        registerSuccess = userDao.registerGymOwner(gymOwner);
+        registerSuccess = PersonDao.registerGymOwner(gymOwner);
         return registerSuccess;
     }
     /**
-     Verifies a user's data.
-     @param user The user object representing the user data
-     @return true if the user's data are valid else returns false
+     Verifies a Person's data.
+     @param Person The Person object representing the Person data
+     @return true if the Person's data are valid else returns false
      */
-    public boolean authenticateUser(Person user) {
+    public boolean authenticatePerson(Person Person) {
         boolean authenticateSuccess = false;
-        authenticateSuccess = userDao.authenticateUser(user);
+        authenticateSuccess = PersonDao.authenticatePerson(Person);
         return authenticateSuccess;
     }
     /**
-     Logs out a user.
-     @param user The User object representing the user data
-     @return true if the user is successfully logged out else returns false
+     Logs out a Person.
+     @param Person The Person object representing the Person data
+     @return true if the Person is successfully logged out else returns false
      */
-    public boolean logout(Person user) {
+    public boolean logout(Person Person) {
         return true;
     }
 }
