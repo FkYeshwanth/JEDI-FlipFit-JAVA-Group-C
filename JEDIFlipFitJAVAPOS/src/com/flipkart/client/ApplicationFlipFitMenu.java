@@ -110,7 +110,7 @@ public class ApplicationFlipFitMenu {
                     break;
                 case 2:
                     CustomerFlipFitMenu customer = new CustomerFlipFitMenu();
-                    customer.registerCustomer();
+                    customer.registerGymUser();
                     login();
                     break;
                 case 3:
