@@ -12,7 +12,7 @@ public class AdminFlipFitService implements AdminFlipFitInterface{
      * @return List of GymOwner objects
      */
     public List<GymOwner> getGymOwners() {
-//        System.out.println("Fetched gym owner details successfully!");
+        System.out.println("Fetched gym owner details successfully!");
         return adminDAO.getAllGymOwners();
     }
     /**

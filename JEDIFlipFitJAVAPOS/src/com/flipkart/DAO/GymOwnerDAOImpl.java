@@ -33,7 +33,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
                 gymOwner.setAadharNumber(rs.getString("aadharNumber"));
                 gymOwner.setPanNumber(rs.getString("panNumber"));
 
-//	                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
+//                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
             }
         } catch (SQLException e) {
             printSQLException(e);
