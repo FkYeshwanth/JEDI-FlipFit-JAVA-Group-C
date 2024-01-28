@@ -15,13 +15,13 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
     public GymOwner getGymOwnerDetails(String gymOwnerEmailId) {
         Connection connection = null;
         GymOwner gymOwner = new GymOwner();
-        String query = "select email, name, phoneNum, aadharNum, panNum from gymOwner where email = ?";
+        String query = "select email, name, phoneNumber, aadharNumber, panNumber from gymOwner where email = ?";
         try {connection = DBUtils.getConnection();
 
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, gymOwnerEmailId);
-            System.out.println(preparedStatement);
+//            System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -29,9 +29,9 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             while (rs.next()) {
                 gymOwner.setEmail(rs.getString("email"));
                 gymOwner.setName(rs.getString("name"));
-                gymOwner.setPhoneNumber(rs.getString("phoneNum"));
-                gymOwner.setAadharNumber(rs.getString("aadharNum"));
-                gymOwner.setPanNumber(rs.getString("panNum"));
+                gymOwner.setPhoneNumber(rs.getString("phoneNumber"));
+                gymOwner.setAadharNumber(rs.getString("aadharNumber"));
+                gymOwner.setPanNumber(rs.getString("panNumber"));
 
 //	                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
             }
@@ -51,7 +51,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_SQL);
             preparedStatement.setString(1, gymOwnerDetails.getEmail());
             preparedStatement.setString(2, gymOwnerDetails.getPassword());
-            preparedStatement.setString(3, "GymOwner");
+            preparedStatement.setString(3, "3");
 
             System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
@@ -62,7 +62,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
         }
 
         String INSERT_GYM_OWNER_SQL = "INSERT INTO gymOwner"
-                + "  (email, password, name, phoneNum, aadharNum, panNum, isVerified) VALUES "
+                + "  (email, password, name, phoneNum, aadharNumber, panNumber, isVerified) VALUES "
                 + " (?, ?, ?, ?, ?, ?, ?);";
         System.out.println(INSERT_GYM_OWNER_SQL);
         // Step 1: Establishing a Connection

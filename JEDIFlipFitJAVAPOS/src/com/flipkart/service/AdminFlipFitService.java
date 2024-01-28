@@ -12,7 +12,7 @@ public class AdminFlipFitService implements AdminFlipFitInterface{
      * @return List of GymOwner objects
      */
     public List<GymOwner> getGymOwners() {
-        System.out.println("Fetched gym owner details successfully!");
+//        System.out.println("Fetched gym owner details successfully!");
         return adminDAO.getAllGymOwners();
     }
     /**
@@ -20,7 +20,7 @@ public class AdminFlipFitService implements AdminFlipFitInterface{
      * @return List of Gym objects
      */
     public List<Gym> getGym() {
-        System.out.println("Fetched gym details successfully!");
+//        System.out.println("Fetched gym details successfully!");
         return adminDAO.getAllGyms();
     }
 

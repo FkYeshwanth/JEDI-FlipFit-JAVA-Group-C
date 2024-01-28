@@ -52,7 +52,7 @@ public class AdminFlipFitMenu {
         for (GymOwner gymOwner : gymOwners) {
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++");
             System.out.println("Gym Owner Name-->" + gymOwner.getName());
-            System.out.println("Gym Owner phone numver-->" + gymOwner.getPhoneNumber());
+            System.out.println("Gym Owner phone number-->" + gymOwner.getPhoneNumber());
             System.out.println("Gym Owner Aadhar-->" + gymOwner.getAadharNumber());
             System.out.println("Gym Owner panNumber-->" + gymOwner.getPanNumber());
             System.out.println("Gym Owner Verification -->" + (gymOwner.isVerified() ? "Yes" : "No"));
@@ -78,22 +78,22 @@ public class AdminFlipFitMenu {
             switch (choice) {
                 // Case statements
                 case 1:
-//                    viewAllGyms(gymList);
+                    viewAllGyms(gymList);
                     break;
                 case 2:
-//                    viewAllGymOwners(gymOwnerList);
+                    viewAllGymOwners(gymOwnerList);
                     break;
                 case 3:
-//                    viewAllPendingGymOwnerRequests();
+                    viewAllPendingGymOwnerRequests();
                     break;
                 case 4:
-//                    viewAllPendingGymRequests();
+                    viewAllPendingGymRequests();
                     break;
                 case 5:
-//                    approvePendingGymOwnerRequests();
+                    approvePendingGymOwnerRequests();
                     break;
                 case 6:
-//                    approvePendingGymRequests();
+                    approvePendingGymRequests();
                     break;
                 case 7:
 //                    accessLogs();

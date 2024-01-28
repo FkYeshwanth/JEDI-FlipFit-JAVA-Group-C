@@ -18,14 +18,14 @@ public class CustomerFlipFitMenu {
 	public void registerGymUser() {
 		System.out.print("Enter email: ");
 		customer.setName(sc.next());
-		System.out.print("Enter password: ");
-		customer.setPassword(sc.next());
 		System.out.print("Enter Name: ");
+		customer.setPassword(sc.next());
+		System.out.print("Enter password: ");
 		customer.setName(sc.next());
 		System.out.print("Enter Phone Number: ");
 		customer.setPhoneNumber(sc.next());
 		System.out.print("Enter Age: ");
-		customer.setAge(Integer.valueOf(sc.next()));
+		customer.setAge(Integer.parseInt(sc.next()));
 		System.out.print("Enter Address: ");
 		customer.setAddress(sc.next());
 		PersonFlipFitService userBusiness = new PersonFlipFitService();
@@ -100,7 +100,7 @@ public class CustomerFlipFitMenu {
 		String bookingId = sc.next();
 		customerBusiness.cancelBooking(bookingId, email);
 	}
-	public void customerMenu(String email) {
+	public void customerMenu(String email) throws ParseException {
 		int choice = 0;
 
 		while (choice != 8) {
@@ -111,25 +111,25 @@ public class CustomerFlipFitMenu {
 
 			switch (choice) {
 				case 1:
-//					viewGyms(email);
+					viewGyms(email);
 					break;
 				case 2:
 //					viewAvailableSlots();
 					break;
 				case 3:
-//					customerBusiness.getBookings(email);
+					customerBusiness.getBookings(email);
 					break;
 				case 4:
 //					bookSlot();
 					break;
 				case 5:
-//					cancelBooking(email);
+					cancelBooking(email);
 					break;
 				case 6:
-//					viewProfile(email)
+//					viewProfile(email);
 					break;
 				case 7:
-//					editProfile(email);
+					editProfile(email);
 				case 8:
 					break;
 				default:

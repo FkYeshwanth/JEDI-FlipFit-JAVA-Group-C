@@ -16,25 +16,25 @@ public class ApplicationFlipFitMenu {
         String PersonEmail = in.next();
         System.out.print("Enter Password: ");
         String password = in.next();
-        System.out.print("Enter Role Name: ");
+        System.out.print("Enter Role Id: (1=admin /2=customer /3=owner)");
         String roleId = in.next();
         Person Person = new Person(PersonEmail, password, roleId);
-        PersonFlipFitService Personservice = new PersonFlipFitService();
-        if (roleId.equalsIgnoreCase("Admin")) {
+        PersonFlipFitService personService = new PersonFlipFitService();
+        if (roleId.equalsIgnoreCase("1")) {
             AdminFlipFitMenu admin = new AdminFlipFitMenu();
             admin.AdminMenu(in);
         }
-        else if (Personservice.authenticatePerson(Person)) {
+        else if (personService.authenticatePerson(Person)) {
             System.out.println("__________________________________________________________________________________\n");
             System.out.println(
                     ColorConstants.GREEN + "Welcome " + PersonEmail + "! You are logged in." + ColorConstants.RESET);
 
-            if (roleId.equalsIgnoreCase("Customer")) {
+            if (roleId.equalsIgnoreCase("2")) {
 
                 CustomerFlipFitMenu customer = new CustomerFlipFitMenu();
                 customer.customerMenu(PersonEmail);
 
-            } else if (roleId.equalsIgnoreCase("GymOwner")) {
+            } else if (roleId.equalsIgnoreCase("3")) {
 
                 GymOwnerFlipFitMenu gymOwner = new GymOwnerFlipFitMenu();
                 gymOwner.gymOwnerMenu(in, PersonEmail);
@@ -86,6 +86,7 @@ public class ApplicationFlipFitMenu {
                     System.out.println(ColorConstants.RED + "Wrong choice" + ColorConstants.RESET);
             }
         }
+
 
     }
 

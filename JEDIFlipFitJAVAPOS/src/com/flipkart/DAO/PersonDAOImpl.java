@@ -42,7 +42,7 @@ public class PersonDAOImpl implements PersonDAO {
     public boolean registerCustomer(GymUser customer) {
         Connection connection = null;
         boolean registerSuccess = false;
-        String query = "INSERT INTO customer VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO gymuser VALUES (?,?,?,?,?)";
         String queryPerson = "INSERT INTO Person VALUES (?,?,?)";
         try {connection = DBUtils.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -52,7 +52,7 @@ public class PersonDAOImpl implements PersonDAO {
             preparedStatement.setString(2, customer.getName());
             preparedStatement.setString(3, customer.getPhoneNumber());
             preparedStatement.setInt(4, customer.getAge());
-            preparedStatement.setString(1, customer.getAddress());
+            preparedStatement.setString(5, customer.getAddress());
 
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected != 0)
