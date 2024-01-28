@@ -45,22 +45,24 @@ public class GymOwnerFlipFitMenu {
     }
 
     public void editProfile(Scanner in, String email) {
+        gymOwner = gymOwnerservice.getProfile(email);
+        GymOwner newgymOwner = new GymOwner();
         System.out.println("Enter Details: ");
         System.out.print("Enter Email: ");
-        gymOwner.setEmail(in.next());
+        newgymOwner.setEmail(in.next());
         System.out.print("Enter Password: ");
-        gymOwner.setPassword(in.next());
-        gymOwner.setRoleId("GymOwner");
+        newgymOwner.setPassword(in.next());
+        newgymOwner.setRoleId("3");
         System.out.print("Enter Name: ");
-        gymOwner.setName(in.next());
+        newgymOwner.setName(in.next());
         System.out.print("Enter Phone Number: ");
-        gymOwner.setPhoneNumber(in.next());
+        newgymOwner.setPhoneNumber(in.next());
         System.out.print("Enter PAN: ");
-        gymOwner.setPanNumber(in.next());
+        newgymOwner.setPanNumber(in.next());
         System.out.print("Enter Aadhaar: ");
-        gymOwner.setAadharNumber(in.next());
+        newgymOwner.setAadharNumber(in.next());
 
-        gymOwnerservice.editProfile(gymOwner);
+        gymOwnerservice.editProfile(gymOwner,newgymOwner);
     }
 
     public void viewProfile(Scanner in, String email) {

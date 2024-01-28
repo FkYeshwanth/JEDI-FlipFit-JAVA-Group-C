@@ -8,7 +8,7 @@ public interface GymOwnerFlipFitInterface {
     /*
   returns the gym owner's profile
     */
-    public void editProfile(GymOwner gymOwnerNews);
+    public void editProfile(GymOwner gymOwnerOlds,GymOwner gymOwnerNews);
     /*
 allows the gym owner to edit profile
      */

@@ -95,7 +95,7 @@ public class PersonDAOImpl implements PersonDAO {
 
             preparedStatementOwner.setString(1, gymOwner.getEmail());
             preparedStatementOwner.setString(2, gymOwner.getPassword());
-            preparedStatementOwner.setString(3, "GymOwner");
+            preparedStatementOwner.setString(3, "3");
 
             rowsAffected = preparedStatementOwner.executeUpdate();
             if (rowsAffected != 0)

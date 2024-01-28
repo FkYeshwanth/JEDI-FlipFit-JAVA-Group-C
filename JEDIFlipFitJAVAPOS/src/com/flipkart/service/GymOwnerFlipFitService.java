@@ -31,8 +31,8 @@ public class GymOwnerFlipFitService implements GymOwnerFlipFitInterface {
      * @param gymOwnerNew the gymOwner object in which the profile data needs to be updated
      * @param email the gymOwner email for which the profile data needs to be update
      */
-    public void editProfile(GymOwner gymOwnerNew) {
-        gymOwnerDAO.editGymOwnerDetails(gymOwnerNew);
+    public void editProfile(GymOwner gymOwnerOld, GymOwner gymOwnerNew) {
+        gymOwnerDAO.editGymOwnerDetails(gymOwnerOld,gymOwnerNew);
         System.out.println(ColorConstants.GREEN + "\nEdited your profile Successfully!" + ColorConstants.RESET);
     }
     /**

@@ -102,9 +102,9 @@ public class AdminDAOImpl implements AdminDAO {
                 GymOwner gymOwner = new GymOwner();
 //                gymOwner.setEmail(rs.getString("email"));
                 gymOwner.setName(rs.getString("name"));
-                gymOwner.setPhoneNumber(rs.getString("phoneNum"));
-                gymOwner.setAadharNumber(rs.getString("aadharNum"));
-                gymOwner.setPanNumber(rs.getString("panNum"));
+                gymOwner.setPhoneNumber(rs.getString("phoneNumber"));
+                gymOwner.setAadharNumber(rs.getString("aadharNumber"));
+                gymOwner.setPanNumber(rs.getString("panNumber"));
                 gymOwner.setVerified(rs.getBoolean("isVerified"));
                 gymOwners.add(gymOwner);
 //	                System.out.println(id + "," + name + "," + email + "," + country + "," + password);

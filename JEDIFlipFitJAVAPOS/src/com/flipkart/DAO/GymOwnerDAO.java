@@ -11,7 +11,7 @@ public interface GymOwnerDAO {
 
     public void addGymOwnerDetails(GymOwner gymOwnerDetails);
 
-    public void editGymOwnerDetails(GymOwner gymOwnerDetails);
+    public void editGymOwnerDetails(GymOwner gymOwnerDetails,GymOwner gymOwnerDetailsNew);
 
     public Gym getGym(String gymId);
 

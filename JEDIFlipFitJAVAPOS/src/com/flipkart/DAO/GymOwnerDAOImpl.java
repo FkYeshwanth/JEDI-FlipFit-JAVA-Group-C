@@ -62,7 +62,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
         }
 
         String INSERT_GYM_OWNER_SQL = "INSERT INTO gymOwner"
-                + "  (email, password, name, phoneNum, aadharNumber, panNumber, isVerified) VALUES "
+                + "  (email, password, name, phoneNumber, aadharNumber, panNumber, isVerified) VALUES "
                 + " (?, ?, ?, ?, ?, ?, ?);";
         System.out.println(INSERT_GYM_OWNER_SQL);
         // Step 1: Establishing a Connection
@@ -87,17 +87,17 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
         }
     }
 
-    public void editGymOwnerDetails(GymOwner gymOwnerDetails) {
+    public void editGymOwnerDetails(GymOwner oldgymOwnerDetails,GymOwner newgymOwnerDetails) {
         Connection connection = null;
-        String UPDATE_USER_SQL = "update user set email = ?, password = ?, role = ?" + " where email = ?;";
+        String UPDATE_USER_SQL = "update person set email = ?, password = ?, role = ?" + " where email = ?;";
         try {connection = DBUtils.getConnection();
 
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_SQL);
-            preparedStatement.setString(1, gymOwnerDetails.getEmail());
-            preparedStatement.setString(2, gymOwnerDetails.getPassword());
-            preparedStatement.setString(3, "GymOwner");
-            preparedStatement.setString(4, gymOwnerDetails.getEmail());
+            preparedStatement.setString(1, newgymOwnerDetails.getEmail());
+            preparedStatement.setString(2, newgymOwnerDetails.getPassword());
+            preparedStatement.setString(3, "3");
+            preparedStatement.setString(4, oldgymOwnerDetails.getEmail());
             System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             preparedStatement.executeUpdate();
@@ -106,7 +106,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             printSQLException(e);
         }
 
-        String UPDATE_GYM_OWNER_SQL = "update gymOwner set email = ?, name = ?, phoneNum = ?, aadharNum = ?, panNum = ?, isVerified = ? "
+        String UPDATE_GYM_OWNER_SQL = "update gymowner set email = ?, name = ?, phoneNumber = ?, aadharNumber = ?, panNumber = ?, isVerified = ? "
                 + "where email = ?;";
         System.out.println(UPDATE_GYM_OWNER_SQL);
         // Step 1: Establishing a Connection
@@ -114,13 +114,13 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
 
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_GYM_OWNER_SQL);
-            preparedStatement.setString(1, gymOwnerDetails.getEmail());
-            preparedStatement.setString(2, gymOwnerDetails.getName());
-            preparedStatement.setString(3, gymOwnerDetails.getPhoneNumber());
-            preparedStatement.setString(4, gymOwnerDetails.getAadharNumber());
-            preparedStatement.setString(5, gymOwnerDetails.getPanNumber());
-            preparedStatement.setBoolean(6, gymOwnerDetails.isVerified());
-            preparedStatement.setString(7, gymOwnerDetails.getEmail());
+            preparedStatement.setString(1, newgymOwnerDetails.getEmail());
+            preparedStatement.setString(2, newgymOwnerDetails.getName());
+            preparedStatement.setString(3, newgymOwnerDetails.getPhoneNumber());
+            preparedStatement.setString(4, newgymOwnerDetails.getAadharNumber());
+            preparedStatement.setString(5, newgymOwnerDetails.getPanNumber());
+            preparedStatement.setBoolean(6, newgymOwnerDetails.isVerified());
+            preparedStatement.setString(7, oldgymOwnerDetails.getEmail());
             System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             preparedStatement.executeUpdate();
@@ -221,7 +221,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
     public List<Gym> getGymsOfGymOwner(String gymOwnerId) {
         Connection connection = null;
         List<Gym> gyms = new ArrayList<Gym>();
-        String query = "select gymId, gymName, ownerEmail, address, slotCount, seatsPerSlotCount, isVerified from gym where gymOwnerEmail =  ?";
+        String query = "select gymId, gymName, ownerEmail, address, slotCount, seatsPerSlotCount, isVerified from gym where ownerEmail =  ?";
         try {connection = DBUtils.getConnection();
 
             // Step 2:Create a statement using connection object
@@ -236,10 +236,10 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
                 Gym gym = new Gym();
                 gym.setGymId(rs.getString("gymId"));
                 gym.setGymName(rs.getString("gymName"));
-                gym.setOwnerEmail(rs.getString("gymOwnerEmail"));
+                gym.setOwnerEmail(rs.getString("ownerEmail"));
                 gym.setAddress(rs.getString("address"));
                 gym.setSlotCount(rs.getInt("slotCount"));
-                gym.setSeatsPerSlotCount(rs.getInt("seatsPerSlot"));
+                gym.setSeatsPerSlotCount(rs.getInt("seatsPerSlotCount"));
                 gym.setVerified(rs.getBoolean("isVerified"));
                 gyms.add(gym);
 //	                System.out.println(id + "," + name + "," + email + "," + country + "," + password);

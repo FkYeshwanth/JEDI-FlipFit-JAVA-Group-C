@@ -49,6 +49,23 @@ public class CustomerFlipFitMenu {
 			System.out.print("Slot Id: " + slot.getSlotId());
 			System.out.print("Availability: " + customerBusiness.isSlotBooked(slot.getSlotId(), date));
 		}
+
+	}
+
+	public void bookSlot(String email) throws ParseException {
+		getGyms();
+		System.out.print("Enter gym ID: ");
+		String gymId = sc.next();
+		System.out.print("Enter Date (yyyy-mm-dd): ");
+		String dateStr = sc.next();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = dateFormat.parse(dateStr);
+
+		List<Slot> slots = customerBusiness.getSlotInGym(gymId);
+		for (Slot slot : slots) {
+			System.out.print("Slot Id: " + slot.getSlotId());
+			System.out.print("Availability: " + customerBusiness.isSlotBooked(slot.getSlotId(), date));
+		}
 		System.out.print("Enter the slot ID which you want to book: ");
 		String slotId = sc.next();
 		int bookingResponse = customerBusiness.bookSlot(gymId,slotId, email, date);
@@ -95,6 +112,16 @@ public class CustomerFlipFitMenu {
 		}
 	}
 
+	public void getGymsInBangalore() {
+		List<Gym> gyms = customerBusiness.getGymInCity("Bangalore");
+		for (Gym gym : gyms) {
+			System.out.print("Gym Id: " + gym.getGymId());
+			System.out.print("Gym Owner Email: " + gym.getOwnerEmail());
+			System.out.print("Gym Name: " + gym.getGymName());
+			System.out.println();
+		}
+	}
+
 	public void cancelBooking(String email) {
 		System.out.print("Enter booking ID that you want to cancel: ");
 		String bookingId = sc.next();
@@ -111,22 +138,24 @@ public class CustomerFlipFitMenu {
 
 			switch (choice) {
 				case 1:
-					viewGyms(email);
+					//viewGyms(email);
+					getGymsInBangalore();
 					break;
 				case 2:
-//					viewAvailableSlots();
+					//
+					viewGyms(email);
 					break;
 				case 3:
 					customerBusiness.getBookings(email);
 					break;
 				case 4:
-//					bookSlot();
+					bookSlot(email);
 					break;
 				case 5:
 					cancelBooking(email);
 					break;
 				case 6:
-//					viewProfile(email);
+					//viewProfile(email);
 					break;
 				case 7:
 					editProfile(email);
