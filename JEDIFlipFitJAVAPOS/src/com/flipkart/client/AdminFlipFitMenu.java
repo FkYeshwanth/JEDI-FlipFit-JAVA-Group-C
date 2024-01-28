@@ -36,18 +36,18 @@ public class AdminFlipFitMenu {
         adminBusiness.approveAllPendingGymRequests();
     }
     public void viewAllGyms(List<Gym> gyms) {
-        for (Gym gym : gyms) {
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++");
             System.out.println("Gym Id          Gym Name        Gym Owner Mail        Gym Address        Gym Slot Count        Gym Verification");
             System.out.println("---------------------------------------------------------------------------------------------------------------");
-            System.out.println(gym.getGymId()+"       "+gym.getGymName()+"        "+gym.getOwnerEmail()+"               "+gym.getAddress()+"               "+gym.getSlotCount()+"                  "+(gym.isVerified() ? "Yes" : "No"));
+        for (Gym gym : gyms) {
+            System.out.println(gym.getGymId() + "       " + gym.getGymName() + "        " + gym.getOwnerEmail() + "               " + gym.getAddress() + "               " + gym.getSlotCount() + "                  " + (gym.isVerified() ? "Yes" : "No"));
+        }
 //            System.out.println("Gym Name-->" + gym.getGymName());
 //            System.out.println("Gym Owner Mail-->" + gym.getOwnerEmail());
 //            System.out.println("Gym Address-->" + gym.getAddress());
 //            System.out.println("Gym Slot Count-->" + gym.getSlotCount());
 //            System.out.println("Gym Verification -->" + (gym.isVerified() ? "Yes" : "No"));
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++");
-        }
     }
 
     public void viewAllGymOwners(List<GymOwner> gymOwners) {
