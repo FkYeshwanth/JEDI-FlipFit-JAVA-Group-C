@@ -51,17 +51,19 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
         try {connection = DBUtils.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1,gymId);
-            System.out.println(statement);
+//            System.out.println(statement);
             ResultSet output = statement.executeQuery();
             if (!output.next()) {
                 throw new NoSlotsFoundException("No slot found");
             }
-            System.out.println("SlotId \t Capacity \t SlotTime \t GymId");
+            System.out.println("SlotId \t GymId \t SlotStart \t SlotEnd \t Available Seats");
             do {
                 System.out.printf("%-7s\t", output.getString(1));
                 System.out.printf("  %-9s\t", output.getString(2));
                 System.out.printf("  %-9s\t", output.getString(3));
                 System.out.printf("  %-9s\t", output.getString(4));
+                System.out.printf("  %-9s\t", Integer.parseInt(output.getString(6))-Integer.parseInt(output.getString(7)));
+
                 System.out.println("");
             } while (output.next());
             System.out.println("-----------------------------------------------");

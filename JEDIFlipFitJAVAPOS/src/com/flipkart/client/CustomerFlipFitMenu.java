@@ -46,13 +46,13 @@ public class CustomerFlipFitMenu {
 		Date date = dateFormat.parse(dateStr);
 
 		List<Slot> slots = customerBusiness.getSlotInGym(gymId);
-		System.out.printf("| %-10s | %-10s |\n","Slot Id: ","Availability");
-		if(slots!=null){
-
-		for (Slot slot : slots) {
-				System.out.printf("| %-10s | %-10s |\n",slot.getSlotId(),customerBusiness.isSlotBooked(slot.getSlotId(), date));
-			}
-		}
+//		System.out.printf("| %-10s | %-10s |\n","Slot Id: ","Availability");
+//		if(slots!=null){
+//
+//		for (Slot slot : slots) {
+//				System.out.printf("| %-10s | %-10s |\n",slot.getSlotId(),customerBusiness.isSlotBooked(slot.getSlotId(), date));
+//			}
+//		}
 
 	}
 
