@@ -45,9 +45,9 @@ public class CustomerFlipFitMenu {
 		Date date = dateFormat.parse(dateStr);
 
 		List<Slot> slots = customerBusiness.getSlotInGym(gymId);
+		System.out.printf("| %-10s | %-10s |\n","Slot Id: ","Availability");
 		for (Slot slot : slots) {
-			System.out.print("Slot Id: " + slot.getSlotId());
-			System.out.print("Availability: " + customerBusiness.isSlotBooked(slot.getSlotId(), date));
+			System.out.printf("| %-10s | %-10s |\n",slot.getSlotId(),customerBusiness.isSlotBooked(slot.getSlotId(), date));
 		}
 
 	}
@@ -62,9 +62,9 @@ public class CustomerFlipFitMenu {
 		Date date = dateFormat.parse(dateStr);
 
 		List<Slot> slots = customerBusiness.getSlotInGym(gymId);
+		System.out.printf("| %-10s | %-10s |\n","Slot Id: ","Availability");
 		for (Slot slot : slots) {
-			System.out.print("Slot Id: " + slot.getSlotId());
-			System.out.print("Availability: " + customerBusiness.isSlotBooked(slot.getSlotId(), date));
+			System.out.printf("| %-10s | %-10s |\n",slot.getSlotId(),customerBusiness.isSlotBooked(slot.getSlotId(), date));
 		}
 		System.out.print("Enter the slot ID which you want to book: ");
 		String slotId = sc.next();
@@ -104,21 +104,17 @@ public class CustomerFlipFitMenu {
 	public void getGyms() {
 		System.out.print("Enter your city: ");
 		List<Gym> gyms = customerBusiness.getGymInCity(sc.next());
+		System.out.printf("| %-10s | %-20s | %-20s | \n","Gym Id: ","Gym Owner Email: ","Gym Name: ");
 		for (Gym gym : gyms) {
-			System.out.print("Gym Id: " + gym.getGymId());
-			System.out.print("Gym Owner Email: " + gym.getOwnerEmail());
-			System.out.print("Gym Name: " + gym.getGymName());
-			System.out.println();
+			System.out.printf("| %-10s | %-20s | %-20s | \n",gym.getGymId(),gym.getOwnerEmail(),gym.getGymName());
 		}
 	}
 
 	public void getGymsInBangalore() {
 		List<Gym> gyms = customerBusiness.getGymInCity("Bangalore");
+		System.out.printf("| %-10s | %-20s | %-20s | \n","Gym Id: ","Gym Owner Email: ","Gym Name: ");
 		for (Gym gym : gyms) {
-			System.out.print("Gym Id: " + gym.getGymId());
-			System.out.print("Gym Owner Email: " + gym.getOwnerEmail());
-			System.out.print("Gym Name: " + gym.getGymName());
-			System.out.println();
+			System.out.printf("| %-10s | %-20s | %-20s | \n",gym.getGymId(),gym.getOwnerEmail(),gym.getGymName());
 		}
 	}
 

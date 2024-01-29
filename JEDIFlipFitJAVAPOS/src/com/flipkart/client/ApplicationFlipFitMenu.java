@@ -16,7 +16,7 @@ public class ApplicationFlipFitMenu {
         String PersonEmail = in.next();
         System.out.print("Enter Password: ");
         String password = in.next();
-        System.out.print("Enter Role Id: (1=admin /2=customer /3=owner)");
+        System.out.print("Enter Role Id: ( 1=Admin / 2=Customer / 3=Owner )");
         String roleId = in.next();
         Person Person = new Person(PersonEmail, password, roleId);
         PersonFlipFitService personService = new PersonFlipFitService();
