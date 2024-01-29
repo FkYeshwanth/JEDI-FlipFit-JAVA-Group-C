@@ -10,6 +10,7 @@ import com.flipkart.utils.IdGenerator;
 //import com.flipkart.utils.IdGenerator;
 
 
+import java.net.StandardSocketOptions;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,16 +28,16 @@ public class GymUserFlipFitService implements GymUserFlipFitInterface{
     List<Gym> gyms = adminBusiness.getGym();
 
     Date d1 = new Date();
-    GymUser customer1 = new GymUser("c1@gmail.com", "c1", "Customer", "Vaishnavi", "0000", 22, "Kanpur");
-    GymUser customer2 = new GymUser("c2@gmail.com", "c2", "Customer", "Anjali", "0000", 32, "Vadodara");
-    GymUser customer3 = new GymUser("c3@gmail.com", "c3", "Customer", "Sudha", "0000", 42, "Kolkata");
-    GymUser customer4 = new GymUser("c4@gmail.com", "c4", "Customer", "Aaishu", "0000", 52, "Mumbai");
+//    GymUser customer1 = new GymUser("c1@gmail.com", "c1", "Customer", "Vaishnavi", "0000", 22, "Kanpur");
+//    GymUser customer2 = new GymUser("c2@gmail.com", "c2", "Customer", "Anjali", "0000", 32, "Vadodara");
+//    GymUser customer3 = new GymUser("c3@gmail.com", "c3", "Customer", "Sudha", "0000", 42, "Kolkata");
+//    GymUser customer4 = new GymUser("c4@gmail.com", "c4", "Customer", "Aaishu", "0000", 52, "Mumbai");
 
 
-    Booking b1 = new Booking("123", "121", "171", "confirmed", d1, "c1@gmail.com", "John");
-    Booking b2 = new Booking("173", "191", "131", "waitlisted", d1, "c2@gmail.com", "Jack");
-    Booking b3 = new Booking("113", "129", "173", "confirmed", d1, "c3@gmail.com", "Johnathon");
-    Booking b4 = new Booking("193", "127", "971", "waitlisted", d1, "c4@gmail.com", "J");
+//    Booking b1 = new Booking("123", "121", "171", "confirmed", d1, "c1@gmail.com", "John");
+//    Booking b2 = new Booking("173", "191", "131", "waitlisted", d1, "c2@gmail.com", "Jack");
+//    Booking b3 = new Booking("113", "129", "173", "confirmed", d1, "c3@gmail.com", "Johnathon");
+//    Booking b4 = new Booking("193", "127", "971", "waitlisted", d1, "c4@gmail.com", "J");
 
 //    Slot s1 = new Slot("900", "1400", "1500", 100, "John", "g1");
 //    Slot s2 = new Slot("910", "1500", "1600", 100, "J", "g2");
@@ -50,15 +51,16 @@ public class GymUserFlipFitService implements GymUserFlipFitInterface{
 //    Gym gym4 = new Gym("g4", "gym4", "gymowner4@gmail.com", "Cochin", 6, 5, true);
 
     public GymUserFlipFitService() {
-        customers.add(customer1);
-        customers.add(customer2);
-        customers.add(customer3);
-        customers.add(customer4);
 
-        bookings.add(b1);
-        bookings.add(b2);
-        bookings.add(b3);
-        bookings.add(b4);
+//        customers.add(customer1);
+//        customers.add(customer2);
+//        customers.add(customer3);
+//        customers.add(customer4);
+
+//        bookings.add(b1);
+//        bookings.add(b2);
+//        bookings.add(b3);
+//        bookings.add(b4);
 
 //        slots.add(s1);
 //        slots.add(s2);
@@ -107,15 +109,17 @@ public class GymUserFlipFitService implements GymUserFlipFitInterface{
      * @return List of bookings done by the given customer email
      */
     public List<Booking> getBookings(String email) {
+        System.out.println("Get bookings function");
+        return gymCustomerDAO.fetchBookedSlots(email);
 
-        List<Booking> customerBookings = new ArrayList<Booking>();
-
-        for (Booking b : bookings) {
-            if (b.getCustomerEmail().equals(email)) {
-                customerBookings.add(b);
-            }
-        }
-        return customerBookings;
+//        List<Booking> customerBookings = new ArrayList<Booking>();
+//
+//        for (Booking b : bookings) {
+//            if (b.getCustomerEmail().equals(email)) {
+//                customerBookings.add(b);
+//            }
+//        }
+//        return customerBookings;
     }
     /**
      * Performs booking cancellation operation for the given customer email.

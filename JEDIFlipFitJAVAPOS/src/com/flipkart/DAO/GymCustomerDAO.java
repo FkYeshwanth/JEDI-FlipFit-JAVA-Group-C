@@ -14,14 +14,14 @@ public interface GymCustomerDAO {
 
     public List<Slot> fetchSlotList(String gymId) throws NoSlotsFoundException;
 
-    public void fetchBookedSlots(String email);
+    public List<Booking> fetchBookedSlots(String email);
 
 
-    public boolean isFull(String slotId, Date date);
+    public boolean isFull(String slotId, String date);
 
-    public boolean alreadyBooked(String slotId, String email, Date date);
+    public boolean alreadyBooked(String slotId, String email, String date);
 
-    public void cancelBooking(String slotId, String email, Date date);
+    public void cancelBooking(String slotId, String email, String date);
 
     public boolean checkSlotExists(String slotId, String gymId);
 

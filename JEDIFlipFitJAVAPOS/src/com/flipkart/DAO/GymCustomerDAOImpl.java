@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.flipkart.bean.Booking;
 import com.flipkart.bean.Gym;
 import com.flipkart.bean.Slot;
 import com.flipkart.constants.SQLConstants;
@@ -16,6 +17,10 @@ import com.flipkart.exception.*;
 import com.flipkart.utils.DBUtils;
 
 public class GymCustomerDAOImpl implements GymCustomerDAO{
+
+    public List<Booking> getBookings(String email) {
+        return fetchBookedSlots(email);
+    }
 
     public List<Gym> fetchGymList() {
         Connection connection = null;
@@ -82,25 +87,39 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
     public int getNumberOfSeats(String slotId){
         return 1;
     }
-    public void fetchBookedSlots(String email) {
+    public List<Booking> fetchBookedSlots(String email) {
+        System.out.println("fetch booked slots");
         Connection connection = null;
-        String query = "Select * From Booking where customerEmail = ?";
-        try {connection = DBUtils.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query);
+        List<Booking> bookings=new ArrayList<>();
+        try {
+            connection = DBUtils.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SQLConstants.SQL_SELECT_BOOKED_SLOTS_BY_CUSTOMER);
 
             statement.setString(1, email);
-            ResultSet output = statement.executeQuery();
-            System.out.println("BookingId \t Date \t    GymId");
-            while (output.next()) {
-                System.out.printf("%-12s\t", output.getInt(1));
-                System.out.printf("  %-7s\t", output.getString(5));
-                System.out.printf("%-8s\t", output.getString(3));
-                System.out.println("");
+            System.out.println("state: "+statement);
+            ResultSet rs = statement.executeQuery();
+            System.out.println("result: "+rs);
+
+            while (rs.next()) {
+                Booking b=new Booking();
+                b.setBookingId(rs.getString("bookingId"));
+                b.setCustomerEmail(rs.getString("customerEmail"));
+                b.setSlotId(rs.getString("slotId"));
+                b.setGymId(rs.getString("gymId"));
+                b.setType(rs.getString("type"));
+                b.setDate(rs.getString("date"));
+                bookings.add(b);
+                System.out.println("booking "+bookings.get(0).getBookingId());
             }
-            System.out.println("-----------------------------------------------");
         } catch (SQLException sqlExcep) {
-            printSQLException(sqlExcep);
+//            printSQLException(sqlExcep);
         }
+        System.out.println("booking");
+        System.out.println(bookings);
+        for(Booking b : bookings)  {
+            System.out.println(b);
+        }
+        return bookings;
     }
 
     public void bookSlots(String bookingId, String slotId, String gymId, String type, String date, String customerEmail) {
@@ -120,40 +139,22 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
         }
     }
 
-    public boolean isFull(String slotId, java.util.Date date) {
-        return false;
-    }
-
-    public boolean alreadyBooked(String slotId, String email, java.util.Date date) {
-        return false;
-    }
-
-    public void cancelBooking(String slotId, String email, java.util.Date date) {
-
-    }
-
-
-    public void bookSlots(String bookingId, String slotId, String gymId, String type, Date date, String customerEmail) {
-        Connection connection = null;
-        String query = "INSERT INTO Booking (bookingId,slotId,gymId,type,date,customerEmail) values(?, ?, ?, ?, ?, ?)";
-        try {connection = DBUtils.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, bookingId);
-            statement.setString(2, slotId);
-            statement.setString(3, gymId);
-            statement.setString(4, type);
-            statement.setDate(5, (java.sql.Date)date);
-            statement.setString(6, customerEmail);
-            statement.executeUpdate();
-            System.out.println("-----------------------------------------------");
-        } catch (SQLException sqlExcep) {
-            printSQLException(sqlExcep);
-        }
-    }
-
-//    @Override
-//    public boolean isFull(String slotId, Date date) {
-//        return false;
+//    public void bookSlots(String bookingId, String slotId, String gymId, String type, Date date, String customerEmail) {
+//        Connection connection = null;
+//        String query = "INSERT INTO Booking (bookingId,slotId,gymId,type,date,customerEmail) values(?, ?, ?, ?, ?, ?)";
+//        try {connection = DBUtils.getConnection();
+//            PreparedStatement statement = connection.prepareStatement(query);
+//            statement.setString(1, bookingId);
+//            statement.setString(2, slotId);
+//            statement.setString(3, gymId);
+//            statement.setString(4, type);
+//            statement.setDate(5, (java.sql.Date)date);
+//            statement.setString(6, customerEmail);
+//            statement.executeUpdate();
+//            System.out.println("-----------------------------------------------");
+//        } catch (SQLException sqlExcep) {
+//            printSQLException(sqlExcep);
+//        }
 //    }
 
     public boolean updateNumOfSeats(String slotId, int seats)

@@ -13,14 +13,14 @@ public class Booking {
     private String slotId;
     private String gymId;
     private String type;
-    private Date date;
+    private String date;
     private String customerEmail;
 
     public Booking() {
         super();
     }//default constructor
 
-    public Booking(String bookingId,String slotId,String gymId,String type,Date date,String customerEmail,String trainer)
+    public Booking(String bookingId,String slotId,String gymId,String type,String date,String customerEmail,String trainer)
     {
         this.bookingId=bookingId;
         this.slotId=slotId;
@@ -63,11 +63,11 @@ public class Booking {
         this.type = type;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
