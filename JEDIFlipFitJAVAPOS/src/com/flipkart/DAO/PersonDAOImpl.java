@@ -60,7 +60,7 @@ public class PersonDAOImpl implements PersonDAO {
 
             preparedStatementPerson.setString(1, customer.getEmail());
             preparedStatementPerson.setString(2, customer.getPassword());
-            preparedStatementPerson.setString(3, "Customer");
+            preparedStatementPerson.setString(3, "2");
 
             rowsAffected = preparedStatementPerson.executeUpdate();
             if (rowsAffected != 0)

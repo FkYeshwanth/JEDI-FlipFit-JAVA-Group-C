@@ -1,7 +1,8 @@
 package com.flipkart.DAO;
 
 import java.util.ArrayList;
-import java.util.Date;
+//import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 
 import com.flipkart.bean.Gym;
 import com.flipkart.bean.Slot;
+import com.flipkart.constants.SQLConstants;
 import com.flipkart.exception.*;
 import com.flipkart.utils.DBUtils;
 
@@ -73,6 +75,13 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
         return null;
     }
 
+    public int getNumberOfSeatsBooked(String slotId){
+        return 1;
+    }
+
+    public int getNumberOfSeats(String slotId){
+        return 1;
+    }
     public void fetchBookedSlots(String email) {
         Connection connection = null;
         String query = "Select * From Booking where customerEmail = ?";
@@ -94,6 +103,36 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
         }
     }
 
+    public void bookSlots(String bookingId, String slotId, String gymId, String type, String date, String customerEmail) {
+        Connection connection = null;
+        try {
+            connection = DBUtils.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SQLConstants.SQL_INSERT_BOOKING);
+            statement.setString(1, bookingId);
+            statement.setString(2, slotId);
+            statement.setString(3, gymId);
+            statement.setString(4, type);
+            statement.setString(5, date);
+            statement.setString(6, customerEmail);
+            statement.executeUpdate();
+        } catch (SQLException sqlExcep) {
+            printSQLException(sqlExcep);
+        }
+    }
+
+    public boolean isFull(String slotId, java.util.Date date) {
+        return false;
+    }
+
+    public boolean alreadyBooked(String slotId, String email, java.util.Date date) {
+        return false;
+    }
+
+    public void cancelBooking(String slotId, String email, java.util.Date date) {
+
+    }
+
+
     public void bookSlots(String bookingId, String slotId, String gymId, String type, Date date, String customerEmail) {
         Connection connection = null;
         String query = "INSERT INTO Booking (bookingId,slotId,gymId,type,date,customerEmail) values(?, ?, ?, ?, ?, ?)";
@@ -112,9 +151,31 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
         }
     }
 
+//    @Override
+//    public boolean isFull(String slotId, Date date) {
+//        return false;
+//    }
+
+    public boolean updateNumOfSeats(String slotId, int seats)
+    {
+        Connection connection = null;
+        try {
+            connection = DBUtils.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQLConstants.SQL_UPDATE_NUMBER_OF_BOOKED_SEATS);
+            preparedStatement.setString(2, slotId);
+            preparedStatement.setInt(1, seats);
+            preparedStatement.executeUpdate();
+            return true;
+        }
+        catch (SQLException sqlExcep) {
+//            printSQLException(sqlExcep);
+        }
+        return false;
+    }
+
     public boolean isFull(String slotId, String date) {
         Connection connection = null;
-        String query = "Select * slot where slotId=? and (numOfSeatsBooked>=numOfSeats)";
+        String query = "Select * from slot where (slotId=? and (numOfSeatsBooked>=numOfSeats))";
         try {connection = DBUtils.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
@@ -131,9 +192,19 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
         return false;
     }
 
+//    @Override
+//    public boolean alreadyBooked(String slotId, String email, Date date) {
+//        return false;
+//    }
+//
+//    @Override
+//    public void cancelBooking(String slotId, String email, Date date) {
+//
+//    }
+
     public boolean alreadyBooked(String slotId, String email, String date) {
         Connection connection = null;
-        String query = "select isVerified from Booking where slotId=? and customerEmail =  ?";
+        String query = "select bookingId from Booking where slotId=? and customerEmail =  ?";
         try {connection = DBUtils.getConnection();
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);

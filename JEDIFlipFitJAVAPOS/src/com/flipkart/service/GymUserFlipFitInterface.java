@@ -36,7 +36,7 @@ public interface GymUserFlipFitInterface {
 //    returns the list of slots in a gym
 
 
-    public int bookSlot(String gymId, String slotId, String email, Date date);
+    public int bookSlot(String gymId, String slotId, String email, String date);
 
 //    allows the customer to book a slot
 

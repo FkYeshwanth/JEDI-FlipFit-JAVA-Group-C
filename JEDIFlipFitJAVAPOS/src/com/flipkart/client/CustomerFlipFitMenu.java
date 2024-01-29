@@ -46,6 +46,7 @@ public class CustomerFlipFitMenu {
 		Date date = dateFormat.parse(dateStr);
 
 		List<Slot> slots = customerBusiness.getSlotInGym(gymId);
+
 //		System.out.printf("| %-10s | %-10s |\n","Slot Id: ","Availability");
 //		if(slots!=null){
 //
@@ -66,15 +67,15 @@ public class CustomerFlipFitMenu {
 		Date date = dateFormat.parse(dateStr);
 
 		List<Slot> slots = customerBusiness.getSlotInGym(gymId);
-		System.out.printf("| %-10s | %-10s |\n","Slot Id: ","Availability");
-		if(slots!=null){
-			for (Slot slot : slots) {
-				System.out.printf("| %-10s | %-10s |\n",slot.getSlotId(),customerBusiness.isSlotBooked(slot.getSlotId(), date));
-			}
-		}
+		//System.out.printf("| %-10s | %-10s |\n","Slot Id: ","Availability");
+//		if(slots!=null){
+//			for (Slot slot : slots) {
+//				System.out.printf("| %-10s | %-10s |\n",slot.getSlotId(),customerBusiness.isSlotBooked(slot.getSlotId(), date));
+//			}
+//		}
 		System.out.print("Enter the slot ID which you want to book: ");
 		String slotId = sc.next();
-		int bookingResponse = customerBusiness.bookSlot(gymId,slotId, email, date);
+		int bookingResponse = customerBusiness.bookSlot(gymId,slotId, email, String.valueOf(date));
 		switch (bookingResponse) {
 			case 0:
 				System.out.println("You have already booked this time. Cancelling the previous one and booking this slot");
