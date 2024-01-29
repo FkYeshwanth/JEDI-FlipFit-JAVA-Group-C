@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.flipkart.bean.Gym;
+import com.flipkart.bean.Slot;
 import com.flipkart.exception.*;
 import com.flipkart.utils.DBUtils;
 
@@ -44,13 +45,13 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
         return gyms;
     }
 
-    public void fetchSlotList(int gymId) throws NoSlotsFoundException {
+    public List<Slot> fetchSlotList(String gymId) throws NoSlotsFoundException {
         Connection connection = null;
         String query = "Select * From Slot Where gymId=?";
         try {connection = DBUtils.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1,gymId);
             System.out.println(statement);
-            statement.setInt(1, gymId);
             ResultSet output = statement.executeQuery();
             if (!output.next()) {
                 throw new NoSlotsFoundException("No slot found");
@@ -67,6 +68,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
         } catch (SQLException sqlExcep) {
             printSQLException(sqlExcep);
         }
+        return null;
     }
 
     public void fetchBookedSlots(String email) {

@@ -2,6 +2,7 @@ package com.flipkart.service;
 
 import com.flipkart.bean.Booking;
 import com.flipkart.bean.*;
+import com.flipkart.exception.NoSlotsFoundException;
 
 import java.util.Date;
 import java.util.List;
@@ -30,7 +31,7 @@ public interface GymUserFlipFitInterface {
 //    returns the list of gyms in a city
 
 
-    public List<Slot> getSlotInGym(String gymId);
+    public List<Slot> getSlotInGym(String gymId) throws NoSlotsFoundException;
 
 //    returns the list of slots in a gym
 

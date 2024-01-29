@@ -3,13 +3,16 @@ package com.flipkart.DAO;
 import java.util.Date;
 import java.util.List;
 
+import com.flipkart.bean.Booking;
 import com.flipkart.bean.Gym;
+import com.flipkart.bean.Slot;
+import com.flipkart.exception.NoSlotsFoundException;
 //import com.flipkart.exception.NoSlotsFoundException;
 
 public interface GymCustomerDAO {
     public List<Gym> fetchGymList();
 
-//    public void fetchSlotList(int gymId) throws NoSlotsFoundException;
+    public List<Slot> fetchSlotList(String gymId) throws NoSlotsFoundException;
 
     public void fetchBookedSlots(String email);
 

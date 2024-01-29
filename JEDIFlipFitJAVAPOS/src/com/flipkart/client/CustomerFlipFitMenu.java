@@ -2,6 +2,7 @@ package com.flipkart.client;
 import java.text.ParseException;
 import java.util.*;
 import com.flipkart.bean.GymUser;
+import com.flipkart.exception.NoSlotsFoundException;
 import com.flipkart.service.GymUserFlipFitInterface;
 import com.flipkart.DAO.PersonDAOImpl;
 import java.text.SimpleDateFormat;
@@ -35,7 +36,7 @@ public class CustomerFlipFitMenu {
 
 	}
 
-	public void viewGyms(String email) throws ParseException {
+	public void viewGyms(String email) throws ParseException, NoSlotsFoundException {
 		getGyms();
 		System.out.print("Enter gym ID: ");
 		String gymId = sc.next();
@@ -46,13 +47,16 @@ public class CustomerFlipFitMenu {
 
 		List<Slot> slots = customerBusiness.getSlotInGym(gymId);
 		System.out.printf("| %-10s | %-10s |\n","Slot Id: ","Availability");
+		if(slots!=null){
+
 		for (Slot slot : slots) {
-			System.out.printf("| %-10s | %-10s |\n",slot.getSlotId(),customerBusiness.isSlotBooked(slot.getSlotId(), date));
+				System.out.printf("| %-10s | %-10s |\n",slot.getSlotId(),customerBusiness.isSlotBooked(slot.getSlotId(), date));
+			}
 		}
 
 	}
 
-	public void bookSlot(String email) throws ParseException {
+	public void bookSlot(String email) throws ParseException, NoSlotsFoundException {
 		getGyms();
 		System.out.print("Enter gym ID: ");
 		String gymId = sc.next();
@@ -63,8 +67,10 @@ public class CustomerFlipFitMenu {
 
 		List<Slot> slots = customerBusiness.getSlotInGym(gymId);
 		System.out.printf("| %-10s | %-10s |\n","Slot Id: ","Availability");
-		for (Slot slot : slots) {
-			System.out.printf("| %-10s | %-10s |\n",slot.getSlotId(),customerBusiness.isSlotBooked(slot.getSlotId(), date));
+		if(slots!=null){
+			for (Slot slot : slots) {
+				System.out.printf("| %-10s | %-10s |\n",slot.getSlotId(),customerBusiness.isSlotBooked(slot.getSlotId(), date));
+			}
 		}
 		System.out.print("Enter the slot ID which you want to book: ");
 		String slotId = sc.next();
@@ -123,7 +129,7 @@ public class CustomerFlipFitMenu {
 		String bookingId = sc.next();
 		customerBusiness.cancelBooking(bookingId, email);
 	}
-	public void customerMenu(String email) throws ParseException {
+	public void customerMenu(String email) throws ParseException, NoSlotsFoundException {
 		int choice = 0;
 
 		while (choice != 8) {
