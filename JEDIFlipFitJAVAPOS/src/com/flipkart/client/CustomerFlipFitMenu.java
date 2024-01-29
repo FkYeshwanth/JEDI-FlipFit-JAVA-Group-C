@@ -11,6 +11,7 @@ import com.flipkart.bean.Gym;
 import com.flipkart.bean.Slot;
 import com.flipkart.service.GymUserFlipFitService;
 import com.flipkart.service.PersonFlipFitService;
+import com.flipkart.bean.*;
 
 public class CustomerFlipFitMenu {
 	GymUser customer = new GymUser();
@@ -95,16 +96,68 @@ public class CustomerFlipFitMenu {
 	}
 
 	public void editProfile(String email) {
-		System.out.print("Enter password: ");
-		customer.setPassword(sc.next());
-		System.out.print("Enter Name: ");
-		customer.setName(sc.next());
-		System.out.print("Enter Phone Number: ");
-		customer.setPhoneNumber(sc.next());
-		System.out.print("Enter Age: ");
-		customer.setAge(Integer.valueOf(sc.next()));
-		System.out.print("Enter Address: ");
-		customer.setAddress(sc.next());
+		System.out.println("==========================================");
+		System.out.println("              Edit Profile               ");
+		System.out.println("==========================================");
+		System.out.println("Want to change password? Yes/No");
+		String choice = sc.next();
+		GymUser customer = new GymUser();
+		try{
+			GymUser existingCustomer = customerBusiness.getProfile(email);
+			if (existingCustomer != null) {
+				// Use existing values as default values
+				customer.setEmail(existingCustomer.getEmail());
+				customer.setName(existingCustomer.getName());
+				customer.setPhoneNumber(existingCustomer.getPhoneNumber());
+				customer.setAddress(existingCustomer.getAddress());
+				customer.setAge(existingCustomer.getAge());
+
+			}
+		}catch (Error e){
+			System.out.println("Bad issue");
+		}
+
+//		try{
+////			GymUser u1 = new GymUser();
+//			customer.setPassword();
+//		}catch (Error e){
+//			System.out.println("Bad issue");
+//			return ;
+//		}
+
+		if(choice.equals("Yes")){
+			System.out.print("Enter Password: ");
+			customer.setPassword(sc.next());
+		}
+		System.out.println("Want to change name? Yes/No");
+		choice = sc.next();
+		if(choice.equals("Yes")) {
+			System.out.print("Enter Name: ");
+			customer.setName(sc.next());
+		}
+		System.out.println("Want to change phone number? Yes/No");
+		choice = sc.next();
+		if(choice.equals("Yes")) {
+			System.out.print("Enter Phone Number: ");
+			customer.setPhoneNumber(sc.next());
+		}
+		System.out.println("Want to change age? Yes/No");
+		choice = sc.next();
+		if(choice.equals("Yes")) {
+			System.out.print("Enter Age: ");
+			customer.setAge(Integer.valueOf(sc.next()));
+		}
+		System.out.println("Want to change address? Yes/No");
+		choice = sc.next();
+		if(choice.equals("Yes")) {
+			System.out.print("Enter Address: ");
+			customer.setAddress(sc.next());
+		}
+		try{
+			customerBusiness.editProfile(customer);
+		}catch (Error e){
+			return ;
+		}
 		System.out.println("Successfully edited your profile");
 	}
 
@@ -129,6 +182,26 @@ public class CustomerFlipFitMenu {
 		System.out.print("Enter booking ID that you want to cancel: ");
 		String bookingId = sc.next();
 		customerBusiness.cancelBooking(bookingId, email);
+	}
+
+	public void getProfile(String email) {
+		System.out.println("User Profile: ");
+//		try {
+			customer = customerBusiness.getProfile(email);
+//		} catch (CustomerNotFoundException e) {
+			// TODO Auto-generated catch block
+//			System.out.println(ColorConstants.RED + e.getMessage() + ColorConstants.RESET);
+//			return;
+//		}
+		System.out.println("______________________");
+		System.out.printf("%15s%15s%15s%15s", "Customer Name", "Phone Number", "Address", "Age");
+		System.out.println();
+		System.out.printf("%15s%15s%15s%15s", customer.getName(), customer.getPhoneNumber(), customer.getAddress(),
+				customer.getAge());
+		System.out.println();
+		System.out.println("\n______________________");
+//		customerBusiness.viewProfile(email);
+
 	}
 	public void customerMenu(String email) throws ParseException, NoSlotsFoundException {
 		int choice = 0;
@@ -158,7 +231,7 @@ public class CustomerFlipFitMenu {
 					cancelBooking(email);
 					break;
 				case 6:
-					//viewProfile(email);
+					getProfile(email);
 					break;
 				case 7:
 					editProfile(email);
