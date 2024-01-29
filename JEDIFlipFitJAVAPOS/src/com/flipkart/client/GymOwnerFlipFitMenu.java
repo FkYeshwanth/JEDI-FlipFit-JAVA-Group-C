@@ -1,5 +1,6 @@
 package com.flipkart.client;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,20 +19,30 @@ public class GymOwnerFlipFitMenu {
     PersonFlipFitService userservice = new PersonFlipFitService();
 
     public void gymOwnerRegistration(Scanner in) {
-        System.out.println("\nEnter GymOwner Details: \n");
-        System.out.print("Enter Email: ");
-        gymOwner.setEmail(in.next());
-        System.out.print("Enter Password: ");
-        gymOwner.setPassword(in.next());
-        gymOwner.setRoleId("GymOwner");
-        System.out.print("Enter Name: ");
-        gymOwner.setName(in.next());
-        System.out.print("Enter Phone Number: ");
-        gymOwner.setPhoneNumber(in.next());
-        System.out.print("Enter PAN: ");
-        gymOwner.setPanNumber(in.next());
-        System.out.print("Enter Aadhaar: ");
-        gymOwner.setAadharNumber(in.next());
+
+        boolean lp=true;
+        while(lp){
+            try {
+                System.out.println("\nEnter GymOwner Details: \n");
+                System.out.print("Enter Email: ");
+                gymOwner.setEmail(in.next());
+                System.out.print("Enter Password: ");
+                gymOwner.setPassword(in.next());
+                gymOwner.setRoleId("GymOwner");
+                System.out.print("Enter Name: ");
+                gymOwner.setName(in.next());
+                System.out.print("Enter Phone Number: ");
+                gymOwner.setPhoneNumber(in.next());
+                System.out.print("Enter PAN: ");
+                gymOwner.setPanNumber(in.next());
+                System.out.print("Enter Aadhaar: ");
+                gymOwner.setAadharNumber(in.next());
+                lp=false;
+            } catch (InputMismatchException e) {
+                System.out.println(ColorConstants.RED + "Enter the valid input");
+                System.out.println(ColorConstants.RESET);
+            }
+        }
 
         PersonFlipFitService userservice = new PersonFlipFitService();
         boolean registerSuccess = userservice.registerGymOwner(gymOwner);
@@ -79,17 +90,28 @@ public class GymOwnerFlipFitMenu {
         System.out.println("Please Enter Gym Details ");
 
         Gym gym = new Gym();
-        gym.setGymId(IdGenerator.generateId("Gym"));
-        System.out.print("Gym Name: ");
-        gym.setGymName(in.next());
-        gym.setOwnerEmail(email);
-        System.out.print("Address: ");
-        gym.setAddress(in.next());
-        System.out.print("SlotCount: ");
-        gym.setSlotCount(in.nextInt());
-        System.out.print("SeatsPerSlotCount: ");
-        gym.setSeatsPerSlotCount(in.nextInt());
-        gym.setVerified(false);
+        boolean lp=true;
+        while(lp){
+            try {
+                gym.setGymId(IdGenerator.generateId("Gym"));
+                System.out.print("Gym Name: ");
+                gym.setGymName(in.next());
+                gym.setOwnerEmail(email);
+                System.out.print("Address: ");
+                gym.setAddress(in.next());
+                System.out.print("SlotCount: ");
+                gym.setSlotCount(in.nextInt());
+                System.out.print("SeatsPerSlotCount: ");
+                gym.setSeatsPerSlotCount(in.nextInt());
+                gym.setVerified(false);
+                lp=false;
+            } catch (InputMismatchException e) {
+                System.out.println(ColorConstants.RED + "Enter the valid input");
+                System.out.println(ColorConstants.RESET);
+            }
+        }
+
+
 
         gymOwnerservice.addGym(gym);
     }
@@ -98,18 +120,28 @@ public class GymOwnerFlipFitMenu {
         System.out.println("Please Enter Gym Details ");
 
         Gym gym = new Gym();
-        System.out.print("Gym Id: ");
-        gym.setGymId(in.next());
-        System.out.print("GymName: ");
-        gym.setGymName(in.next());
-        gym.setOwnerEmail(email);
-        System.out.print("Address: ");
-        gym.setAddress(in.next());
-        System.out.print("SlotCount: ");
-        gym.setSlotCount(in.nextInt());
-        System.out.print("SeatsPerSlotCount: ");
-        gym.setSeatsPerSlotCount(in.nextInt());
-        gym.setVerified(false);
+        boolean lp=true;
+        while(lp){
+            try {
+                System.out.print("Gym Id: ");
+                gym.setGymId(in.next());
+                System.out.print("GymName: ");
+                gym.setGymName(in.next());
+                gym.setOwnerEmail(email);
+                System.out.print("Address: ");
+                gym.setAddress(in.next());
+                System.out.print("SlotCount: ");
+                gym.setSlotCount(in.nextInt());
+                System.out.print("SeatsPerSlotCount: ");
+                gym.setSeatsPerSlotCount(in.nextInt());
+                gym.setVerified(false);
+                lp = false;
+            }
+            catch (InputMismatchException e) {
+                System.out.println(ColorConstants.RED + "Enter the valid input");
+                System.out.println(ColorConstants.RESET);
+            }
+        }
 
         gymOwnerservice.editGym(gym);
     }

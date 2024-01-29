@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import com.flipkart.bean.Booking;
 import com.flipkart.bean.Gym;
 import com.flipkart.bean.Slot;
+import com.flipkart.constants.ColorConstants;
 import com.flipkart.constants.SQLConstants;
 import com.flipkart.exception.*;
 import com.flipkart.utils.DBUtils;
@@ -26,15 +27,22 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
         Connection connection = null;
         List<Gym> gyms = new ArrayList<Gym>();
         String query = "select gymId, gymName, ownerEmail, address, slotCount, seatsPerSlotCount, isVerified from gym";
-        try {connection = DBUtils.getConnection();
-            // Step 2:Create a statement using connection object
+
+        try {
+            connection = DBUtils.getConnection();
+            // Step 2: Create a statement using the connection object
             PreparedStatement statement = connection.prepareStatement(query);
             System.out.println(statement);
             // Step 3: Execute the query or update query
             ResultSet rs = statement.executeQuery();
 
             // Step 4: Process the ResultSet object.
-            while (rs.next()) {
+            if (!rs.next()) {
+                // Throw the custom exception with a message
+                throw new GymNotFoundException("No gyms found");
+            }
+
+            do {
                 Gym gym = new Gym();
                 gym.setGymId(rs.getString("gymId"));
                 gym.setGymName(rs.getString("gymName"));
@@ -44,39 +52,49 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
                 gym.setSeatsPerSlotCount(rs.getInt("seatsPerSlotCount"));
                 gym.setVerified(rs.getBoolean("isVerified"));
                 gyms.add(gym);
-//	                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
-            }
+            } while (rs.next());
         } catch (SQLException e) {
             printSQLException(e);
+        } catch (GymNotFoundException e) {
+            // Handle the custom exception by printing a custom message
+            System.out.println(ColorConstants.RED+"No gyms found"+ColorConstants.RESET);
         }
+
         return gyms;
     }
 
-    public List<Slot> fetchSlotList(String gymId) throws NoSlotsFoundException {
+    public List<Slot> fetchSlotList(String gymId) {
         Connection connection = null;
         String query = "Select * From Slot Where gymId=?";
-        try {connection = DBUtils.getConnection();
+
+        try {
+            connection = DBUtils.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1,gymId);
-//            System.out.println(statement);
+            statement.setString(1, gymId);
             ResultSet output = statement.executeQuery();
+
             if (!output.next()) {
-                throw new NoSlotsFoundException("No slot found");
+                // Throw the custom exception with a message
+                throw new NoSlotsFoundException("No slots found in this gym");
             }
+
             System.out.println("SlotId \t GymId \t SlotStart \t SlotEnd \t Available Seats");
             do {
                 System.out.printf("%-7s\t", output.getString(1));
                 System.out.printf("  %-9s\t", output.getString(2));
                 System.out.printf("  %-9s\t", output.getString(3));
                 System.out.printf("  %-9s\t", output.getString(4));
-                System.out.printf("  %-9s\t", Integer.parseInt(output.getString(6))-Integer.parseInt(output.getString(7)));
-
+                System.out.printf("  %-9s\t", Integer.parseInt(output.getString(6)) - Integer.parseInt(output.getString(7)));
                 System.out.println("");
             } while (output.next());
             System.out.println("-----------------------------------------------");
         } catch (SQLException sqlExcep) {
-            printSQLException(sqlExcep);
+            System.out.println("SQL exception");
+        } catch (NoSlotsFoundException e) {
+            // Handle the custom exception by printing a custom message
+            System.out.println(ColorConstants.RED+"No slots found in this gym"+ColorConstants.RESET);
         }
+
         return null;
     }
 
@@ -90,18 +108,22 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
     public List<Booking> fetchBookedSlots(String email) {
         System.out.println("fetch booked slots");
         Connection connection = null;
-        List<Booking> bookings=new ArrayList<>();
+        List<Booking> bookings = new ArrayList<>();
+
         try {
             connection = DBUtils.getConnection();
             PreparedStatement statement = connection.prepareStatement(SQLConstants.SQL_SELECT_BOOKED_SLOTS_BY_CUSTOMER);
-
             statement.setString(1, email);
-            System.out.println("state: "+statement);
+            System.out.println("state: " + statement);
             ResultSet rs = statement.executeQuery();
-            System.out.println("result: "+rs);
+            System.out.println("result: " + rs);
 
-            while (rs.next()) {
-                Booking b=new Booking();
+            if (!rs.next()) {
+                throw new NoBookedSlotsFoundException("No booked slots found for the customer with email: " + email);
+            }
+
+            do {
+                Booking b = new Booking();
                 b.setBookingId(rs.getString("bookingId"));
                 b.setCustomerEmail(rs.getString("customerEmail"));
                 b.setSlotId(rs.getString("slotId"));
@@ -109,16 +131,22 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
                 b.setType(rs.getString("type"));
                 b.setDate(rs.getString("date"));
                 bookings.add(b);
-                System.out.println("booking "+bookings.get(0).getBookingId());
-            }
+                System.out.println("booking " + b.getBookingId());
+            } while (rs.next());
         } catch (SQLException sqlExcep) {
-//            printSQLException(sqlExcep);
+            // Handle SQLException or print the exception
+            sqlExcep.printStackTrace();
+        } catch (NoBookedSlotsFoundException e) {
+            System.out.println(ColorConstants.RED+"No booked slots found for the customer with email: "+ColorConstants.RESET);
+            // You can choose to log this information or handle it in a way suitable for your application
         }
+
         System.out.println("booking");
         System.out.println(bookings);
-        for(Booking b : bookings)  {
+        for (Booking b : bookings) {
             System.out.println(b);
         }
+
         return bookings;
     }
 
