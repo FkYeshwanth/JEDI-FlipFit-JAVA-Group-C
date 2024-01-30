@@ -1,5 +1,7 @@
 package com.flipkart.client;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.flipkart.bean.Person;
@@ -10,35 +12,44 @@ public class ApplicationFlipFitMenu {
 
     public static void login() throws Exception {
         Scanner in = new Scanner(System.in);
-        System.out.println("__________________________________________________________________________________\n");
+        System.out.println("____________________________\n");
         System.out.println("Enter LogIn Details\n");
         System.out.print("Enter Email: ");
-        String PersonEmail = in.next();
+        String personEmail = in.next();
         System.out.print("Enter Password: ");
         String password = in.next();
-        System.out.print("Enter Role Id: ( 1=Admin / 2=Customer / 3=Owner )");
+        System.out.print("Enter Role Id: (1=Admin / 2=Customer / 3=Owner)");
         String roleId = in.next();
-        Person Person = new Person(PersonEmail, password, roleId);
+        Person person = new Person(personEmail, password, roleId);
         PersonFlipFitService personService = new PersonFlipFitService();
+
         if (roleId.equalsIgnoreCase("1")) {
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = now.format(formatter);
+
+            System.out.println("____________________________\n");
+            System.out.println(ColorConstants.GREEN + "Welcome Admin " + personEmail + " ! You are logged in at " + formattedDateTime + "." + ColorConstants.RESET);
+
             AdminFlipFitMenu admin = new AdminFlipFitMenu();
             admin.AdminMenu(in);
-        }
-        else if (personService.authenticatePerson(Person)) {
-            System.out.println("__________________________________________________________________________________\n");
-            System.out.println(
-                    ColorConstants.GREEN + "Welcome " + PersonEmail + "! You are logged in." + ColorConstants.RESET);
+        } else if (personService.authenticatePerson(person)) {
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = now.format(formatter);
+
+
 
             if (roleId.equalsIgnoreCase("2")) {
-
+                System.out.println("____________________________\n");
+                System.out.println(ColorConstants.GREEN + "Welcome Customer " + personEmail + "! You are logged in at " + formattedDateTime + "." + ColorConstants.RESET);
                 CustomerFlipFitMenu customer = new CustomerFlipFitMenu();
-                customer.customerMenu(PersonEmail);
-
+                customer.customerMenu(personEmail);
             } else if (roleId.equalsIgnoreCase("3")) {
-
+                System.out.println("____________________________\n");
+                System.out.println(ColorConstants.GREEN + "Welcome Gym Owner " + personEmail + "! You are logged in at " + formattedDateTime + "." + ColorConstants.RESET);
                 GymOwnerFlipFitMenu gymOwner = new GymOwnerFlipFitMenu();
-                gymOwner.gymOwnerMenu(in, PersonEmail);
-
+                gymOwner.gymOwnerMenu(in, personEmail);
             } else {
                 System.out.println(ColorConstants.RED + "Wrong Choice!" + ColorConstants.RESET);
             }
@@ -46,6 +57,7 @@ public class ApplicationFlipFitMenu {
             System.out.println(ColorConstants.RED + "\nSorry! You are not Registered! Please Register Yourself!" + ColorConstants.RESET);
         }
     }
+
 
     public static void applicationMenu() throws Exception {
         boolean recur = true;
@@ -60,8 +72,16 @@ public class ApplicationFlipFitMenu {
             System.out.print("\nEnter Your Choice: ");
 
             Scanner in = new Scanner(System.in);
+            int choice=4;
+            try{
+                choice= in.nextInt();
+            }
+            catch (InputMismatchException e){
+                System.out.println(ColorConstants.RED +"Please enter a numeric value between [1-4]");
+                System.out.println(ColorConstants.RESET);
+                continue;
+            }
 
-            int choice = in.nextInt();
             switch (choice) {
                 case 1:
                     login();
@@ -86,7 +106,6 @@ public class ApplicationFlipFitMenu {
                     System.out.println(ColorConstants.RED + "Wrong choice" + ColorConstants.RESET);
             }
         }
-
 
     }
 

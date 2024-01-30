@@ -2,6 +2,8 @@ package com.flipkart.client;
 import java.text.ParseException;
 import java.util.*;
 import com.flipkart.bean.GymUser;
+import com.flipkart.constants.ColorConstants;
+import com.flipkart.exception.NoBookedSlotsFoundException;
 import com.flipkart.exception.NoSlotsFoundException;
 import com.flipkart.service.GymUserFlipFitInterface;
 import com.flipkart.DAO.PersonDAOImpl;
@@ -41,12 +43,43 @@ public class CustomerFlipFitMenu {
 		getGyms();
 		System.out.print("Enter gym ID: ");
 		String gymId = sc.next();
+
 		System.out.print("Enter Date (yyyy-mm-dd): ");
 		String dateStr = sc.next();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = dateFormat.parse(dateStr);
 
-		List<Slot> slots = customerBusiness.getSlotInGym(gymId);
+//		List<Slot> slots = customerBusiness.getSlotInGym(gymId);
+
+		try {
+			List<Slot> slots = customerBusiness.getSlotInGym(gymId);
+
+			System.out.printf("%15s%15s%15s%15s", "Slot Id", "Start Time", "End Time", "Availability");
+			System.out.println();
+			slots.forEach(slot -> {
+				System.out.printf("%15s%15s%15s%15s", slot.getSlotId(), slot.getStartTime(), slot.getEndTime(), customerBusiness.isSlotBooked(slot.getSlotId(), date)? "WaitingList": "Available");
+				System.out.println();
+			});
+			System.out.println("\n__________________________________________________________________________________\n");
+			System.out.print("Enter the slot ID which you want to book: ");
+			String slotId = sc.next();
+			int bookingResponse = customerBusiness.bookSlot(gymId ,slotId , email, dateStr);
+			switch (bookingResponse) {
+				case 0:
+					System.out.println(ColorConstants.RED +"\nYou have already booked this time. \nCancelling the previous one and booking this slot"+ColorConstants.RESET);
+					break;
+				case 1:
+					System.out.println(ColorConstants.GREEN +"\nSlot is already booked, added to the waiting list"+ColorConstants.RESET);
+					break;
+				case 2:
+					System.out.println(ColorConstants.GREEN +"\nSuccessfully booked the slot"+ColorConstants.RESET);
+					break;
+				default:
+					System.out.println(ColorConstants.RED +"\nBooking failed"+ColorConstants.RESET);
+			}
+		} catch (NoSlotsFoundException e) {
+			System.out.println(ColorConstants.RED + e.getMessage() + ColorConstants.RESET);
+		}
 
 //		System.out.printf("| %-10s | %-10s |\n","Slot Id: ","Availability");
 //		if(slots!=null){
@@ -68,30 +101,34 @@ public class CustomerFlipFitMenu {
 		Date date = dateFormat.parse(dateStr);
 
 		List<Slot> slots = customerBusiness.getSlotInGym(gymId);
-		//System.out.printf("| %-10s | %-10s |\n","Slot Id: ","Availability");
-//		if(slots!=null){
-//			for (Slot slot : slots) {
-//				System.out.printf("| %-10s | %-10s |\n",slot.getSlotId(),customerBusiness.isSlotBooked(slot.getSlotId(), date));
-//			}
-//		}
+
 		System.out.print("Enter the slot ID which you want to book: ");
 		String slotId = sc.next();
-		int bookingResponse = customerBusiness.bookSlot(gymId,slotId, email, String.valueOf(date));
-		switch (bookingResponse) {
-			case 0:
-				System.out.println("You have already booked this time. Cancelling the previous one and booking this slot");
+
+		boolean slotFound = false;
+		for (Slot slot : slots) {
+			if (slot.getSlotId().equals(slotId)) {
+				slotFound = true;
+				int bookingResponse = customerBusiness.bookSlot(gymId, slotId, email, String.valueOf(date));
+				switch (bookingResponse) {
+					case 0:
+						System.out.println("You have already booked this time. Cancelling the previous one and booking this slot");
+						break;
+					case 1:
+						System.out.println("Slot is already booked, added to the waiting list");
+						break;
+					case 2:
+						System.out.println("Successfully booked the slot");
+						break;
+					default:
+						System.out.println("Booking failed");
+				}
 				break;
-			case 1:
-				System.out.println("Slot is already booked, added to the waiting list");
-				break;
-			case 2:
-				System.out.println("Successfully booked the slot");
-				break;
-			case 3:
-				System.out.println("Slot not found");
-				break;
-			default:
-				System.out.println("Booking failed");
+			}
+		}
+
+		if (!slotFound) {
+			throw new NoSlotsFoundException("Slot not found");
 		}
 	}
 
@@ -246,24 +283,36 @@ public class CustomerFlipFitMenu {
 
 	public void registerCustomer() {
 		GymUser customer = new GymUser();
-		System.out.print("\u001B[36mEnter email: ");
-		String email =sc.next();
-		customer.setEmail(email);
-		System.out.print("Enter password: ");
-		String password =sc.next();
-		customer.setPassword(password);
-		System.out.print("Enter Name: ");
-		String name=sc.next();
-		customer.setName(name);
-		System.out.print("Enter Phone Number: ");
-		String number=sc.next();
-		customer.setPhoneNumber(number);
-		System.out.print("Enter Age: ");
-		int age= sc.nextInt();
-		customer.setAge(age);
-		System.out.print("Enter Address: \033[0m");
-		String address=sc.next();
-		customer.setAddress(address);
+
+		boolean lp = true;
+		while (lp){
+			try {
+				System.out.print("\u001B[36mEnter email: ");
+				String email = sc.nextLine();
+				customer.setEmail(email);
+				System.out.print("Enter password: ");
+				String password = sc.next();
+				customer.setPassword(password);
+				System.out.print("Enter Name: ");
+				String name = sc.next();
+				customer.setName(name);
+				System.out.print("Enter Phone Number: ");
+				String number = sc.next();
+				customer.setPhoneNumber(number);
+				System.out.print("Enter Age: ");
+				int age = sc.nextInt();
+				customer.setAge(age);
+				System.out.print("Enter Address: \033[0m");
+				sc.nextLine();
+				String address = sc.nextLine();
+				customer.setAddress(address);
+				lp = false;
+			} catch (InputMismatchException e) {
+				System.out.println(ColorConstants.RED + "Enter the valid input");
+				System.out.println(ColorConstants.RESET);
+			}
+		}
+
 //		UserBusiness userBusiness = new UserBusiness();
 	//	PersonFlipFitService temp = new PersonFlipFitService();
 	//	temp.registerCustomer(customer);
