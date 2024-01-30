@@ -32,7 +32,7 @@ public class DBUtils {
 
                 // Load properties from the config.properties file
                 InputStream inputStream = DBUtils.class.getClassLoader().getResourceAsStream("./config.properties");
-                FileInputStream fileInputStream = new FileInputStream("/Users/r.vidhula/Documents/C/JEDI-FlipFit-JAVA-Group-C/JEDIFlipFitJAVAPOS/src/config.properties");
+                FileInputStream fileInputStream = new FileInputStream("/Users/manshi.shreya/Documents/Final_presentation/JEDI-FlipFit-JAVA-Group-C/JEDIFlipFitJAVAPOS/src/config.properties");
                 prop.load(fileInputStream);
 
                 // Get database connection properties

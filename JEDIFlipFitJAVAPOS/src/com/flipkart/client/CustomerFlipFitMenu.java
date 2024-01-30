@@ -12,6 +12,7 @@ import com.flipkart.bean.Gym;
 import com.flipkart.bean.Slot;
 import com.flipkart.service.GymUserFlipFitService;
 import com.flipkart.service.PersonFlipFitService;
+import com.flipkart.utils.*;
 
 /**
  * This class provides a menu-driven interface for the customers (Gym Users) using the FlipFit application.
@@ -24,25 +25,34 @@ public class CustomerFlipFitMenu {
 	 * Registers a new gym user by taking user input for email, password, name, phone number, age, and address.
 	 * Registers the gym user using the PersonDAOImpl.
 	 */
+
+	/*
 	public void registerGymUser() {
-		System.out.print("Enter email: ");
-		customer.setName(sc.next());
-		System.out.print("Enter Name: ");
-		customer.setPassword(sc.next());
-		System.out.print("Enter password: ");
-		customer.setName(sc.next());
-		System.out.print("Enter Phone Number: ");
-		customer.setPhoneNumber(sc.next());
-		System.out.print("Enter Age: ");
-		customer.setAge(Integer.parseInt(sc.next()));
-		System.out.print("Enter Address: ");
-		customer.setAddress(sc.next());
+		//System.out.print("Enter email: ");
+		String email=Validation.enter_email();
+		customer.setEmail(email);
+		//System.out.print("Enter Password: ");
+		String pass=Validation.enter_password();
+		customer.setPassword(pass);
+		//System.out.print("Enter Name: ");
+		String name=Validation.enterName();
+		customer.setName(name);
+		//System.out.print("Enter Phone Number: ");
+		String phonenumber=Validation.enter_phone_number();
+		customer.setPhoneNumber(phonenumber);
+		//System.out.print("Enter Age: ");
+		int age= Validation.enter_age();
+		customer.setAge(age);
+		//System.out.print("Enter Address: ");
+		String address=Validation.enter_address();
+		customer.setAddress(address);
 		PersonFlipFitService userBusiness = new PersonFlipFitService();
 		userBusiness.registerCustomer(customer);
 
 		System.out.println("Customer registered successfully!");
 
 	}
+	*/
 
 	/**
 	 * Displays the list of gyms in Bangalore and their details.
@@ -333,23 +343,30 @@ public class CustomerFlipFitMenu {
 	 */
 	public void registerCustomer() {
 		GymUser customer = new GymUser();
-		System.out.print("\u001B[36mEnter email: ");
-		String email =sc.next();
+		//System.out.print("\u001B[36mEnter email: ");
+		String email=Validation.enter_email();
+		//String email =sc.next();
 		customer.setEmail(email);
-		System.out.print("Enter password: ");
-		String password =sc.next();
-		customer.setPassword(password);
-		System.out.print("Enter Name: ");
-		String name=sc.next();
+		//System.out.print("Enter password: ");
+		String pass=Validation.enter_password();
+		//String password =sc.next();
+		customer.setPassword(pass);
+		//System.out.print("Enter Name: ");
+		String name=Validation.enterName();
+		//String name=sc.next();
 		customer.setName(name);
-		System.out.print("Enter Phone Number: ");
-		String number=sc.next();
-		customer.setPhoneNumber(number);
-		System.out.print("Enter Age: ");
-		int age= sc.nextInt();
+		//System.out.print("Enter Phone Number: ");
+		String phonenumber=Validation.enter_phone_number();
+		//String number=sc.next();
+		customer.setPhoneNumber(phonenumber);
+
+		//System.out.print("Enter Age: ");
+		int age= Validation.enter_age();
+		//int age= sc.nextInt();
 		customer.setAge(age);
-		System.out.print("Enter Address: \033[0m");
-		String address=sc.next();
+		//System.out.print("Enter Address: \033[0m");
+		String address=Validation.enter_address();
+		//String address=sc.next();
 		customer.setAddress(address);
 //		UserBusiness userBusiness = new UserBusiness();
 		//	PersonFlipFitService temp = new PersonFlipFitService();

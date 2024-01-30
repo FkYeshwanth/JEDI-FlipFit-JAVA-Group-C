@@ -9,12 +9,13 @@ import com.flipkart.bean.Slot;
 import com.flipkart.service.GymOwnerFlipFitService;
 import com.flipkart.service.PersonFlipFitService;
 import com.flipkart.constants.ColorConstants;
-import com.flipkart.utils.IdGenerator;
+import com.flipkart.utils.*;
 
 /**
  * This class provides a menu-driven interface for the gym owners using the FlipFit application.
  */
 public class GymOwnerFlipFitMenu {
+
 
     GymOwner gymOwner = new GymOwner();
     GymOwnerFlipFitService gymOwnerservice = new GymOwnerFlipFitService();
@@ -28,19 +29,25 @@ public class GymOwnerFlipFitMenu {
      */
     public void gymOwnerRegistration(Scanner in) {
         System.out.println("\nEnter GymOwner Details: \n");
-        System.out.print("Enter Email: ");
-        gymOwner.setEmail(in.next());
-        System.out.print("Enter Password: ");
-        gymOwner.setPassword(in.next());
+        //System.out.print("Enter Email: ");
+        String email=Validation.enter_email();
+        gymOwner.setEmail(email);
+        //System.out.print("Enter Password: ");
+        String pass=Validation.enter_password();
+        gymOwner.setPassword(pass);
         gymOwner.setRoleId("GymOwner");
-        System.out.print("Enter Name: ");
-        gymOwner.setName(in.next());
-        System.out.print("Enter Phone Number: ");
-        gymOwner.setPhoneNumber(in.next());
-        System.out.print("Enter PAN: ");
-        gymOwner.setPanNumber(in.next());
-        System.out.print("Enter Aadhaar: ");
-        gymOwner.setAadharNumber(in.next());
+        //System.out.print("Enter Name: ");
+        String name=Validation.enterName();
+        gymOwner.setName(name);
+        //System.out.print("Enter Phone Number: ");
+        String phone=Validation.enter_phone_number();
+        gymOwner.setPhoneNumber(phone);
+        //System.out.print("Enter PAN: ");
+        String pan=Validation.enterPan();
+        gymOwner.setPanNumber(pan);
+        //System.out.print("Enter Aadhaar: ");
+        String adhar=Validation.enter_adhar_number();
+        gymOwner.setAadharNumber(adhar);
 
         PersonFlipFitService userservice = new PersonFlipFitService();
         boolean registerSuccess = userservice.registerGymOwner(gymOwner);

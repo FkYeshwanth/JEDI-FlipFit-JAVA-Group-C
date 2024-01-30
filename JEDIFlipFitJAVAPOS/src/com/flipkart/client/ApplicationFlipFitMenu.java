@@ -2,6 +2,8 @@ package com.flipkart.client;
 
 import java.util.Scanner;
 
+
+import com.flipkart.utils.*;
 import com.flipkart.bean.Person;
 import com.flipkart.constants.ColorConstants;
 import com.flipkart.service.PersonFlipFitService;
@@ -26,7 +28,7 @@ public class ApplicationFlipFitMenu {
         String personEmail = in.next();
         System.out.print("Enter Password: ");
         String password = in.next();
-        System.out.print("Enter Role Id: ( 1=Admin / 2=Customer / 3=Owner )");
+        System.out.print("\u001B[36mEnter Role Id: ( 1=Admin / 2=Customer / 3=Owner )\u001B[0m");
         String roleId = in.next();
         Person person = new Person(personEmail, password, roleId);
         PersonFlipFitService personService = new PersonFlipFitService();
@@ -60,14 +62,31 @@ public class ApplicationFlipFitMenu {
      */
     public static void applicationMenu() throws Exception {
         boolean recur = true;
-        System.out.println(ColorConstants.GREEN + "Welcome to the FlipFit Application!" + ColorConstants.RESET);
+        //System.out.println(ColorConstants.GREEN + "Welcome to the FlipFit Application!" + ColorConstants.RESET);
+        System.out.println("\n");
+        System.out.println(("\u001B[36m---------------------------------------------------------------------------------------------------------------------------------------------------------"));
+        System.out.println("\n");
+        System.out.println(" /$$      /$$           /$$                                                     /$$                     /$$$$$$$$ /$$ /$$           /$$$$$$$$ /$$   /$$    \n" +
+                "| $$  /$ | $$          | $$                                                    | $$                    | $$_____/| $$|__/          | $$_____/|__/  | $$    \n" +
+                "| $$ /$$$| $$  /$$$$$$ | $$  /$$$$$$$  /$$$$$$  /$$$$$$/$$$$   /$$$$$$        /$$$$$$    /$$$$$$       | $$      | $$ /$$  /$$$$$$ | $$       /$$ /$$$$$$  \n" +
+                "| $$/$$ $$ $$ /$$__  $$| $$ /$$_____/ /$$__  $$| $$_  $$_  $$ /$$__  $$      |_  $$_/   /$$__  $$      | $$$$$   | $$| $$ /$$__  $$| $$$$$   | $$|_  $$_/  \n" +
+                "| $$$$_  $$$$| $$$$$$$$| $$| $$      | $$  \\ $$| $$ \\ $$ \\ $$| $$$$$$$$        | $$    | $$  \\ $$      | $$__/   | $$| $$| $$  \\ $$| $$__/   | $$  | $$    \n" +
+                "| $$$/ \\  $$$| $$_____/| $$| $$      | $$  | $$| $$ | $$ | $$| $$_____/        | $$ /$$| $$  | $$      | $$      | $$| $$| $$  | $$| $$      | $$  | $$ /$$\n" +
+                "| $$/   \\  $$|  $$$$$$$| $$|  $$$$$$$|  $$$$$$/| $$ | $$ | $$|  $$$$$$$        |  $$$$/|  $$$$$$/      | $$      | $$| $$| $$$$$$$/| $$      | $$  |  $$$$/\n" +
+                "|__/     \\__/ \\_______/|__/ \\_______/ \\______/ |__/ |__/ |__/ \\_______/         \\___/   \\______/       |__/      |__/|__/| $$____/ |__/      |__/   \\___/  \n" +
+                "                                                                                                                         | $$                              \n" +
+                "                                                                                                                         | $$                              \n" +
+                "                                                                                                                         |__/                              ");
 
+        System.out.println("\n");
+        System.out.println(("---------------------------------------------------------------------------------------------------------------------------------------------------------\u001B[0m"));
+        System.out.println("\n");
         while (recur) {
-            System.out.println("\nChoose your action:");
-            System.out.println("1. Login");
+            System.out.println("\u001B[33m\nChoose your action:\u001B[0m");
+            System.out.println("\u001B[36m1. Login");
             System.out.println("2. Customer Registration");
             System.out.println("3. Gym Owner Registration");
-            System.out.println("4. Exit");
+            System.out.println("4. Exit\u001B[0m");
             System.out.print("\nEnter Your Choice: ");
 
             Scanner in = new Scanner(System.in);

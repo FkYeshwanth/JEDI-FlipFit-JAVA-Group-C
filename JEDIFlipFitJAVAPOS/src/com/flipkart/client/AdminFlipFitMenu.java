@@ -3,6 +3,7 @@ package com.flipkart.client;
 import com.flipkart.bean.Gym;
 import com.flipkart.bean.GymOwner;
 import com.flipkart.service.AdminFlipFitService;
+import com.flipkart.utils.*;
 
 import java.util.List;
 import java.util.Scanner;
@@ -107,7 +108,7 @@ public class AdminFlipFitMenu {
     public void AdminMenu(Scanner in) {
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
         while (true) {
-            System.out.println("\u001B[32m1. View All Gym ");
+            System.out.println("\u001B[36m1. View All Gym ");
             System.out.println("2. View All Gym Owners");
             System.out.println("3. View all pending Gym Owner Requests");
             System.out.println("4. View all pending Gym Requests");
