@@ -12,9 +12,14 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.flipkart.constants.ColorConstants;
+import com.flipkart.exception.GymNotFoundException;
+import com.flipkart.exception.GymOwnerNotFoundException;
+import com.flipkart.exception.NoPendingGymOwnerRequest;
+import com.flipkart.exception.NoPendingGymRequest;
 import com.flipkart.utils.DBUtils;
 
-import static com.flipkart.DAO.GymOwnerDAOImpl.printSQLException;
 
 /**
  *
@@ -22,7 +27,7 @@ import static com.flipkart.DAO.GymOwnerDAOImpl.printSQLException;
 public class AdminDAOImpl implements AdminDAO {
 
     Connection connection = null;
-    public List<GymOwner> getAllGymOwners() {
+    public List<GymOwner> getAllGymOwners() throws GymOwnerNotFoundException{
         List<GymOwner> gymOwners = new ArrayList<GymOwner>();
         String query = "select name, phoneNumber, aadharNumber, panNumber, isVerified from gymOwner";
         try {connection = DBUtils.getConnection();
@@ -31,6 +36,9 @@ public class AdminDAOImpl implements AdminDAO {
 //            System.out.println(preparedStatement);
 ////            // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
+            if(rs==null){
+                throw new GymOwnerNotFoundException(ColorConstants.RED+"There are no gym owners"+ColorConstants.RESET);
+            }
 ////
 ////            // Step 4: Process the ResultSet object.
             while (rs.next()) {
@@ -46,13 +54,13 @@ public class AdminDAOImpl implements AdminDAO {
             }
         }
         catch (SQLException e) {
-            printSQLException(e);
+            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return gymOwners;
     };
 
-    public List<Gym> getAllGyms() {
+    public List<Gym> getAllGyms() throws GymNotFoundException{
         Connection connection = null;
         List<Gym> gyms = new ArrayList<Gym>();
         String query = "select gymId, gymName, ownerEmail, address, slotCount, seatsPerSlotCount, isVerified from gym";
@@ -62,6 +70,9 @@ public class AdminDAOImpl implements AdminDAO {
 //            System.out.println(preparedStatement);
 //            // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
+            if(rs==null){
+                throw new GymNotFoundException(ColorConstants.RED+"There are no gyms in this location"+ColorConstants.RESET);
+            }
 //
 //            // Step 4: Process the ResultSet object.
             while (rs.next()) {
@@ -79,13 +90,13 @@ public class AdminDAOImpl implements AdminDAO {
 
             }
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
         }
 //        // Step 4: try-with-resource statement will auto close the connection.
         return gyms;
     };
 
-    public List<GymOwner> getPendingGymOwnerRequests() {
+    public List<GymOwner> getPendingGymOwnerRequests() throws NoPendingGymOwnerRequest{
         Connection connection = null;
         List<GymOwner> gymOwners = new ArrayList<GymOwner>();
         String query = "select name, phoneNumber, aadharNumber, panNumber, isVerified from gymOwner where isVerified = ?;";
@@ -96,6 +107,9 @@ public class AdminDAOImpl implements AdminDAO {
 //            // Step 3: Execute the query or update query
             preparedStatement.setBoolean(1, false);
             ResultSet rs = preparedStatement.executeQuery();
+            if(rs==null){
+                throw new NoPendingGymOwnerRequest(ColorConstants.RED+"There are no pending gym owner request"+ColorConstants.RESET);
+            }
 //
 //            // Step 4: Process the ResultSet object.
             while (rs.next()) {
@@ -112,14 +126,14 @@ public class AdminDAOImpl implements AdminDAO {
 
             }
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return gymOwners;
 
     };
 
-    public List<Gym> getPendingGymRequests() {
+    public List<Gym> getPendingGymRequests() throws NoPendingGymRequest {
         Connection connection = null;
         List<Gym> gyms = new ArrayList<Gym>();
         String query = "select gymId, gymName, ownerEmail, address, slotCount, seatsPerSlotCount, isVerified from gym where isVerified = ?;";
@@ -130,6 +144,9 @@ public class AdminDAOImpl implements AdminDAO {
 //            // Step 3: Execute the query or update query
             preparedStatement.setBoolean(1, false);
             ResultSet rs = preparedStatement.executeQuery();
+            if(rs==null){
+                throw new NoPendingGymRequest(ColorConstants.RED+"There is no pending gym request"+ColorConstants.RESET);
+            }
 
 //            // Step 4: Process the ResultSet object.
             while (rs.next()) {
@@ -145,7 +162,7 @@ public class AdminDAOImpl implements AdminDAO {
 //	                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
             }
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return gyms;
@@ -163,7 +180,7 @@ public class AdminDAOImpl implements AdminDAO {
             preparedStatement.setString(1, gymOwnerEmail);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
     };
 
@@ -177,7 +194,7 @@ public class AdminDAOImpl implements AdminDAO {
             // Step 3: Execute the query or update query
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
     };
 
@@ -192,7 +209,7 @@ public class AdminDAOImpl implements AdminDAO {
             preparedStatement.setString(1, gymId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
     };
 
@@ -206,24 +223,24 @@ public class AdminDAOImpl implements AdminDAO {
 //            // Step 3: Execute the query or update query
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
     };
 
-    public static void printSQLException(SQLException ex) {
-        for (Throwable e: ex) {
-            if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
-                Throwable t = ex.getCause();
-                while (t != null) {
-                    System.out.println("Cause: " + t);
-                    t = t.getCause();
-                }
-            }
-        }
-    }
+//    public static void printSQLException(SQLException ex) {
+//        for (Throwable e: ex) {
+//            if (e instanceof SQLException) {
+//                e.printStackTrace(System.err);
+//                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
+//                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
+//                System.err.println("Message: " + e.getMessage());
+//                Throwable t = ex.getCause();
+//                while (t != null) {
+//                    System.out.println("Cause: " + t);
+//                    t = t.getCause();
+//                }
+//            }
+//        }
+//    }
 
 }

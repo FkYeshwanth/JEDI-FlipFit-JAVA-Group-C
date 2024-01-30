@@ -3,10 +3,11 @@ import java.text.ParseException;
 import java.util.*;
 import com.flipkart.bean.GymUser;
 import com.flipkart.exception.NoSlotsFoundException;
+import com.flipkart.exception.SeatsNotavailableException;
 import com.flipkart.service.GymUserFlipFitInterface;
 import com.flipkart.DAO.PersonDAOImpl;
 import java.text.SimpleDateFormat;
-
+import com.flipkart.constants.*;
 import com.flipkart.bean.Gym;
 import com.flipkart.bean.Slot;
 import com.flipkart.service.GymUserFlipFitService;
@@ -45,7 +46,39 @@ public class CustomerFlipFitMenu {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = dateFormat.parse(dateStr);
 
-		List<Slot> slots = customerBusiness.getSlotInGym(gymId);
+
+		//List<Slot> slots = customerBusiness.getSlotInGym(gymId);
+
+		try {
+			List<Slot> slots = customerBusiness.getSlotInGym(gymId);
+
+			System.out.printf("%15s%15s%15s%15s", "Slot Id", "Start Time", "End Time", "Availability");
+			System.out.println();
+			slots.forEach(slot -> {
+				System.out.printf("%15s%15s%15s%15s", slot.getSlotId(), slot.getStartTime(), slot.getEndTime(), customerBusiness.isSlotBooked(slot.getSlotId(), date)? "WaitingList": "Available");
+				System.out.println();
+			});
+			System.out.println("\n____________________________\n");
+			System.out.print("Enter the slot ID which you want to book: ");
+			String slotId = sc.next();
+			int bookingResponse = customerBusiness.bookSlot(gymId ,slotId , email, dateStr);
+			switch (bookingResponse) {
+				case 0:
+					System.out.println(ColorConstants.RED +"\nYou have already booked this time. \nCancelling the previous one and booking this slot"+ColorConstants.RESET);
+					break;
+				case 1:
+					System.out.println(ColorConstants.GREEN +"\nSlot is already booked, added to the waiting list"+ColorConstants.RESET);
+					break;
+				case 2:
+					System.out.println(ColorConstants.GREEN +"\nSuccessfully booked the slot"+ColorConstants.RESET);
+					break;
+				default:
+					System.out.println(ColorConstants.RED +"\nBooking failed"+ColorConstants.RESET);
+			}
+		} catch (Exception e) {
+			System.out.println(ColorConstants.RED + "No slots found" + ColorConstants.RESET);
+		}
+
 
 //		System.out.printf("| %-10s | %-10s |\n","Slot Id: ","Availability");
 //		if(slots!=null){
@@ -202,44 +235,51 @@ public class CustomerFlipFitMenu {
 		String bookingId = sc.next();
 		customerBusiness.cancelBooking(bookingId, email);
 	}
-	public void customerMenu(String email) throws ParseException, NoSlotsFoundException {
+	public void customerMenu(String email) throws ParseException, NoSlotsFoundException, SeatsNotavailableException {
 		int choice = 0;
+		try{
+			while (choice != 8) {
+				System.out.println("\u001B[32mMenu:-");
+				System.out.println("1.Select Gym in Bangalore \n2.View Available Slots \n3.View Bookings \n4.Book Slot \n5.Cancel Slot \n6.View Profile \n7.Edit Profile \n8.Exit\033[0m");
+				System.out.print("\u001B[35mEnter your choice: \033[0m");
+				choice = sc.nextInt();
 
-		while (choice != 8) {
-			System.out.println("\u001B[32mMenu:-");
-			System.out.println("1.Select Gym in Bangalore \n2.View Available Slots \n3.View Bookings \n4.Book Slot \n5.Cancel Slot \n6.View Profile \n7.Edit Profile \n8.Exit\033[0m");
-			System.out.print("\u001B[35mEnter your choice: \033[0m");
-			choice = sc.nextInt();
-
-			switch (choice) {
-				case 1:
-					//viewGyms(email);
-					getGymsInBangalore();
-					break;
-				case 2:
-					//
-					viewGyms(email);
-					break;
-				case 3:
-					customerBusiness.getBookings(email);
-					break;
-				case 4:
-					bookSlot(email);
-					break;
-				case 5:
-					cancelBooking(email);
-					break;
-				case 6:
-					getProfile(email);
-					break;
-				case 7:
-					editProfile(email);
-				case 8:
-					break;
-				default:
-					System.out.println("\u001B[31mInvalid choice!\033[0m");
+				switch (choice) {
+					case 1:
+						//viewGyms(email);
+						getGymsInBangalore();
+						break;
+					case 2:
+						//
+						viewGyms(email);
+						break;
+					case 3:
+						customerBusiness.getBookings(email);
+						break;
+					case 4:
+						bookSlot(email);
+						break;
+					case 5:
+						cancelBooking(email);
+						break;
+					case 6:
+						getProfile(email);
+						break;
+					case 7:
+						editProfile(email);
+					case 8:
+						break;
+					default:
+						System.out.println("\u001B[31mInvalid choice!\033[0m");
+				}
 			}
+
 		}
+		catch (InputMismatchException ex){
+			System.out.println("Input mismatch");
+		}
+
+
 
 	}
 

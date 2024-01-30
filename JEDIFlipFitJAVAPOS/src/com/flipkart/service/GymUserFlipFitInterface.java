@@ -3,6 +3,7 @@ package com.flipkart.service;
 import com.flipkart.bean.Booking;
 import com.flipkart.bean.*;
 import com.flipkart.exception.NoSlotsFoundException;
+import com.flipkart.exception.SeatsNotavailableException;
 
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,7 @@ public interface GymUserFlipFitInterface {
 
 //    allows the customer to edit profile
 
-    public List<Booking> getBookings(String email);
+    public List<Booking> getBookings(String email) throws SeatsNotavailableException;
 
 //    returns the list of all the bookings of the customer
 

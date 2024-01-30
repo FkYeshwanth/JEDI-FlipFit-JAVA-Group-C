@@ -5,3 +5,4 @@ public class UnauthorizedAccessException extends Exception {
         super(message);
     }
 }
+

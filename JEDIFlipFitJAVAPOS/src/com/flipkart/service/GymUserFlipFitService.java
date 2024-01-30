@@ -6,6 +6,8 @@ import com.flipkart.bean.Booking;
 import com.flipkart.bean.Gym;
 import com.flipkart.bean.Slot;
 import com.flipkart.exception.NoSlotsFoundException;
+import com.flipkart.exception.SeatsNotavailableException;
+import com.flipkart.exception.UserNotFoundException;
 import com.flipkart.utils.*;
 import com.flipkart.constants.SQLConstants;
 
@@ -82,7 +84,13 @@ public class GymUserFlipFitService implements GymUserFlipFitInterface{
 
 
     public GymUser getProfile(String email) {
-        GymUser customers = gymCustomerDAO.getGymUserDetails(email);
+        GymUser customers =null;
+        try{
+            customers= gymCustomerDAO.getGymUserDetails(email);
+        }catch (UserNotFoundException ex){
+            System.out.println("User not found");
+        }
+
 //        gymCustomerDAO.get
         return customers;
 
@@ -112,7 +120,7 @@ public class GymUserFlipFitService implements GymUserFlipFitInterface{
      * @param email the Customer email for which the bookings data are requested
      * @return List of bookings done by the given customer email
      */
-    public List<Booking> getBookings(String email) {
+    public List<Booking> getBookings(String email) throws SeatsNotavailableException {
         System.out.println("Get bookings function");
         List<Booking> customerBookings = gymCustomerDAO.fetchBookedSlots(email);
         System.out.println("Customer booking :");

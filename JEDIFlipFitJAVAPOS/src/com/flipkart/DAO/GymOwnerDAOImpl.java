@@ -8,11 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.flipkart.bean.*;
+import com.flipkart.constants.ColorConstants;
+import com.flipkart.exception.GymNotFoundException;
+import com.flipkart.exception.GymOwnerNotApprovedExceptions;
+import com.flipkart.exception.GymOwnerNotFoundException;
+import com.flipkart.exception.NoSlotsFoundException;
 import com.flipkart.utils.DBUtils;
 
 public class GymOwnerDAOImpl implements GymOwnerDAO{
 
-    public GymOwner getGymOwnerDetails(String gymOwnerEmailId) {
+    public GymOwner getGymOwnerDetails(String gymOwnerEmailId) throws GymOwnerNotFoundException{
         Connection connection = null;
         GymOwner gymOwner = new GymOwner();
         String query = "select email, name, phoneNumber, aadharNumber, panNumber from gymOwner where email = ?";
@@ -25,6 +30,9 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
 
+            if(rs==null){
+                throw new GymOwnerNotFoundException(ColorConstants.RED+"There are no gym owners"+ColorConstants.RESET);
+            }
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
                 gymOwner.setEmail(rs.getString("email"));
@@ -36,7 +44,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
 //                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
             }
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return gymOwner;
@@ -58,7 +66,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             // print SQL exception information
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
 
         String INSERT_GYM_OWNER_SQL = "INSERT INTO gymOwner"
@@ -83,7 +91,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             // print SQL exception information
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
     }
 
@@ -103,7 +111,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             // print SQL exception information
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
 
         String UPDATE_GYM_OWNER_SQL = "update gymowner set email = ?, name = ?, phoneNumber = ?, aadharNumber = ?, panNumber = ?, isVerified = ? "
@@ -126,11 +134,11 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             // print SQL exception information
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
     }
 
-    public Gym getGym(String gymId) {
+    public Gym getGym(String gymId) throws GymNotFoundException {
         Connection connection = null;
         Gym gym = new Gym();
         String query = "select gymId, gymName, ownerEmail, address, slotCount, seatsPerSlotCount, isVerified from gym where gymId = ?";
@@ -142,6 +150,9 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
+            if(rs==null){
+                throw new GymNotFoundException(ColorConstants.RED+"There is no gyms available"+ColorConstants.RESET);
+            }
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
@@ -156,7 +167,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
 //	                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
             }
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return gym;
@@ -186,7 +197,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             // print SQL exception information
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
     }
 
@@ -214,11 +225,11 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             // print SQL exception information
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
     }
 
-    public List<Gym> getGymsOfGymOwner(String gymOwnerId) {
+    public List<Gym> getGymsOfGymOwner(String gymOwnerId) throws GymNotFoundException{
         Connection connection = null;
         List<Gym> gyms = new ArrayList<Gym>();
         String query = "select gymId, gymName, ownerEmail, address, slotCount, seatsPerSlotCount, isVerified from gym where ownerEmail =  ?";
@@ -230,6 +241,9 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
+            if(rs==null){
+                throw new GymNotFoundException(ColorConstants.RED+"There is no gyms available"+ColorConstants.RESET);
+            }
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
@@ -245,13 +259,13 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
 //	                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
             }
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return gyms;
     }
 
-    public List<Slot> getPossibleSlots(String gymId) {
+    public List<Slot> getPossibleSlots(String gymId) throws NoSlotsFoundException {
         Connection connection = null;
         List<Slot> slots = new ArrayList<Slot>();
         String query = "select slotId, gymId, startTime, endTime, trainer, numOfSeats, numOfSeatsBooked from slot where gymId =  ?";
@@ -263,6 +277,9 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
+            if(rs==null){
+                throw new NoSlotsFoundException(ColorConstants.RED+"There are no slots found"+ColorConstants.RESET);
+            }
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
@@ -276,7 +293,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
 //	                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
             }
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return slots;
@@ -306,7 +323,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
         } catch (SQLException e) {
 
             // print SQL exception information
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
     }
 
@@ -325,13 +342,13 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             // Step 4: Process the ResultSet object.
             return rs.next();
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return false;
     }
 
-    public boolean checkGymApproval(String gymId) {
+    public boolean checkGymApproval(String gymId) throws GymOwnerNotApprovedExceptions {
         Connection connection = null;
         String query = "select isVerified from gym where gymId =  ?";
         try {connection = DBUtils.getConnection();
@@ -342,29 +359,32 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
+            if(rs==null){
+                throw new GymOwnerNotApprovedExceptions(ColorConstants.RED+"Gym owner not approved"+ColorConstants.RESET);
+            }
 
             // Step 4: Process the ResultSet object.
             return rs.next();
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return false;
     }
 
-    public static void printSQLException(SQLException ex) {
-        for (Throwable e : ex) {
-            if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
-                Throwable t = ex.getCause();
-                while (t != null) {
-                    System.out.println("Cause: " + t);
-                    t = t.getCause();
-                }
-            }
-        }
-    }
+//    public static void printSQLException(SQLException ex) {
+//        for (Throwable e : ex) {
+//            if (e instanceof SQLException) {
+//                e.printStackTrace(System.err);
+//                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
+//                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
+//                System.err.println("Message: " + e.getMessage());
+//                Throwable t = ex.getCause();
+//                while (t != null) {
+//                    System.out.println("Cause: " + t);
+//                    t = t.getCause();
+//                }
+//            }
+//        }
+//    }
 }

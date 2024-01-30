@@ -7,14 +7,17 @@ import com.flipkart.bean.Booking;
 import com.flipkart.bean.Gym;
 import com.flipkart.bean.Slot;
 import com.flipkart.bean.GymUser;
+import com.flipkart.exception.GymNotApprovedExceptions;
+import com.flipkart.exception.GymNotFoundException;
 import com.flipkart.exception.NoSlotsFoundException;
+import com.flipkart.exception.UserNotFoundException;
 //import com.flipkart.exception.NoSlotsFoundException;
 
 public interface GymCustomerDAO {
-    public List<Gym> fetchGymList();
+    public List<Gym> fetchGymList() throws GymNotFoundException;
     public int editGymUserDetails(GymUser user);
 
-    public GymUser getGymUserDetails(String email);
+    public GymUser getGymUserDetails(String email) throws UserNotFoundException;
 
     public List<Slot> fetchSlotList(String gymId) throws NoSlotsFoundException;
 
@@ -28,9 +31,9 @@ public interface GymCustomerDAO {
 
 //    public void cancelBooking(String slotId, String email, String date);
 
-    public boolean checkSlotExists(String slotId, String gymId);
+    public boolean checkSlotExists(String slotId, String gymId) throws NoSlotsFoundException;
 
-    public boolean checkGymApprove(String gymId);
+    public boolean checkGymApprove(String gymId) throws GymNotApprovedExceptions;
 
     public int getNumberOfSeatsBooked(String slotId);
 

@@ -33,7 +33,7 @@ public class PersonDAOImpl implements PersonDAO {
             }
 
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
 
         return isPersonValid;
@@ -67,7 +67,7 @@ public class PersonDAOImpl implements PersonDAO {
                 registerSuccess = true;
 
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
 
         return registerSuccess;
@@ -102,25 +102,25 @@ public class PersonDAOImpl implements PersonDAO {
                 registerSuccess = true;
 
         } catch (SQLException e) {
-            printSQLException(e);
+            System.out.println("There is an issue with the SQL code");
         }
 
         return registerSuccess;
     }
 
-    public static void printSQLException(SQLException ex) {
-        for (Throwable e : ex) {
-            if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
-                Throwable t = ex.getCause();
-                while (t != null) {
-                    System.out.println("Cause: " + t);
-                    t = t.getCause();
-                }
-            }
-        }
-    }
+//    public static void printSQLException(SQLException ex) {
+//        for (Throwable e : ex) {
+//            if (e instanceof SQLException) {
+//                e.printStackTrace(System.err);
+//                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
+//                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
+//                System.err.println("Message: " + e.getMessage());
+//                Throwable t = ex.getCause();
+//                while (t != null) {
+//                    System.out.println("Cause: " + t);
+//                    t = t.getCause();
+//                }
+//            }
+//        }
+//    }
 }

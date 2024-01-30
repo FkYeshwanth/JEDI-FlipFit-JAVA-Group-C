@@ -3,6 +3,7 @@ package com.flipkart.client;
 import java.util.*;
 
 import com.flipkart.bean.Person;
+import com.flipkart.exception.InvalidInputException;
 import com.flipkart.service.PersonFlipFitService;
 import com.flipkart.constants.*;
 
@@ -60,8 +61,14 @@ public class ApplicationFlipFitMenu {
             System.out.print("\nEnter Your Choice: ");
 
             Scanner in = new Scanner(System.in);
+            int choice=4;
+            try {
+                choice = in.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println(ColorConstants.RED+"Please enter a numeric value between [1-4]"+ColorConstants.RESET);
+                continue;
+            }
 
-            int choice = in.nextInt();
             switch (choice) {
                 case 1:
                     login();
@@ -86,7 +93,6 @@ public class ApplicationFlipFitMenu {
                     System.out.println(ColorConstants.RED + "Wrong choice" + ColorConstants.RESET);
             }
         }
-
 
     }
 

@@ -3,6 +3,10 @@ package com.flipkart.service;
 import com.flipkart.bean.*;
 import java.util.*;
 import com.flipkart.DAO.AdminDAOImpl;
+import com.flipkart.exception.GymNotFoundException;
+import com.flipkart.exception.GymOwnerNotFoundException;
+import com.flipkart.exception.NoPendingGymOwnerRequest;
+import com.flipkart.exception.NoPendingGymRequest;
 
 
 public class AdminFlipFitService implements AdminFlipFitInterface{
@@ -13,7 +17,15 @@ public class AdminFlipFitService implements AdminFlipFitInterface{
      */
     public List<GymOwner> getGymOwners() {
         System.out.println("Fetched gym owner details successfully!");
-        return adminDAO.getAllGymOwners();
+        List<GymOwner> gymOwnersList=null;
+        try{
+            gymOwnersList= adminDAO.getAllGymOwners();
+        }
+        catch (GymOwnerNotFoundException ex)
+        {
+            System.out.println("There are no gym owners");
+        }
+        return gymOwnersList;
     }
     /**
      * Obtains a list of every gym within the system.
@@ -21,7 +33,15 @@ public class AdminFlipFitService implements AdminFlipFitInterface{
      */
     public List<Gym> getGym() {
 //        System.out.println("Fetched gym details successfully!");
-        return adminDAO.getAllGyms();
+        List<Gym> gymList=null;
+        try{
+            gymList=adminDAO.getAllGyms();
+        }
+        catch (GymNotFoundException ex){
+            System.out.println("There are no gyms found");
+        }
+        return gymList;
+
     }
 
     /**
@@ -30,7 +50,14 @@ public class AdminFlipFitService implements AdminFlipFitInterface{
      */
     public List<GymOwner> viewAllPendingGymOwnerRequests() {
         System.out.println("Fetched pending gym owner details successfully!");
-        return adminDAO.getPendingGymOwnerRequests();
+        List<GymOwner> pendingReq=null;
+        try{
+            pendingReq=adminDAO.getPendingGymOwnerRequests();
+        }
+        catch (NoPendingGymOwnerRequest ex){
+            System.out.println("There are no pending gym owner request");
+        }
+        return pendingReq;
     }
 
     /**
@@ -57,7 +84,13 @@ public class AdminFlipFitService implements AdminFlipFitInterface{
      */
     public List<Gym> viewAllPendingGymRequests() {
         System.out.println("Fetched pending gym requests successfully!");
-        return adminDAO.getPendingGymRequests();
+        List<Gym> gymReqList=null;
+        try{
+            gymReqList=adminDAO.getPendingGymRequests();
+        }catch (NoPendingGymRequest ex){
+            System.out.println("There is no pending gym request");
+        }
+        return gymReqList;
     }
     /**
      * Approves a single Gym object request.

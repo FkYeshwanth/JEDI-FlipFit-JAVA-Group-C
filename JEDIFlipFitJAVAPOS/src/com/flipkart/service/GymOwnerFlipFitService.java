@@ -8,6 +8,9 @@ import com.flipkart.bean.GymOwner;
 import com.flipkart.bean.Slot;
 import com.flipkart.DAO.*;
 import com.flipkart.constants.ColorConstants;
+import com.flipkart.exception.GymNotFoundException;
+import com.flipkart.exception.GymOwnerNotApprovedExceptions;
+import com.flipkart.exception.GymOwnerNotFoundException;
 
 import java.util.*;
 
@@ -24,7 +27,14 @@ public class GymOwnerFlipFitService implements GymOwnerFlipFitInterface {
      */
     public GymOwner getProfile(String email) {
         System.out.println(ColorConstants.GREEN +"Fetched Gym owner details successfully! " + email+ColorConstants.RESET);
-        return gymOwnerDAO.getGymOwnerDetails(email);
+        GymOwner gymOwner=null;
+        try{
+            gymOwner=gymOwnerDAO.getGymOwnerDetails(email);;
+        }
+        catch (GymOwnerNotFoundException ex){
+            System.out.println("There is no gym owners available");
+        }
+        return gymOwner;
     }
     /**
      * Gives functionality of updating gym onwer's personal data.
@@ -59,7 +69,13 @@ public class GymOwnerFlipFitService implements GymOwnerFlipFitInterface {
      */
     public List<Gym> getGymDetail(String gymOwnerEmail) {
         System.out.println(ColorConstants.GREEN +"\nFetched gym details successfully! " + gymOwnerEmail+ ColorConstants.RESET);
-        return gymOwnerDAO.getGymsOfGymOwner(gymOwnerEmail);
+        List<Gym> gymList=null;
+        try{
+            gymList=gymOwnerDAO.getGymsOfGymOwner(gymOwnerEmail);
+        }catch (GymNotFoundException ex){
+            System.out.println("There is no gyms found");
+        }
+        return gymList;
     }
     /**
      * This method allows a gym owner to add details of a slot.
@@ -83,6 +99,12 @@ public class GymOwnerFlipFitService implements GymOwnerFlipFitInterface {
      * @return true if the gym is verified else returns false;
      */
     public boolean isGymApproved(String gymId) {
-        return gymOwnerDAO.checkGymApproval(gymId);
+        boolean approved=false;
+        try{
+            approved= gymOwnerDAO.checkGymApproval(gymId);
+        }catch (GymOwnerNotApprovedExceptions ex){
+            System.out.println("Gym owner not approved");
+        }
+        return approved;
     }
 }
