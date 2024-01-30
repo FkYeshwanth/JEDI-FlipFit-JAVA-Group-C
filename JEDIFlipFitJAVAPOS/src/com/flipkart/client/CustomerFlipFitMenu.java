@@ -13,10 +13,17 @@ import com.flipkart.bean.Slot;
 import com.flipkart.service.GymUserFlipFitService;
 import com.flipkart.service.PersonFlipFitService;
 
+/**
+ * This class provides a menu-driven interface for the customers (Gym Users) using the FlipFit application.
+ */
 public class CustomerFlipFitMenu {
 	GymUser customer = new GymUser();
 	GymUserFlipFitService customerBusiness = new GymUserFlipFitService();
 	Scanner sc = new Scanner(System.in);
+	/**
+	 * Registers a new gym user by taking user input for email, password, name, phone number, age, and address.
+	 * Registers the gym user using the PersonDAOImpl.
+	 */
 	public void registerGymUser() {
 		System.out.print("Enter email: ");
 		customer.setName(sc.next());
@@ -37,6 +44,9 @@ public class CustomerFlipFitMenu {
 
 	}
 
+	/**
+	 * Displays the list of gyms in Bangalore and their details.
+	 */
 	public void viewGyms(String email) throws ParseException, NoSlotsFoundException {
 		getGyms();
 		System.out.print("Enter gym ID: ");
@@ -90,6 +100,15 @@ public class CustomerFlipFitMenu {
 
 	}
 
+	/**
+	 * Allows the user to book a slot for a specified gym, date, and slot.
+	 * Displays available slots and prompts the user to enter the slot ID for booking.
+	 *
+	 * @param email The email of the gym user booking the slot.
+	 * @throws ParseException             When there is an error parsing the date.
+	 * @throws NoSlotsFoundException       When no slots are found for the specified gym and date.
+	 * @throws SeatsNotavailableException When no seats are available for booking in the specified slot.
+	 */
 	public void bookSlot(String email) throws ParseException, NoSlotsFoundException {
 		getGyms();
 		System.out.print("Enter gym ID: ");
@@ -127,6 +146,11 @@ public class CustomerFlipFitMenu {
 		}
 	}
 
+	/**
+	 * Allows the user to edit their profile details such as password, name, phone number, age, and address.
+	 *
+	 * @param email The email of the gym user editing the profile.
+	 */
 	public void editProfile(String email) {
 		System.out.println("==========================================");
 		System.out.println("              Edit Profile               ");
@@ -192,7 +216,9 @@ public class CustomerFlipFitMenu {
 		}
 		System.out.println("Successfully edited your profile");
 	}
-
+	/**
+	 * Displays the list of gyms in the user-specified city and their details.
+	 */
 	public void getGyms() {
 		System.out.print("Enter your city: ");
 		List<Gym> gyms = customerBusiness.getGymInCity(sc.next());
@@ -201,7 +227,9 @@ public class CustomerFlipFitMenu {
 			System.out.printf("| %-10s | %-20s | %-20s | \n",gym.getGymId(),gym.getOwnerEmail(),gym.getGymName());
 		}
 	}
-
+	/**
+	 * Displays the list of gyms in Bangalore and their details.
+	 */
 	public void getGymsInBangalore() {
 		List<Gym> gyms = customerBusiness.getGymInCity("Bangalore");
 		System.out.printf("| %-10s | %-20s | %-20s | \n","Gym Id: ","Gym Owner Email: ","Gym Name: ");
@@ -209,7 +237,11 @@ public class CustomerFlipFitMenu {
 			System.out.printf("| %-10s | %-20s | %-20s | \n",gym.getGymId(),gym.getOwnerEmail(),gym.getGymName());
 		}
 	}
-
+	/**
+	 * Displays the profile details of the gym user.
+	 *
+	 * @param email The email of the gym user whose profile is being viewed.
+	 */
 	public void getProfile(String email) {
 		System.out.println("User Profile: ");
 //        try {
@@ -229,12 +261,24 @@ public class CustomerFlipFitMenu {
 //        customerBusiness.viewProfile(email);
 
 	}
-
+	/**
+	 * Cancels a booking for a specified gym user and booking ID.
+	 *
+	 * @param email The email of the gym user canceling the booking.
+	 */
 	public void cancelBooking(String email) {
 		System.out.print("Enter booking ID that you want to cancel: ");
 		String bookingId = sc.next();
 		customerBusiness.cancelBooking(bookingId, email);
 	}
+	/**
+	 * Displays the main menu for gym users and handles their choices.
+	 *
+	 * @param email The email of the gym user accessing the menu.
+	 * @throws ParseException             When there is an error parsing the date.
+	 * @throws NoSlotsFoundException       When no slots are found for the specified gym and date.
+	 * @throws SeatsNotavailableException When no seats are available for booking in the specified slot.
+	 */
 	public void customerMenu(String email) throws ParseException, NoSlotsFoundException, SeatsNotavailableException {
 		int choice = 0;
 		try{
@@ -276,13 +320,17 @@ public class CustomerFlipFitMenu {
 
 		}
 		catch (InputMismatchException ex){
-			System.out.println("Input mismatch");
+			System.out.println("Input mismatch" +
+					"");
 		}
 
 
 
 	}
-
+	/**
+	 * Registers a new gym user by taking user input for email, password, name, phone number, age, and address.
+	 * Registers the gym user using the PersonFlipFitService.
+	 */
 	public void registerCustomer() {
 		GymUser customer = new GymUser();
 		System.out.print("\u001B[36mEnter email: ");
@@ -304,8 +352,8 @@ public class CustomerFlipFitMenu {
 		String address=sc.next();
 		customer.setAddress(address);
 //		UserBusiness userBusiness = new UserBusiness();
-	//	PersonFlipFitService temp = new PersonFlipFitService();
-	//	temp.registerCustomer(customer);
+		//	PersonFlipFitService temp = new PersonFlipFitService();
+		//	temp.registerCustomer(customer);
 		PersonDAOImpl personDAOImpl = new PersonDAOImpl();
 		personDAOImpl.registerCustomer(customer);
 

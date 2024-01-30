@@ -184,10 +184,11 @@ public class GymUserFlipFitService implements GymUserFlipFitInterface{
     }
     /**
      * Performs booking operation for the given customer email on the given date for the given slotId
-     * @param email the email of customer who requested the booking operation
-     * @param slotId the slot id in which the customer wants to book a seat
-     * @param date the date on which the customer wants to book a seat
-     * @return returns integer signal based on the customer's booking status
+     *
+     * @param email  The email of the customer who requested the booking operation.
+     * @param slotId The slot id in which the customer wants to book a seat.
+     * @param date   The date on which the customer wants to book a seat.
+     * @return Returns an integer signal based on the customer's booking status.
      */
     public int bookSlot(String gymId, String slotId, String email, String date) {
 //        List<Booking> tempBookings = getBookings(email);
@@ -334,9 +335,10 @@ public class GymUserFlipFitService implements GymUserFlipFitInterface{
     }
     /**
      * Checks if the slot is already booked or not
-     * @param slotId the slot id for which the booking status is requested
-     * @param date the date on which the booking status is requested
-     * @return returns true if the slot id for the given date is fully booked else returns false
+     *
+     * @param slotId The slot id for which the booking status is requested.
+     * @param date   The date on which the booking status is requested.
+     * @return Returns true if the slot id for the given date is fully booked else returns false.
      */
     public boolean isSlotBooked(String slotId, Date date) {
         for (Slot s : slots) {
@@ -349,12 +351,14 @@ public class GymUserFlipFitService implements GymUserFlipFitInterface{
         }
         return false;
     }
+
     /**
      * Checks if the customer has already booked a seat in the same slot for the given date
-     * @param slotId the slot id for which the booking status is requested
-     * @param date the date on which the booking status is requested
-     * @param customerEmail the email of customer for which the booking status is getting checked
-     * @return returns true if the customer has already booked a seat on the same date in the same slot
+     *
+     * @param slotId        The slot id for which the booking status is requested.
+     * @param date          The date on which the booking status is requested.
+     * @param customerEmail The email of the customer for which the booking status is getting checked.
+     * @return Returns true if the customer has already booked a seat on the same date in the same slot.
      */
     public boolean hasBookedSlotAlready(String slotId, String customerEmail, Date date) {
         for (Booking b : bookings) {

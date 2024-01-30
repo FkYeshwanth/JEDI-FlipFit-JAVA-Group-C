@@ -1,71 +1,81 @@
 /**
- *
+ * Service class providing functionality for gym owner operations in the FlipFit system.
  */
 package com.flipkart.service;
 
 import com.flipkart.bean.Gym;
 import com.flipkart.bean.GymOwner;
 import com.flipkart.bean.Slot;
-import com.flipkart.DAO.*;
+import com.flipkart.DAO.GymOwnerDAOImpl;
 import com.flipkart.constants.ColorConstants;
 import com.flipkart.exception.GymNotFoundException;
 import com.flipkart.exception.GymOwnerNotApprovedExceptions;
 import com.flipkart.exception.GymOwnerNotFoundException;
 
-import java.util.*;
+import java.util.List;
 
 /**
- *
+ * Service class providing functionality for gym owner operations in the FlipFit system.
  */
 public class GymOwnerFlipFitService implements GymOwnerFlipFitInterface {
+    // Instance of GymOwnerDAOImpl to interact with the data layer
     GymOwnerDAOImpl gymOwnerDAO = new GymOwnerDAOImpl();
 
     /**
-     * Obtains gym owner's profile details
-     * @param email the email of the gym owner whose profile details are requested
-     * @return GymOwner the gym owner object
+     * Retrieves gym owner's profile details.
+     *
+     * @param email The email of the gym owner whose profile details are requested.
+     * @return GymOwner object representing the gym owner's profile.
      */
     public GymOwner getProfile(String email) {
-        System.out.println(ColorConstants.GREEN +"Fetched Gym owner details successfully! " + email+ColorConstants.RESET);
-        GymOwner gymOwner=null;
-        try{
-            gymOwner=gymOwnerDAO.getGymOwnerDetails(email);;
-        }
-        catch (GymOwnerNotFoundException ex){
+        System.out.println(ColorConstants.GREEN + "Fetched Gym owner details successfully! " + email + ColorConstants.RESET);
+        GymOwner gymOwner = null;
+        try {
+            gymOwner = gymOwnerDAO.getGymOwnerDetails(email);
+        } catch (GymOwnerNotFoundException ex) {
             System.out.println("There is no gym owners available");
         }
         return gymOwner;
     }
+
     /**
-     * Gives functionality of updating gym onwer's personal data.
-     * @param gymOwnerNew the gymOwner object in which the profile data needs to be updated
-     * @param email the gymOwner email for which the profile data needs to be update
+     * Allows the gym owner to update their profile.
+     *
+     * @param gymOwnerOld Original GymOwner object representing the current profile.
+     * @param gymOwnerNew Updated GymOwner object with the new profile information.
      */
     public void editProfile(GymOwner gymOwnerOld, GymOwner gymOwnerNew) {
-        gymOwnerDAO.editGymOwnerDetails(gymOwnerOld,gymOwnerNew);
+        gymOwnerDAO.editGymOwnerDetails(gymOwnerOld, gymOwnerNew);
         System.out.println(ColorConstants.GREEN + "\nEdited your profile Successfully!" + ColorConstants.RESET);
     }
+
     /**
-     * This method allows a gym owner to add details of a particular gym.
-     * @param gym the gym object representing the gym details
+     * Allows a gym owner to add details of a particular gym.
+     *
+     * @param gym Gym object representing the gym details.
+     * @return True if the addition is successful, false otherwise.
      */
     public boolean addGym(Gym gym) {
         gymOwnerDAO.addGym(gym);
-        System.out.println(ColorConstants.GREEN + "\nAdded Gym Successfully!" + gym.getGymId() + ColorConstants.RESET );
+        System.out.println(ColorConstants.GREEN + "\nAdded Gym Successfully!" + gym.getGymId() + ColorConstants.RESET);
         return true;
     }
+
     /**
-     * This method allows a gym owner to edit details of a particular gym.
-     * @param gym the gym object representing the gym details
+     * Allows a gym owner to edit details of a particular gym.
+     *
+     * @param gym Gym object representing the gym details.
      */
     public void editGym(Gym gym) {
         gymOwnerDAO.editGym(gym);
-        System.out.println(ColorConstants.GREEN + "\nEdited Gym Details Successfully! " + gym.getGymId()+ ColorConstants.RESET );
+        System.out.println(ColorConstants.GREEN + "\nEdited Gym Details Successfully! " + gym.getGymId() + ColorConstants.RESET);
     }
+
     /**
-     * Obtains all the gyms that owned by the given gym owner.
-     * @param gymOwnerEmail the gym owner's email for which the list of gyms is requested
-     * @return list of gyms owned by the given gym owner
+     * Retrieves all the gyms owned by the given gym owner.
+     *
+     * @param gymOwnerEmail The gym owner's email for which the list of gyms is requested.
+     * @return List of gyms owned by the given gym owner.
      */
     public List<Gym> getGymDetail(String gymOwnerEmail) {
         System.out.println(ColorConstants.GREEN +"\nFetched gym details successfully! " + gymOwnerEmail+ ColorConstants.RESET);
@@ -77,32 +87,38 @@ public class GymOwnerFlipFitService implements GymOwnerFlipFitInterface {
         }
         return gymList;
     }
+
     /**
-     * This method allows a gym owner to add details of a slot.
-     * @param slot the slot object representing the slot details
+     * Allows a gym owner to add details of a slot.
+     *
+     * @param slot Slot object representing the slot details.
      */
     public void addSlot(Slot slot) {
         gymOwnerDAO.addSlot(slot);
-        System.out.println(ColorConstants.GREEN + "\nAdded slot successfully!"+ ColorConstants.RESET);
+        System.out.println(ColorConstants.GREEN + "\nAdded slot successfully!" + ColorConstants.RESET);
     }
+
     /**
      * Checks if the gym owner is verified or not.
-     * @param email the gym owner's email
-     * @return true if the gym owner is verified else returns false;
+     *
+     * @param email The gym owner's email.
+     * @return True if the gym owner is verified, false otherwise.
      */
     public boolean isApproved(String email) {
         return gymOwnerDAO.checkOwnerApproval(email);
     }
+
     /**
      * Checks if the gym is verified or not.
-     * @param gymId the gym id for which the verification status is requested
-     * @return true if the gym is verified else returns false;
+     *
+     * @param gymId The gym id for which the verification status is requested.
+     * @return True if the gym is verified, false otherwise.
      */
     public boolean isGymApproved(String gymId) {
-        boolean approved=false;
-        try{
-            approved= gymOwnerDAO.checkGymApproval(gymId);
-        }catch (GymOwnerNotApprovedExceptions ex){
+        boolean approved = false;
+        try {
+            approved = gymOwnerDAO.checkGymApproval(gymId);
+        } catch (GymOwnerNotApprovedExceptions ex) {
             System.out.println("Gym owner not approved");
         }
         return approved;

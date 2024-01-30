@@ -1,45 +1,49 @@
 package com.flipkart.client;
 
-import java.util.*;
+import java.util.Scanner;
 
 import com.flipkart.bean.Person;
-import com.flipkart.exception.InvalidInputException;
+import com.flipkart.constants.ColorConstants;
 import com.flipkart.service.PersonFlipFitService;
-import com.flipkart.constants.*;
+import com.flipkart.exception.InvalidInputException;
 
+/**
+ * This class provides a menu-driven interface for the FlipFit application.
+ */
 public class ApplicationFlipFitMenu {
 
+    /**
+     * Authenticates the user and navigates to the respective menu based on the provided credentials.
+     * Handles login for Admin, Customer, and Gym Owner roles.
+     *
+     * @throws Exception Any exception that might occur during the login process.
+     */
     public static void login() throws Exception {
         Scanner in = new Scanner(System.in);
         System.out.println("__________________________________________________________________________________\n");
         System.out.println("Enter LogIn Details\n");
         System.out.print("Enter Email: ");
-        String PersonEmail = in.next();
+        String personEmail = in.next();
         System.out.print("Enter Password: ");
         String password = in.next();
         System.out.print("Enter Role Id: ( 1=Admin / 2=Customer / 3=Owner )");
         String roleId = in.next();
-        Person Person = new Person(PersonEmail, password, roleId);
+        Person person = new Person(personEmail, password, roleId);
         PersonFlipFitService personService = new PersonFlipFitService();
         if (roleId.equalsIgnoreCase("1")) {
             AdminFlipFitMenu admin = new AdminFlipFitMenu();
             admin.AdminMenu(in);
-        }
-        else if (personService.authenticatePerson(Person)) {
+        } else if (personService.authenticatePerson(person)) {
             System.out.println("__________________________________________________________________________________\n");
             System.out.println(
-                    ColorConstants.GREEN + "Welcome " + PersonEmail + "! You are logged in." + ColorConstants.RESET);
+                    ColorConstants.GREEN + "Welcome " + personEmail + "! You are logged in." + ColorConstants.RESET);
 
             if (roleId.equalsIgnoreCase("2")) {
-
                 CustomerFlipFitMenu customer = new CustomerFlipFitMenu();
-                customer.customerMenu(PersonEmail);
-
+                customer.customerMenu(personEmail);
             } else if (roleId.equalsIgnoreCase("3")) {
-
                 GymOwnerFlipFitMenu gymOwner = new GymOwnerFlipFitMenu();
-                gymOwner.gymOwnerMenu(in, PersonEmail);
-
+                gymOwner.gymOwnerMenu(in, personEmail);
             } else {
                 System.out.println(ColorConstants.RED + "Wrong Choice!" + ColorConstants.RESET);
             }
@@ -48,6 +52,12 @@ public class ApplicationFlipFitMenu {
         }
     }
 
+    /**
+     * Displays the main application menu and handles user choices.
+     * Allows users to login, register as a customer, register as a gym owner, or exit the application.
+     *
+     * @throws Exception Any exception that might occur during the execution of the menu.
+     */
     public static void applicationMenu() throws Exception {
         boolean recur = true;
         System.out.println(ColorConstants.GREEN + "Welcome to the FlipFit Application!" + ColorConstants.RESET);
@@ -61,11 +71,11 @@ public class ApplicationFlipFitMenu {
             System.out.print("\nEnter Your Choice: ");
 
             Scanner in = new Scanner(System.in);
-            int choice=4;
+            int choice = 4;
             try {
                 choice = in.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println(ColorConstants.RED+"Please enter a numeric value between [1-4]"+ColorConstants.RESET);
+            } catch (Exception e) {
+                System.out.println(ColorConstants.RED + "Please enter a numeric value between [1-4]" + ColorConstants.RESET);
                 continue;
             }
 
@@ -93,12 +103,15 @@ public class ApplicationFlipFitMenu {
                     System.out.println(ColorConstants.RED + "Wrong choice" + ColorConstants.RESET);
             }
         }
-
     }
 
+    /**
+     * Main method to start the FlipFit application.
+     *
+     * @param args Command-line arguments (not used in this application).
+     * @throws Exception Any exception that might occur during the execution of the main method.
+     */
     public static void main(String[] args) throws Exception {
-        // TODO Auto-generated method stub
         applicationMenu();
     }
-
 }
