@@ -53,7 +53,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.setString(2, gymOwnerDetails.getPassword());
             preparedStatement.setString(3, "3");
 
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -78,7 +78,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.setString(6, gymOwnerDetails.getPanNumber());
             preparedStatement.setBoolean(7, gymOwnerDetails.isVerified());
 
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -98,7 +98,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.setString(2, newgymOwnerDetails.getPassword());
             preparedStatement.setString(3, "3");
             preparedStatement.setString(4, oldgymOwnerDetails.getEmail());
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -121,7 +121,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.setString(5, newgymOwnerDetails.getPanNumber());
             preparedStatement.setBoolean(6, newgymOwnerDetails.isVerified());
             preparedStatement.setString(7, oldgymOwnerDetails.getEmail());
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -139,7 +139,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, gymId);
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -181,7 +181,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.setInt(6, gymDetails.getSeatsPerSlotCount());
             preparedStatement.setBoolean(7, gymDetails.isVerified());
 
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -209,7 +209,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.setBoolean(7, gymDetails.isVerified());
             preparedStatement.setString(8, gymDetails.getGymId());
 
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -227,7 +227,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, gymOwnerId);
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -260,7 +260,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, gymId);
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -300,7 +300,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.setInt(6, slot.getNumOfSeats());
             preparedStatement.setInt(7, slot.getNumOfSeatsBooked());
 
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -318,7 +318,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -339,7 +339,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, gymId);
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
 

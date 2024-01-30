@@ -6,7 +6,9 @@ import com.flipkart.bean.Booking;
 import com.flipkart.bean.Gym;
 import com.flipkart.bean.Slot;
 import com.flipkart.exception.NoSlotsFoundException;
-import com.flipkart.utils.IdGenerator;
+import com.flipkart.utils.*;
+import com.flipkart.constants.SQLConstants;
+
 //import com.flipkart.utils.IdGenerator;
 
 
@@ -15,9 +17,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class GymUserFlipFitService implements GymUserFlipFitInterface{
 
-    GymCustomerDAOImpl test = new GymCustomerDAOImpl();
+    GymCustomerDAO test = new GymCustomerDAOImpl();
     AdminFlipFitService adminBusiness = new AdminFlipFitService();
     GymCustomerDAOImpl gymCustomerDAO=new GymCustomerDAOImpl();
 
@@ -73,17 +80,12 @@ public class GymUserFlipFitService implements GymUserFlipFitInterface{
 //        gyms.add(gym4);
     }
 
-    /**
-     * Obtains customer's profile details
-     * @param customer the Customer object for which the profile details are requested
-     * @return Customer the Customer's object
-     */
-    public GymUser getProfile(GymUser customer) {
-        for (GymUser cust : customers) {
-            if (cust.getEmail().equals(customer.getEmail()))
-                return cust;
-        }
-        return null;
+
+    public GymUser getProfile(String email) {
+        GymUser customers = gymCustomerDAO.getGymUserDetails(email);
+//        gymCustomerDAO.get
+        return customers;
+
     }
 
     /**
@@ -91,17 +93,19 @@ public class GymUserFlipFitService implements GymUserFlipFitInterface{
      * @param customer the Customer object for which the profile data needs to be updated
      */
     public void editProfile(GymUser customer) {
-        for (GymUser cust : customers) {
-            if (cust.getEmail().equals(customer.getEmail())) {
-                cust.setName(customer.getName());
-                cust.setPhoneNumber(customer.getPhoneNumber());
-                cust.setAge(customer.getAge());
-                cust.setAddress(customer.getAddress());
-                customers.add(cust);
-//                System.out.println(ColorConstants.GREEN+"Successfully edited your profile\ns"+ColorConstants.RESET);
-                break;
-            }
-        }
+//        for (GymUser cust : customers) {
+//            if (cust.getEmail().equals(customer.getEmail())) {
+//                cust.setName(customer.getName());
+//                cust.setPhoneNumber(customer.getPhoneNumber());
+//                cust.setAge(customer.getAge());
+//                cust.setAddress(customer.getAddress());
+//                customers.add(cust);
+////                System.out.println(ColorConstants.GREEN+"Successfully edited your profile\ns"+ColorConstants.RESET);
+//                break;
+//            }
+//        }
+
+        int updatedCount = gymCustomerDAO.editGymUserDetails(customer);
     }
     /**
      * Obtains all the bookings done by the given customer email.
@@ -110,7 +114,14 @@ public class GymUserFlipFitService implements GymUserFlipFitInterface{
      */
     public List<Booking> getBookings(String email) {
         System.out.println("Get bookings function");
-        return gymCustomerDAO.fetchBookedSlots(email);
+        List<Booking> customerBookings = gymCustomerDAO.fetchBookedSlots(email);
+        System.out.println("Customer booking :");
+        int count = 0;
+        for(Booking b : customerBookings) {
+            System.out.print(++count);
+            System.out.println(". "+b.getBookingId()+" "+b.getSlotId() + " "+b.getGymId() + " " + b.getDate());
+        }
+        return customerBookings;
 
 //        List<Booking> customerBookings = new ArrayList<Booking>();
 //
@@ -128,15 +139,9 @@ public class GymUserFlipFitService implements GymUserFlipFitInterface{
      * @return returns true of the booking gets cancelled successfully else returns false
      */
     public boolean cancelBooking(String bookingId, String email) {
-
-        for (Booking booking : bookings) {
-            if (booking.getBookingId().equals(bookingId)) {
-                bookings.remove(booking);
-//                System.out.println(ColorConstants.GREEN + "Successfully cancelled your booking" + ColorConstants.RESET);
-                return true;
-            }
-        }
-        return false;
+        System.out.println("Successfully cancelled the booking ");
+        if (gymCustomerDAO.cancelBooking(bookingId, email)) return true;
+        else return false;
     }
     /**
      * Obtains all the gyms for the given city.
@@ -284,7 +289,7 @@ public class GymUserFlipFitService implements GymUserFlipFitInterface{
         if(test.alreadyBooked(slotId, email, date))
         {
             //System.out.println("entered already booked");
-            test.cancelBooking(slotId, email,date);
+            test.cancelBooking(slotId, email);
             test.updateNumOfSeats(slotId,bookedSeatsNum--);
             if(bookedSeatsNum<totalSeatsNum)
             {

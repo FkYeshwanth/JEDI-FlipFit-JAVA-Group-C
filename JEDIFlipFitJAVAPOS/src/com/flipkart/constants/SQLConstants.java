@@ -9,14 +9,14 @@ package com.flipkart.constants;
 public class SQLConstants {
     public static final String SQL_FETCH_SLOT_LIST = "Select * From Slot Where gymId=?;";
     public static final String SQL_SELECT_USER_LOGIN_CREDENTIAL = "select email, password, role from user where email = ?;";
-    public static final String SQL_SELECT_GYM_OWNER_DETAILS = "select email, name, phoneNum, aadharNum, panNum from gymOwner where email = ?;";
-    public static final String SQL_INSERT_USER = "INSERT INTO user (email, password, role) VALUES (?, ?, ?);";
-    public static final String SQL_UPDATE_USER = "update user set email = ?, password = ?, role = ?" + " where email = ?;";
+    public static final String SQL_SELECT_GYM_OWNER_DETAILS = "select email, name, phoneNumber, aadharNum, panNum from gymOwner where email = ?;";
+    public static final String SQL_INSERT_USER = "INSERT INTO person (email, password, role) VALUES (?, ?, ?);";
+    public static final String SQL_UPDATE_USER = "update person set email = ?, password = ?, role = ?" + " where email = ?;";
 
-    public static final String SQL_VIEW_CUSTOMER = "SELECT * From Customer from Customer where email= ?;";
-    public static final String SQL_UPDATE_CUSTOMER="UPDATE customer set name=? ,phoneNum=? ,age=? ,address=? where email=?;";
-    public static final String SQL_INSERT_GYM_OWNER = "INSERT INTO gymOwner (email, name, phoneNum, aadharNum, panNum, isVerified) VALUES (?, ?, ?, ?, ?, ?);";
-    public static final String SQL_UPDATE_GYM_OWNER = "UPDATE gymOwner set email = ?, name = ?, phoneNum = ?, aadharNum = ?, panNum = ?, isVerified = ? where email = ?;";
+    public static final String SQL_VIEW_CUSTOMER = "SELECT * From gymuser where email= ?;";
+    public static final String SQL_UPDATE_CUSTOMER="UPDATE gymuser set name=? ,phoneNumber=? ,age=? ,address=? where email=?;";
+    public static final String SQL_INSERT_GYM_OWNER = "INSERT INTO gymowner (email, name, phoneNumber, aadharNum, panNum, isVerified) VALUES (?, ?, ?, ?, ?, ?);";
+    public static final String SQL_UPDATE_GYM_OWNER = "UPDATE gymowner set email = ?, name = ?, phoneNumber = ?, aadharNum = ?, panNum = ?, isVerified = ? where email = ?;";
 
     public static final String SQL_READ_GYM = "select gymId, gymName, ownerEmail, address, slotCount, seatsPerSlotCount, isVerified from gym where gymId = ?;";
     public static final String SQL_INSERT_GYM = "INSERT INTO gym"
@@ -42,8 +42,8 @@ public class SQLConstants {
     public static final String SQL_SELECT_VERIFICATION_STATUS_GYM = "select isVerified from gym where gymId =  ?;";
     public static final String SQL_SELECT_VERIFICATION_STATUS_GYM_OWNER = "select isVerified from gym where gymId =  ?;";
 
-    public static final String SQL_SELECT_ALL_GYM_OWNERS = "select email, name, phoneNum, aadharNum, panNum, isVerified from gymOwner;";
-    public static final String SQL_SELECT_PENDING_GYM_OWNERS = "select email, name, phoneNum, aadharNum, panNum, isVerified from gymOwner where isVerified = ?;";
+    public static final String SQL_SELECT_ALL_GYM_OWNERS = "select email, name, phoneNumber, aadharNum, panNum, isVerified from gymOwner;";
+    public static final String SQL_SELECT_PENDING_GYM_OWNERS = "select email, name, phoneNumber, aadharNum, panNum, isVerified from gymOwner where isVerified = ?;";
     public static final String SQL_SELECT_PENDING_GYMS = "select gymId, gymName, ownerEmail, address, slotCount, seatsPerSlotCount, isVerified from gym where isVerified = ?;";
     public static final String SQL_APPROVE_GYM_OWNER_BY_ID = "update gymOwner set isVerified=1 WHERE email=?;";
     public static final String SQL_APPROVE_ALL_GYMS_OWNERS = "update gymOwner set isVerified=1 WHERE isVerified=0;";
@@ -58,7 +58,7 @@ public class SQLConstants {
     public static final String SQL_DELETE_BOOKING = "Delete from booking where customerEmail = ? and bookingId = ?;";
     public static final String SQL_CHECK_SLOT_EXISTS = "select isVerified from slot where slotId=? and gymId = ?;";
     public static final String SQL_CHECK_GYM_APPROVAL = "select isVerified from gym where gymId = ?;";
-    public static final String SQL_INSERT_CUSTOMER = "INSERT INTO customer (email, name, phoneNum, age, address) VALUES (?, ?, ?, ?, ?);";
+    public static final String SQL_INSERT_CUSTOMER = "INSERT INTO gymuser (email, name, phoneNumber, age, address) VALUES (?, ?, ?, ?, ?);";
     public static final String SQL_GET_NUMBER_OF_BOOKED_SEATS = "select numOfSeatsBooked from slot where slotId=?;";
     public static final String SQL_UPDATE_NUMBER_OF_BOOKED_SEATS = "UPDATE slot set numOfSeatsBooked=? where slotId=?;";
     public static final String SQL_GET_NUMBER_OF_SEATS = "select numOfSeats from slot where slotId=?;";

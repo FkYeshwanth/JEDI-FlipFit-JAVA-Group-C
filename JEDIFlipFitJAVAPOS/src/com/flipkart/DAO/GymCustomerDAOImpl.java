@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 import com.flipkart.bean.Booking;
 import com.flipkart.bean.Gym;
+import com.flipkart.bean.GymUser;
 import com.flipkart.bean.Slot;
 import com.flipkart.constants.SQLConstants;
 import com.flipkart.exception.*;
@@ -18,9 +19,152 @@ import com.flipkart.utils.DBUtils;
 
 public class GymCustomerDAOImpl implements GymCustomerDAO{
 
+
+
     public List<Booking> getBookings(String email) {
         return fetchBookedSlots(email);
     }
+
+    public int editGymUserDetails(GymUser customer) {
+        Connection connection = null;
+        try {
+            connection = DBUtils.getConnection();
+            // Step 2:Create a statement using connection object
+            PreparedStatement preparedStatement = connection.prepareStatement(SQLConstants.SQL_UPDATE_USER);
+
+
+            preparedStatement.setString(1, customer.getEmail());
+
+
+            preparedStatement.setString(2, customer.getPassword());
+
+
+            preparedStatement.setString(3, "Customer");
+
+
+            preparedStatement.setString(4, customer.getEmail());
+
+
+            // Step 3: Execute the query or update query
+
+
+            preparedStatement.executeUpdate();
+
+
+        } catch (SQLException e) {
+
+
+            // print SQL exception information
+
+
+//            printSQLException(e);
+
+
+        }
+
+
+        try {
+
+
+            connection = DBUtils.getConnection();
+
+
+
+
+
+
+            // Step 2:Create a statement using connection object
+
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQLConstants.SQL_UPDATE_CUSTOMER);
+
+
+            PreparedStatement preparedStatement2 = connection.prepareStatement(SQLConstants.SQL_UPDATE_USER);
+
+
+
+
+
+
+            preparedStatement.setString(1, customer.getName());
+
+
+            preparedStatement.setString(2, customer.getPhoneNumber());
+
+
+            preparedStatement.setInt(3,customer.getAge());
+
+
+            preparedStatement.setString(4, customer.getAddress());
+
+
+            preparedStatement.setString(5, customer.getEmail());
+
+
+
+
+
+
+            preparedStatement2.setString(1, customer.getEmail());
+
+
+            preparedStatement2.setString(2, customer.getPassword());
+
+
+            preparedStatement2.setString(3, customer.getRoleId());
+
+
+            preparedStatement2.setString(4, customer.getEmail());
+
+            //System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            preparedStatement2.executeUpdate();
+            return  preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            // print SQL exception information
+
+//            printSQLException(e);
+
+        }
+
+        // Step 1: Establishing a Connection
+        return 0;
+    }
+
+    public GymUser getGymUserDetails(String email) {
+        Connection connection = null;
+        GymUser customer = new GymUser();
+        try {
+            connection = DBUtils.getConnection();
+            // Step 2:Create a statement using connection object
+            PreparedStatement preparedStatement = connection.prepareStatement(SQLConstants.SQL_VIEW_CUSTOMER);
+            preparedStatement.setString(1, email);
+            //System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+            if (!rs.next())
+                return null;
+            // Step 4: Process the ResultSet object.
+            do {
+                customer.setEmail(rs.getString("email"));
+                customer.setName(rs.getString("name"));
+                customer.setPhoneNumber(rs.getString("phoneNumber"));
+                customer.setAge(rs.getInt("age"));
+                customer.setAddress(rs.getString("address"));
+
+//                customer.setAadharNumber(rs.getString("aadharNum"));
+//                gymOwner.setPanNumber(rs.getString("panNum"));
+
+                // System.out.println(id + "," + name + "," + email + "," + country + "," + password);
+            } while (rs.next());
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        // Step 4: try-with-resource statement will auto close the connection.
+        return customer;
+    }
+
+
 
     public List<Gym> fetchGymList() {
         Connection connection = null;
@@ -29,7 +173,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
         try {connection = DBUtils.getConnection();
             // Step 2:Create a statement using connection object
             PreparedStatement statement = connection.prepareStatement(query);
-            System.out.println(statement);
+            //System.out.println(statement);
             // Step 3: Execute the query or update query
             ResultSet rs = statement.executeQuery();
 
@@ -181,7 +325,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
             preparedStatement.setString(1, slotId);
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
 
             ResultSet rs = preparedStatement.executeQuery();
             return rs.next();
@@ -203,39 +347,60 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
 //
 //    }
 
+    public boolean cancelBooking(String slotId, String email) {
+        Connection connection = null;
+//        String query = "Delete from Booking where email = ? and slotId = ? and date = ?";
+//        try {connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(query);
+            try {
+                connection = DBUtils.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQLConstants.SQL_DELETE_BOOKING);
+//                statement.setString(2, bookingId);
+                statement.setString(1, email);
+                statement.setString(2, slotId);
+//                statement.setString(3, date);
+                statement.executeUpdate();
+                System.out.println("-----------------------------------------------");
+                return true;
+            } catch (SQLException sqlExcep) {
+//                printSQLException(sqlExcep);
+//            printSQLException(sqlExcep);
+            }
+            return false;
+        }
+
     public boolean alreadyBooked(String slotId, String email, String date) {
         Connection connection = null;
-        String query = "select bookingId from Booking where slotId=? and customerEmail =  ?";
+//        String query = "select bookingId from Booking where slotId=? and customerEmail =  ?";
         try {connection = DBUtils.getConnection();
 
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, slotId);
-            preparedStatement.setString(2, email);
-            System.out.println(preparedStatement);
+            PreparedStatement statement = connection.prepareStatement(SQLConstants.SQL_CHECK_ALREADY_BOOKED);
+            statement.setString(1,slotId);
+            statement.setString(2, email);
+            //System.out.println(statement);
 
-            ResultSet rs = preparedStatement.executeQuery();
+            statement.executeUpdate();
 
-            return rs.next();
+            return true;
         } catch (SQLException e) {
-            printSQLException(e);
+//            printSQLException(e);
         }
 
         return false;
     }
 
-    public void cancelBooking(String slotId, String email, String date) {
-        Connection connection = null;
-        String query = "Delete from Booking where email = ? and slotId = ? and date = ?";
-        try {connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, email);
-            statement.setString(2, slotId);
-            statement.setString(3, date);
-            statement.executeUpdate();
-            System.out.println("-----------------------------------------------");
-        } catch (SQLException sqlExcep) {
-            printSQLException(sqlExcep);
-        }
-    }
+//    public void cancelBooking(String slotId, String email) {
+//        Connection connection = null;
+//        String query = "Delete from Booking where email = ? and slotId = ? and date = ?";
+//        try {connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(query);
+//            statement.setString(1, email);
+//            statement.setString(2, slotId);
+//            statement.setString(3, date);
+//            statement.executeUpdate();
+//            System.out.println("-----------------------------------------------");
+//        } catch (SQLException sqlExcep) {
+//            printSQLException(sqlExcep);
+//        }
+//    }
 
     public boolean checkSlotExists(String slotId, String gymId) {
         Connection connection = null;
@@ -245,7 +410,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, slotId);
             preparedStatement.setString(2, gymId);
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
 
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -264,7 +429,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, gymId);
-            System.out.println(preparedStatement);
+            //System.out.println(preparedStatement);
 
             ResultSet rs = preparedStatement.executeQuery();
 

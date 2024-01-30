@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface GymUserFlipFitInterface {
-    public GymUser getProfile(GymUser customer);
+    public GymUser getProfile(String email);
 
 //    returns the customer profile
 

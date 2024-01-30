@@ -6,22 +6,27 @@ import java.util.List;
 import com.flipkart.bean.Booking;
 import com.flipkart.bean.Gym;
 import com.flipkart.bean.Slot;
+import com.flipkart.bean.GymUser;
 import com.flipkart.exception.NoSlotsFoundException;
 //import com.flipkart.exception.NoSlotsFoundException;
 
 public interface GymCustomerDAO {
     public List<Gym> fetchGymList();
+    public int editGymUserDetails(GymUser user);
+
+    public GymUser getGymUserDetails(String email);
 
     public List<Slot> fetchSlotList(String gymId) throws NoSlotsFoundException;
 
     public List<Booking> fetchBookedSlots(String email);
+    public boolean cancelBooking(String slotId, String email);
 
 
     public boolean isFull(String slotId, String date);
 
     public boolean alreadyBooked(String slotId, String email, String date);
 
-    public void cancelBooking(String slotId, String email, String date);
+//    public void cancelBooking(String slotId, String email, String date);
 
     public boolean checkSlotExists(String slotId, String gymId);
 
