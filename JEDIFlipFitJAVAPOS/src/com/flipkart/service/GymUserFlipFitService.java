@@ -121,7 +121,7 @@ public class GymUserFlipFitService implements GymUserFlipFitInterface{
      * @return List of bookings done by the given customer email
      */
     public List<Booking> getBookings(String email) throws SeatsNotavailableException {
-        System.out.println("Get bookings function");
+//        System.out.println("Get bookings function");
         List<Booking> customerBookings = gymCustomerDAO.fetchBookedSlots(email);
         System.out.println("Customer booking :");
         int count = 0;

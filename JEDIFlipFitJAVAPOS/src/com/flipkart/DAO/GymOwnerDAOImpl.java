@@ -44,7 +44,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
 //                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
             }
         } catch (SQLException e) {
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return gymOwner;
@@ -66,7 +66,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             // print SQL exception information
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
 
         String INSERT_GYM_OWNER_SQL = "INSERT INTO gymOwner"
@@ -91,7 +91,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             // print SQL exception information
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
     }
 
@@ -111,7 +111,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             // print SQL exception information
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
 
         String UPDATE_GYM_OWNER_SQL = "update gymowner set email = ?, name = ?, phoneNumber = ?, aadharNumber = ?, panNumber = ?, isVerified = ? "
@@ -134,7 +134,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             // print SQL exception information
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
     }
 
@@ -167,7 +167,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
 //	                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
             }
         } catch (SQLException e) {
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return gym;
@@ -197,7 +197,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             // print SQL exception information
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
     }
 
@@ -225,7 +225,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             // print SQL exception information
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
     }
 
@@ -259,7 +259,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
 //	                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
             }
         } catch (SQLException e) {
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return gyms;
@@ -293,7 +293,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
 //	                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
             }
         } catch (SQLException e) {
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return slots;
@@ -323,7 +323,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
         } catch (SQLException e) {
 
             // print SQL exception information
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
     }
 
@@ -342,7 +342,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             // Step 4: Process the ResultSet object.
             return rs.next();
         } catch (SQLException e) {
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return false;
@@ -366,7 +366,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO{
             // Step 4: Process the ResultSet object.
             return rs.next();
         } catch (SQLException e) {
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return false;

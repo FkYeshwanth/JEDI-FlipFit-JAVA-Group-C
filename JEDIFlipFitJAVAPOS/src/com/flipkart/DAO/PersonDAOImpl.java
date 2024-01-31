@@ -26,14 +26,14 @@ public class PersonDAOImpl implements PersonDAO {
             while (rs.next()) {
                 if (Person.getPassword().equals(rs.getString("password"))
                         && Person.getRoleId().equalsIgnoreCase(rs.getString("role"))) {
-                    System.out.println(
-                            rs.getString("email") + " " + rs.getString("password") + " " + rs.getString("role"));
+                    //System.out.println(
+                          //  rs.getString("email") + " " + rs.getString("password") + " " + rs.getString("role"));
                     isPersonValid = true;
                 }
             }
 
         } catch (SQLException e) {
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
 
         return isPersonValid;
@@ -67,7 +67,7 @@ public class PersonDAOImpl implements PersonDAO {
                 registerSuccess = true;
 
         } catch (SQLException e) {
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
 
         return registerSuccess;
@@ -102,7 +102,7 @@ public class PersonDAOImpl implements PersonDAO {
                 registerSuccess = true;
 
         } catch (SQLException e) {
-            System.out.println("There is an issue with the SQL code");
+           // System.out.println("There is an issue with the SQL code");
         }
 
         return registerSuccess;

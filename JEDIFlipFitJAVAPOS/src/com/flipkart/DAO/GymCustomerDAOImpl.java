@@ -53,7 +53,8 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
 
 
         } catch (SQLException e) {
-            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
+            //System.out.println(ColorConstants.RED+"
+            // There is an issue with the SQL code"+ColorConstants.RESET);
         }
 
 
@@ -115,7 +116,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
             preparedStatement2.executeUpdate();
             return  preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
+            //System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
 
         }
 
@@ -153,7 +154,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
                 // System.out.println(id + "," + name + "," + email + "," + country + "," + password);
             } while (rs.next());
         } catch (SQLException e) {
-            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
+            //System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return customer;
@@ -189,7 +190,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
 //	                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
             }
         } catch (SQLException e) {
-            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ ColorConstants.RESET);
+            //System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ ColorConstants.RESET);
         }
         return gyms;
     }
@@ -202,9 +203,8 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
             statement.setString(1,gymId);
 //            System.out.println(statement);
             ResultSet output = statement.executeQuery();
-
-        if(output==null){
-                throw new NoSlotsFoundException(ColorConstants.RED+ "No slot found"+ColorConstants.RESET);
+            if (!output.next()) {
+                throw new NoSlotsFoundException("No slot found");
             }
             System.out.println("SlotId \t GymId \t SlotStart \t SlotEnd \t Available Seats");
             do {
@@ -218,7 +218,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
             } while (output.next());
             System.out.println("-----------------------------------------------");
         } catch (SQLException sqlExcep) {
-            System.out.println(ColorConstants.RED+ "There is an issue with the SQL code"+ColorConstants.RESET);
+            //printSQLException(sqlExcep);
         }
         return null;
     }
@@ -231,7 +231,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
         return 1;
     }
     public List<Booking> fetchBookedSlots(String email) {
-        System.out.println("fetch booked slots");
+//        System.out.println("fetch booked slots");
         Connection connection = null;
         List<Booking> bookings=new ArrayList<>();
         try {
@@ -239,9 +239,9 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
             PreparedStatement statement = connection.prepareStatement(SQLConstants.SQL_SELECT_BOOKED_SLOTS_BY_CUSTOMER);
 
             statement.setString(1, email);
-            System.out.println("state: "+statement);
+//            System.out.println("state: "+statement);
             ResultSet rs = statement.executeQuery();
-            System.out.println("result: "+rs);
+//            System.out.println("result: "+rs);
             if (!rs.next()) {
                 throw new SeatsNotavailableException(ColorConstants.RED+"No seats available"+ColorConstants.RESET);
             }
@@ -255,18 +255,18 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
                 b.setType(rs.getString("type"));
                 b.setDate(rs.getString("date"));
                 bookings.add(b);
-                System.out.println("booking "+bookings.get(0).getBookingId());
+//                System.out.println("booking "+bookings.get(0).getBookingId());
             }
         } catch (SQLException sqlExcep) {
 //            System.out.println("There is an issue with the SQL code");
         } catch (SeatsNotavailableException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("booking");
-        System.out.println(bookings);
-        for(Booking b : bookings)  {
-            System.out.println(b);
-        }
+//        System.out.println("booking");
+//        System.out.println(bookings);
+//        for(Booking b : bookings)  {
+//            System.out.println(b);
+//        }
         return bookings;
     }
 
@@ -283,7 +283,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
             statement.setString(6, customerEmail);
             statement.executeUpdate();
         } catch (SQLException sqlExcep) {
-            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
+            //System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
         }
     }
 
@@ -317,7 +317,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
             return true;
         }
         catch (SQLException sqlExcep) {
-            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
+            //System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
         }
         return false;
     }
@@ -335,7 +335,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
             return rs.next();
         } catch (SQLException e)
         {
-            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
+            //System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
         }
 
         return false;
@@ -366,7 +366,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
                 System.out.println("-----------------------------------------------");
                 return true;
             } catch (SQLException sqlExcep) {
-                System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
+                //System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
             }
             return false;
         }
@@ -385,7 +385,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
 
             return true;
         } catch (SQLException e) {
-            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
+            //System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
         }
 
         return false;
@@ -422,7 +422,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
 
             return rs.next();
         } catch (SQLException e) {
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
 
         return false;
@@ -444,7 +444,7 @@ public class GymCustomerDAOImpl implements GymCustomerDAO{
 
             return rs.next();
         } catch (SQLException e) {
-            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
+            //System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
         }
 
         return false;

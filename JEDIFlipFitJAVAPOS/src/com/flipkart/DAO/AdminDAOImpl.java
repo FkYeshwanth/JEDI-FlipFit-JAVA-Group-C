@@ -54,7 +54,7 @@ public class AdminDAOImpl implements AdminDAO {
             }
         }
         catch (SQLException e) {
-            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
+            //System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return gymOwners;
@@ -86,11 +86,11 @@ public class AdminDAOImpl implements AdminDAO {
                 gym.setVerified(rs.getBoolean("isVerified"));
                 gyms.add(gym);
 //	                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
-                System.out.println(gym.getGymName() + "ww");
+
 
             }
         } catch (SQLException e) {
-            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
+            //System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
         }
 //        // Step 4: try-with-resource statement will auto close the connection.
         return gyms;
@@ -126,7 +126,7 @@ public class AdminDAOImpl implements AdminDAO {
 
             }
         } catch (SQLException e) {
-            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
+            //System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return gymOwners;
@@ -162,7 +162,7 @@ public class AdminDAOImpl implements AdminDAO {
 //	                System.out.println(id + "," + name + "," + email + "," + country + "," + password);
             }
         } catch (SQLException e) {
-            System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
+            //System.out.println(ColorConstants.RED+"There is an issue with the SQL code"+ColorConstants.RESET);
         }
         // Step 4: try-with-resource statement will auto close the connection.
         return gyms;
@@ -180,7 +180,7 @@ public class AdminDAOImpl implements AdminDAO {
             preparedStatement.setString(1, gymOwnerEmail);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("There is an issue with the SQL code");
+            //System.out.println("There is an issue with the SQL code");
         }
     };
 
@@ -194,7 +194,7 @@ public class AdminDAOImpl implements AdminDAO {
             // Step 3: Execute the query or update query
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("There is an issue with the SQL code");
+          //  System.out.println("There is an issue with the SQL code");
         }
     };
 
@@ -209,7 +209,7 @@ public class AdminDAOImpl implements AdminDAO {
             preparedStatement.setString(1, gymId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("There is an issue with the SQL code");
+           // System.out.println("There is an issue with the SQL code");
         }
     };
 
@@ -223,7 +223,7 @@ public class AdminDAOImpl implements AdminDAO {
 //            // Step 3: Execute the query or update query
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("There is an issue with the SQL code");
+        //    System.out.println("There is an issue with the SQL code");
         }
     };
 
